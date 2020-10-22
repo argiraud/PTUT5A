@@ -1,0 +1,15 @@
+spring:
+  profiles: prod
+  application:
+    name: polyrecrute_api
+server:
+  port: 7777
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /
+  api-docs:
+    enabled: true
+    path: /api-docs
+  pathsToMatch: /hello/**
