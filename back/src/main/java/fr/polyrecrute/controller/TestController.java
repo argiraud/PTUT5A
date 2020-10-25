@@ -1,5 +1,7 @@
-package fr.polyrecrute.spring;
+package fr.polyrecrute.controller;
 
+import fr.polyrecrute.model.UserEntity;
+import fr.polyrecrute.SpringBootRunner;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -7,23 +9,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@EnableAutoConfiguration
+@RequestMapping("/hello")
 @Tag(name = "contact", description = "the Contact API")
-public class Controleur {
+public class TestController {
 
     @Operation(summary = "Find contact by ID", description = "Returns a single contact", tags = { "contact" })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(schema = @Schema(implementation = Controleur.class))),
+                    content = @Content(schema = @Schema(implementation = SpringBootRunner.class))),
             @ApiResponse(responseCode = "404", description = "Contact not found") })
-    @GetMapping(value = "/hello", produces = { "application/json", "application/xml" })
+    @GetMapping(value = "", produces = { "application/json", "application/xml" })
     public String home() {
         return "Hello World!";
     }
@@ -37,15 +38,9 @@ public class Controleur {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Book not found",
                     content = @Content) })
-    @GetMapping("/hello/{id}")
-    public long findById(@Parameter(description = "id of book to be searched")
+    @GetMapping("/{id}")
+    public UserEntity findById(@Parameter(description = "id of book to be searched")
                          @PathVariable long id) {
-        return id;
+        return new UserEntity();
     }
-
-
-    public static void main(String[] args) {
-        SpringApplication.run(Controleur.class, args);
-    }
-
 }

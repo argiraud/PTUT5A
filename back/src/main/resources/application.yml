@@ -2,6 +2,20 @@ spring:
   profiles: prod
   application:
     name: polyrecrute_api
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/polyrecruteBDD
+    username: polyrecruteUser
+    password: azerty
+    driverClassName: org.postgresql.Driver
+
 server:
   port: 7777
 
@@ -13,3 +27,4 @@ springdoc:
     enabled: true
     path: /api-docs
   pathsToMatch: /hello/**
+
