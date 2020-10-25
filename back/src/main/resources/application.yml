@@ -6,8 +6,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create
   datasource:
     initialization-mode: always
     platform: postgres
@@ -21,10 +20,9 @@ server:
 
 springdoc:
   swagger-ui:
-    enabled: true
     path: /
   api-docs:
     enabled: true
     path: /api-docs
-  pathsToMatch: /hello/**
+  pathsToMatch: /**
 
