@@ -1,6 +1,6 @@
-package fr.polyrecrute.controller;
+package fr.polyrecrute.controllers;
 
-import fr.polyrecrute.model.User;
+import fr.polyrecrute.models.User;
 import fr.polyrecrute.responceType.StringResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/hello")
 @Tag(name = "contact", description = "the Contact API")
 public class TestController {
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Operation(summary = "Find contact by ID", description = "Returns a single contact")
     @ApiResponses(value = {
@@ -23,8 +26,8 @@ public class TestController {
                     content = @Content(schema = @Schema(implementation = StringResponse.class))),
             @ApiResponse(responseCode = "404", description = "Contact not found", content = @Content) })
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public StringResponse home() {
+        logger.info("test test -----------------------------------------------------------------");
         return new StringResponse("Hello World!");
     }
 
@@ -35,9 +38,8 @@ public class TestController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Book not found", content = @Content) })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public User findById(@Parameter(description = "id of book to be searched")
+    public String findById(@Parameter(description = "id of book to be searched")
                          @PathVariable long id) {
-        return new User();
+        return "";
     }
 }

@@ -14,9 +14,16 @@ spring:
     username: polyrecruteUser
     password: azerty
     driverClassName: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idsvr.example.com/oauth/v2/oauth-anonymou
 
 server:
   port: 7777
+  error:
+    include-message: always
 
 springdoc:
   swagger-ui:
@@ -25,4 +32,11 @@ springdoc:
     enabled: true
     path: /api-docs
   pathsToMatch: /**
+
+
+
+
+
+
+
 
