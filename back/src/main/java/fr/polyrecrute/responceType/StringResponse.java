@@ -2,7 +2,7 @@ package fr.polyrecrute.responceType;
 
 public class StringResponse {
 
-    private String response;
+    private final String response;
 
     public StringResponse(String s) {
         this.response = s;

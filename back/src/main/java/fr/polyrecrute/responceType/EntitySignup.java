@@ -1,18 +1,18 @@
 package fr.polyrecrute.responceType;
 
-public class UserSignup {
-    private String username;
+public class EntitySignup {
+    private String name;
     private String email;
     private String password;
 
-    public UserSignup(String username, String email, String password) {
-        this.username = username;
+    public EntitySignup(String name, String email, String password) {
+        this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {

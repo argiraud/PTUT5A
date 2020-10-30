@@ -13,47 +13,51 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
+@javax.persistence.Entity
+@Table(	name = "Entity",
+		uniqueConstraints = {
 			@UniqueConstraint(columnNames = "email") 
 		})
-public class User implements UserDetails {
+public class Entity implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "id_entity")
+	private Long idEntity;
 
 	@NotBlank
-	@Size(max = 20)
-	private String username;
+	@Column(length = 50)
+	private String name;
 
 	@NotBlank
-	@Size(max = 50)
+	@Column(length = 50)
 	@Email
 	private String email;
 
 	@NotBlank
-	@Size(max = 120)
+	@Column(length = 120)
 	@JsonIgnore
 	private String password;
+
+	@Column(length = 500)
+	private String presentation;
 
 	@NotBlank
 	private boolean enable;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(	name = "Entity_roles",
+				joinColumns = @JoinColumn(name = "id_entity"),
+				inverseJoinColumns = @JoinColumn(name = "id_role"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User() {
+	public Entity() {
 	}
 
-	public User(String username, String email, String password, Role role, boolean enable) {
-		this.username = username;
+	public Entity(@NotBlank @Size(max = 50) String name, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(max = 120) String password, String presentation, @NotBlank boolean enable, Role role) {
+		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.presentation = presentation;
 		this.enable = enable;
 		this.roles.add(role);
 	}
@@ -73,7 +77,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return username;
+		return name;
 	}
 
 	@Override
@@ -99,17 +103,24 @@ public class User implements UserDetails {
 		return enable;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getIdEntity() {
+		return idEntity;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	public String getPresentation() {
+		return presentation;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void addRole(Role role) {
@@ -122,8 +133,8 @@ public class User implements UserDetails {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		User user = (User) o;
-		return Objects.equals(id, user.id);
+		Entity entity = (Entity) o;
+		return Objects.equals(idEntity, entity.idEntity);
 	}
 
 
