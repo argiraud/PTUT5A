@@ -1,0 +1,41 @@
+spring:
+  profiles: prod
+  application:
+    name: polyrecrute_api
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/polyrecruteBDD
+    username: polyrecruteUser
+    password: azerty
+    driverClassName: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idsvr.example.com/oauth/v2/oauth-anonymou
+
+server:
+  port: 7777
+  error:
+    include-message: always
+
+springdoc:
+  swagger-ui:
+    path: /
+  api-docs:
+    enabled: true
+    path: /api-docs
+  pathsToMatch: /**
+
+
+
+
+
+
+
