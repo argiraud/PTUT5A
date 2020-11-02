@@ -1,7 +1,10 @@
 <template>
+    <div>
         <p>Type de compte</p>
         <input type="button" @click="ChangetoEntreprise" value="Entreprise">
         <input type="button" @click="ChangetoCandidat" value="Candidats">
+    </div>
+        
 </template>
 
 <script>

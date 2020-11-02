@@ -1,5 +1,33 @@
-import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import Vue from 'vue'
+import VueRouter from 'vue-router';
+import { routes } from './route';
+import vuetify from './plugins/vuetify';
 
-createApp(App).use(router).mount('#app')
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    routes,
+    mode: 'history',
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        }
+        if (to.hash) {
+            return { selector: to.hash };
+        }
+        return {x: 0, y: 0};
+    }
+});
+
+router.beforeEach((to, from, next) => {
+    console.log('global beforeEach');
+    next();
+});
+
+new Vue({
+    el: '#app',
+    router,
+    vuetify,
+    render: h => h(App)
+})
