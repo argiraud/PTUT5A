@@ -25,7 +25,7 @@
             </v-list-item-icon>
             <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home1">
+          <v-list-item to="adminDonnees">
             <v-list-item-icon>
               <v-icon>mdi-database-cog</v-icon>
             </v-list-item-icon>
