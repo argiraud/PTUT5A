@@ -30,7 +30,7 @@ import java.util.List;
                 url = "https://quiveutdesgoodies.com/products/t-shirt-de-ses-morts"),
         info = @Info(
                 title="PolyRecrute API",
-                version = "0.1"),
+                version = "0.2"),
         servers = { @Server(url = "https://api.polyrecrute.tk", description = "Prod API server") }
 )
 @SecurityScheme(

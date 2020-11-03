@@ -22,7 +22,7 @@ public class EntityDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) {
         return entityRepository.findByEmail(email)
                 .orElseThrow(() -> {throw new ResponseStatusException(
-                        HttpStatus.CONFLICT, "Email or password incorrect");});
+                        HttpStatus.NOT_FOUND, "Email or password incorrect");});
     }
 
 }
