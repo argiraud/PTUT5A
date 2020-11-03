@@ -6,6 +6,7 @@
     >
         <v-text-field
                 v-model="name"
+                id="name"
                 :rules="nameRules"
                 label="Nom de l'entreprise"
                 required
@@ -16,6 +17,7 @@
 
         <v-text-field
                 v-model="email"
+                id="emailInscription"
                 :rules="emailRules"
                 prepend-inner-icon="email"
                 label="E-mail"
@@ -23,8 +25,8 @@
         ></v-text-field>
 
         <v-text-field
-                id="mdpInscription"
                 v-model="mdp"
+                id="mdpInscription"
                 label="Mot de passe"
                 prepend-inner-icon="lock"
                 type="password"
@@ -33,7 +35,7 @@
                 color="teal accent-3"/>
 
         <div class="text-center mt-n5">
-            <v-btn rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
+            <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
         </div>
 
     </v-form>
@@ -63,8 +65,31 @@
         methods: {
             SignUp(){
                 if(this.$refs.form.validate()){
-                    //Methode de connexion entreprise
+                    this.APISignUp();
                 }
+            },
+            APISignUp(){
+                const user = {
+                    name: document.getElementById('name').value.toString(),
+                    email: document.getElementById('emailInscription').value.toString(),
+                    password: document.getElementById('mdpInscription').value.toString(),
+                };
+                const options = {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+                    headers: {
+                        "accept": "*/*",
+                        "Content-Type": "application/json"
+                    }
+                };
+                fetch("https://api.polyrecrute.tk/auth/signup", options).then(response => {
+                    console.log(response);
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+                }).catch(err => {
+                        console.log(err);
+                    });
             }
         },
     }

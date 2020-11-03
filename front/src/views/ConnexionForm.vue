@@ -33,25 +33,32 @@
                                     </v-btn>
                                 </div>
                                 <h4 class="text-center mlt-4">Vérifez votre Email pour compléter l'inscription</h4>
-                                <v-form>
+                                <v-form ref="formconnexion"
+                                        v-model="valid"
+                                        lazy-validation>
                                     <v-text-field
-                                        label="Email"
-                                        name="Email"
-                                        prepend-inner-icon="email"
-                                        type="text"
-                                        color="teal accent-3"/>
+                                            v-model="email"
+                                            id="emailConnexion"
+                                            label="Email"
+                                            prepend-inner-icon="email"
+                                            type="text"
+                                            color="teal accent-3"
+                                            required
+                                            :rules="emailRules"/>
                                     <v-text-field
+                                            v-model="mdpConnexion"
                                             id="mdpConnexion"
                                             label="Mot de passe"
-                                            name="Mot de passe"
                                             prepend-inner-icon="lock"
                                             type="password"
-                                            color="teal accent-3"/>
+                                            color="teal accent-3"
+                                            required
+                                            :rules="mdpRules"/>
                                 </v-form>
                                 <h3 class="text-center mt-3">Mot de passe oublié ?</h3>
                             </v-card-text>
                             <div class="text-center mt-3">
-                                <v-btn rounded color="teal accent-3" dark>CONNEXION</v-btn>
+                                <v-btn rounded color="teal accent-3" dark @click="SignIn">CONNEXION</v-btn>
                             </div>
                         </v-col>
                         <v-col cols="12" md="4" class="teal accent-3">
@@ -126,17 +133,44 @@ export default {
             this.isEntreprise = !this.isEntreprise;
         },
         SignIn(){
-            this.$refs.form.validate()
-            if(this.isEntreprise){
-                //Methode de connexion entreprise
-            }else{
-                //Methode de connexion candidat
+            if(this.$refs.formconnexion.validate()){
+                this.APISignIn();
             }
+        },
+        APISignIn(){
+            let email = document.getElementById('emailConnexion').value.toString();
+            let mdp = document.getElementById('mdpConnexion').value.toString();
+            let url = "https://api.polyrecrute.tk/auth/signin?mail="+email+"&password="+mdp;
+            fetch(url,{
+                method: "GET",
+                headers:{
+                    "accept": "application/json"
+                }
+            }).then(response => {
+                console.log("response : ")
+                console.log(response)
+                return response.json();
+            }).then(data => {
+                console.log("data : ")
+                console.log(data)
+            }).catch(err => {
+                console.log("erreur : " + err);
+            });
         }
      },
     data: () => ({
+        valid: true,
         step: 1,
-        isEntreprise: true
+        isEntreprise: true,
+        email: '',
+        emailRules: [
+            v => !!v || 'L\'addresse mail est requise',
+            v => /.+@.+\..+/.test(v) || 'L\'addresse mail doit être valide',
+        ],
+        mdpConnexion: '',
+        mdpRules: [
+            v => !!v || 'Le mot de passe est requis',
+        ]
     }),
     props: {
         source: String

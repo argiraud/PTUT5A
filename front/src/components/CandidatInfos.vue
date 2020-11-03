@@ -7,6 +7,7 @@
             <v-text-field
                     v-model="name"
                     :rules="nameRules"
+                    id="name"
                     label="Nom"
                     required
                     type="text"
@@ -17,6 +18,7 @@
             <v-text-field
                     v-model="firstname"
                     :rules="nameRules"
+                    id="firstname"
                     label="Prénom"
                     prepend-inner-icon="person"
                     type="text"
@@ -26,6 +28,7 @@
 
             <v-text-field
                     v-model="studentNumber"
+                    id="studentNumber"
                     :counter="8"
                     :rules="studentNumberRules"
                     type="number"
@@ -35,8 +38,10 @@
 
             <v-text-field
                     v-model="email"
+                    id="emailInscription"
                     :rules="emailRules"
                     prepend-inner-icon="email"
+                    type="text"
                     label="E-mail"
                     required
             ></v-text-field>
@@ -52,7 +57,7 @@
                     color="teal accent-3"/>
 
             <div class="text-center mt-n5">
-                <v-btn rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
+                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
             </div>
 
         </v-form>
@@ -88,8 +93,34 @@
         methods: {
             SignUp(){
                 if(this.$refs.form.validate()){
-                    //Methode de connexion candidat
+                    alert("bite");
+                    this.APISignUp();
                 }
+            },
+            APISignUp(){
+                const user = {
+                    name: document.getElementById('name').value.toString(),
+                    firstname: document.getElementById('firstname').value.toString(),
+                    studentNumber: document.getElementById('studentNumber').value.toString(),
+                    email: document.getElementById('emailInscription').value.toString(),
+                    password: document.getElementById('mdpInscription').value.toString(),
+                };
+                const options = {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+                    headers: {
+                        "accept": "*/*",
+                        "Content-Type": "application/json"
+                    }
+                };
+                fetch("https://api.polyrecrute.tk/auth/signup", options).then(response => {
+                    console.log(response);
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                });
             }
         },
     }
