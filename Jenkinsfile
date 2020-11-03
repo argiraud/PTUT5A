@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build"
-                
+                sh 'npm install --prefix /var/lib/jenkins/workspace/PolyRecrute_master/front'
                 sh 'npm run build --prefix /var/lib/jenkins/workspace/PolyRecrute_master/front'
                 sh 'mvn -f /var/lib/jenkins/workspace/PolyRecrute_master/back/pom.xml dependency:tree'
                 sh 'mvn -f /var/lib/jenkins/workspace/PolyRecrute_master/back/pom.xml package'
