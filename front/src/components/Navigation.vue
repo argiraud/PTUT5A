@@ -63,6 +63,12 @@
             <v-list-item-title style="white-space: normal">Tableau de bord</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
+        <v-list-item to="creationCompte">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Création du compte</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>
