@@ -2,13 +2,14 @@ package fr.polyrecrute.models;
 
 import javax.persistence.*;
 
-@javax.persistence.Entity
-@Table(name = "roles")
+@javax.persistence.Entity(name = "Roles")
+@Table(name = "role")
 public class Role {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_role")
-	private Integer idRole;
+	@Column(name = "role_id")
+	private Long idRole;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
@@ -22,11 +23,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public Integer getIdRole() {
+	public Long getIdRole() {
 		return idRole;
 	}
 
-	public void setIdRole(Integer idRole) {
+	public void setIdRole(Long idRole) {
 		this.idRole = idRole;
 	}
 

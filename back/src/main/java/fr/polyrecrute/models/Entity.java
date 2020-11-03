@@ -13,15 +13,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@javax.persistence.Entity
-@Table(	name = "Entity",
+@javax.persistence.Entity(name = "Entity")
+@Table(	name = "entity",
 		uniqueConstraints = {
 			@UniqueConstraint(columnNames = "email") 
 		})
 public class Entity implements UserDetails {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_entity")
+	@Column(name = "entity_id")
 	private Long idEntity;
 
 	@NotBlank
@@ -44,10 +45,16 @@ public class Entity implements UserDetails {
 	@NotBlank
 	private boolean enable;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(	name = "Entity_roles",
-				joinColumns = @JoinColumn(name = "id_entity"),
-				inverseJoinColumns = @JoinColumn(name = "id_role"))
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private User user;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Company company;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "entity_role",
+				joinColumns = @JoinColumn(name = "entity_id"),
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	public Entity() {
@@ -125,6 +132,26 @@ public class Entity implements UserDetails {
 
 	public void addRole(Role role) {
 		roles.add(role);
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setIdEntity(Long idEntity) {
+		this.idEntity = idEntity;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	@Override

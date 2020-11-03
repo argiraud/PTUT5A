@@ -1,8 +1,6 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Role;
-import fr.polyrecrute.models.Entity;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.EntityRepository;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
@@ -48,7 +46,22 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public void registerEntity(EntitySignup entitySignup) {
+    public Entity registerEntity(EntitySignup entitySignup, User user) {
+        Entity entityCreated = register(entitySignup);
+        entityCreated.setUser(user);
+        entityRepository.save(entityCreated);
+        return  entityCreated;
+    }
+
+    @Override
+    public Entity registerEntity(EntitySignup entitySignup, Company company) {
+        Entity entityCreated = register(entitySignup);
+        entityCreated.setCompany(company);
+        entityRepository.save(entityCreated);
+        return  entityCreated;
+    }
+
+    private Entity register(EntitySignup entitySignup) {
         if (entityRepository.existsByEmail(entitySignup.getEmail())) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "Email already exists");
@@ -65,7 +78,7 @@ public class EntityServiceImpl implements EntityService {
                 encoder.encode(entitySignup.getPassword()),
                 "", true, userRole);
 
-        entityRepository.save(entityCreated);
+        return entityCreated;
     }
 
     @Override
