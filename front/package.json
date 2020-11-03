@@ -17,6 +17,8 @@
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@mdi/font": "^5.8.55",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "^4.5.8",
@@ -25,6 +27,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "material-design-icons-iconfont": "^6.1.0",
     "node-sass": "^4.9.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",

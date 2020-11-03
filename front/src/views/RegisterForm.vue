@@ -14,13 +14,11 @@
 </template>
 
 <script>
-import SelectUserType from "./SelectUserType"
-import EntrepriseInfos from "./EntrepriseInfos"
-import CandidatInfos from "./CandidatInfos"
+import EntrepriseInfos from "@/components/EntrepriseInfos"
+import CandidatInfos from "@/components/CandidatInfos"
 export default {
     name: 'RegisterForm',
     components: {
-        SelectUserType,
         EntrepriseInfos,
         CandidatInfos
     },
@@ -37,7 +35,7 @@ export default {
         }
     },
     mounted(){
-        this.isEntreprise = true;
+        this.isEntreprise = false;
     },
     data: () => ({
         isEntreprise: Boolean

@@ -9,7 +9,9 @@
 
       <v-toolbar-title>Ptut</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>Se Connecter</v-btn>
+      <router-link to="/Connexion">
+      <v-btn >Se Connecter</v-btn>
+      </router-link>
     </v-app-bar>
     <v-navigation-drawer
         v-model="drawer"
