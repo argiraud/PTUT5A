@@ -7,8 +7,8 @@
       <v-divider></v-divider>
       <v-stepper-step :complete="currentStep > 3" step="3"> Saisie des voeux </v-stepper-step>
     </v-stepper-header>
-    <v-stepper-content step="1">
-      <AdminDonnee></AdminDonnee>
+    <v-stepper-content step="1" currentStep=1>
+      <AdminDonnee @message-sent="updateMes"></AdminDonnee>
     </v-stepper-content>
   </v-stepper>
 </template>
@@ -18,8 +18,18 @@ import AdminDonnee from '@/views/AdmiDonnee'
 
 export default {
 name: "Stepper",
+  data () {
+    return {
+      currentStep: 1,
+    }
+  },
   components :{
     AdminDonnee
+  },
+  methods :{
+    updateMes(){
+      this.currentStep = 2;
+    }
   }
 }
 </script>

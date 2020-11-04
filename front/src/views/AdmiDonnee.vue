@@ -95,6 +95,7 @@
 
 <script>
 export default {
+  props: ['isClick'],
   data: () => ({
     valid: true,
     name: '',
@@ -124,7 +125,9 @@ export default {
   },
   methods: {
     validate () {
-      this.$refs.form.validate()
+      this.$emit("message-sent", "true")
+      this.$refs.form.validate();
+
     },
 
     handleFileUpload(){
