@@ -62,7 +62,7 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Planification d'entretiens</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home5">
+          <v-list-item v-if="isConnected" to="dashboard">
             <v-list-item-icon>
               <v-icon>mdi-desktop-mac-dashboard</v-icon>
             </v-list-item-icon>

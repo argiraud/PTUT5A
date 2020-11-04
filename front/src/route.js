@@ -1,4 +1,5 @@
 import Home from '@/views/Home.vue';
+import Dashboard from '@/views/Dashboard.vue';
 import NotFound from '@/views/NotFound.vue';
 import ConnexionForm from "@/views/ConnexionForm";
 import AdmiDonnee from "@/views/AdmiDonneeForm";
@@ -34,12 +35,9 @@ export const routes = [
         component: () => import(/* webpackChunkName: "about" */ '@/components/Stepper.vue')
     },
     {
-        path: '/creationCompte',
-        name: 'Creation',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '@/components/Stepper.vue')
+        path: '/dashboard', name: 'dashboard', components: {
+            default: Dashboard,
+        }
     },
     {
         path: '/:notFound(.*)', component: NotFound
