@@ -113,7 +113,7 @@
                         "Content-Type": "application/json"
                     }
                 };
-                fetch("https://api.polyrecrute.tk/auth/signup", options).then(response => {
+                fetch("https://api.polyrecrute.tk/auth/user/signup", options).then(response => {
                     console.log(response);
                     return response.json();
                 }).then(data => {
