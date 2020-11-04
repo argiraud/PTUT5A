@@ -90,6 +90,11 @@ public class EntityServiceImpl implements EntityService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         Entity entity = (Entity) authentication.getPrincipal();
-        return new EntitySignin(entity.getIdEntity(), entity.getUsername(), entity.getEmail(), entity.getPresentation(), entity.getRoles(), entity.isEnabled(), jwt);
+        String type= "";
+        if (entity.getCompany() != null)
+            type = "Company";
+        if (entity.getUser() != null)
+            type = "User";
+        return new EntitySignin(entity.getIdEntity(), entity.getUsername(), entity.getEmail(), entity.getPresentation(), entity.getRoles(), entity.isEnabled(), type, jwt);
     }
 }
