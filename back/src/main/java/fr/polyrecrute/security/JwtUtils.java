@@ -21,7 +21,7 @@ public class JwtUtils {
 
 		int jwtExpirationMs = 86400000;
 		return Jwts.builder()
-				.setSubject((entityPrincipal.getUsername()))
+				.setSubject((entityPrincipal.getEmail()))
 				.setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
