@@ -2,6 +2,7 @@ package fr.polyrecrute.services;
 
 import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.EntityRepository;
+import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
 import fr.polyrecrute.security.JwtUtils;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -21,13 +23,9 @@ import java.util.Optional;
 public class EntityServiceImpl implements EntityService {
 
     private final AuthenticationManager authenticationManager;
-
     private final EntityRepository entityRepository;
-
     private final RoleService roleService;
-
     private final PasswordEncoder encoder;
-
     private final JwtUtils jwtUtils;
 
     @Autowired
@@ -90,6 +88,45 @@ public class EntityServiceImpl implements EntityService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         Entity entity = (Entity) authentication.getPrincipal();
-        return new EntitySignin(entity.getIdEntity(), entity.getUsername(), entity.getEmail(), entity.getPresentation(), entity.getRoles(), entity.isEnabled(), jwt);
+        String type= "";
+        if (entity.getCompany() != null)
+            type = EType.Company.toString();
+        if (entity.getUser() != null)
+            type = EType.User.toString();
+        return new EntitySignin(entity.getIdEntity(), entity.getUsername(), entity.getEmail(), entity.getPresentation(), entity.getRoles(), entity.isEnabled(), type, jwt);
     }
+
+    @Override
+    public Entity findByEmail(String email) {
+        return entityRepository.findByEmail(email)
+                .orElseThrow(() -> {throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Email not found");});
+    }
+
+    @Override
+    public EntityDetails getDetails(String tokenJwt) {
+        Entity entity = getEntityFromToken(tokenJwt);
+        EntityDetails entityDetails = null;
+        if (entity.getCompany() != null){
+            entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
+                    entity.getPresentation(),entity.getRoles(),entity.isEnabled(), EType.Company.toString(),
+                    "","",null,"");
+        }
+        else{
+            entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
+                    entity.getPresentation(),entity.getRoles(),entity.isEnabled(), EType.User.toString(),
+                    entity.getUser().getFirstName(),entity.getUser().getEtudiantNumber(),
+                    entity.getUser().getBirthDate(),entity.getUser().getStatus());
+        }
+        return entityDetails;
+    }
+
+    private Entity getEntityFromToken(String tokenJwt){
+        if (!StringUtils.hasText(tokenJwt) || !tokenJwt.startsWith("Bearer")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error token");
+        }
+        tokenJwt =  tokenJwt.substring(7);
+        return findByEmail(jwtUtils.getEmailFromJwtToken(tokenJwt));
+    }
+
 }

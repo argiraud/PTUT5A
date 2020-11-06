@@ -26,8 +26,8 @@ import java.util.List;
 @Configuration
 @OpenAPIDefinition(
         externalDocs = @ExternalDocumentation(
-                description = "API du PTUT de ses morts !!!! j'ai mis 30 h juste pour cette interface de ses morts !!! ",
-                url = "https://quiveutdesgoodies.com/products/t-shirt-de-ses-morts"),
+                description = "API pour accéder aux données",
+                url = ""),
         info = @Info(
                 title="PolyRecrute API",
                 version = "0.2"),

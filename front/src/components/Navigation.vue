@@ -9,7 +9,9 @@
 
       <v-toolbar-title>Ptut</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>Se Connecter</v-btn>
+      <router-link to="/Connexion">
+      <v-btn >Se Connecter</v-btn>
+      </router-link>
     </v-app-bar>
     <v-navigation-drawer
         width="300"
@@ -28,7 +30,7 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home1">
+          <v-list-item to="adminDonnees">
             <v-list-item-icon>
               <v-icon>mdi-database-cog</v-icon>
             </v-list-item-icon>
@@ -61,6 +63,12 @@
             <v-list-item-title style="white-space: normal">Tableau de bord</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
+        <v-list-item to="creationCompte">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Création du compte</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>

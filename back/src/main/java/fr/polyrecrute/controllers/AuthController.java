@@ -1,7 +1,5 @@
 package fr.polyrecrute.controllers;
 
-import javax.validation.Valid;
-
 import fr.polyrecrute.responceType.CompanySignup;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.UserSignup;
@@ -42,13 +40,13 @@ public class AuthController {
 
 	@Operation(summary = "Sign in entity", description = "Login to an existing account",
 			responses= {
-				@ApiResponse(responseCode = "200", description = "User was register",
+				@ApiResponse(responseCode = "200", description = "User sign in",
 						content = @Content(schema = @Schema(implementation = EntitySignin.class))),
 				@ApiResponse(responseCode = "404", description = "Email or password incorrect", content = @Content) })
 	@GetMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EntitySignin> signInEntity(@Parameter(description = "mail") @Valid String mail,
-													 @Parameter(description = "password") @Valid String password) {
-		EntitySignin entitySignin = entityService.loginEntity(mail, password);
+	public ResponseEntity<EntitySignin> signInEntity(@Parameter(description = "email") String email,
+													 @Parameter(description = "password") String password) {
+		EntitySignin entitySignin = entityService.loginEntity(email, password);
 		return new ResponseEntity<>(entitySignin, HttpStatus.OK);
 	}
 
@@ -58,7 +56,7 @@ public class AuthController {
 					@ApiResponse(responseCode = "400", description = "Email or name is too long", content = @Content),
 					@ApiResponse(responseCode = "409", description = "Email already exists", content = @Content) })
 	@PostMapping(value = "/company/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity companySignCompany(@Valid @RequestBody CompanySignup companySignup) {
+	public ResponseEntity companySignCompany( @RequestBody CompanySignup companySignup) {
 		companyService.registerEntity(companySignup);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
@@ -69,7 +67,7 @@ public class AuthController {
 					@ApiResponse(responseCode = "400", description = "Email, name, first name or etudiant number is too long / Birth date is wrong", content = @Content),
 					@ApiResponse(responseCode = "409", description = "Email already exists", content = @Content) })
 	@PostMapping(value = "/user/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity SignUpUser(@Valid @RequestBody UserSignup userSignup) {
+	public ResponseEntity SignUpUser(@RequestBody UserSignup userSignup) {
 		userService.registerEntity(userSignup);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}

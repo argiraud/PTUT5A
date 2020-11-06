@@ -59,8 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
-                .antMatchers("/hello/**").hasAuthority("USER")
-                .antMatchers("/lol").hasAuthority("ADMIN")
+                //.antMatchers("/hello/**").hasAuthority("USER")
+                //.antMatchers("/lol").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/api-docs",
+        web.ignoring().antMatchers("/api-docs/**",
                 "/",
                 "/api-docs/swagger-config",
                 "/swagger-ui/**");

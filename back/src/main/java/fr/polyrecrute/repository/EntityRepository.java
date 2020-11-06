@@ -10,6 +10,5 @@ import fr.polyrecrute.models.Entity;
 @Repository
 public interface EntityRepository extends JpaRepository<Entity, Long> {
 	Optional<Entity> findByEmail(String email);
-
 	Boolean existsByEmail(String email);
 }

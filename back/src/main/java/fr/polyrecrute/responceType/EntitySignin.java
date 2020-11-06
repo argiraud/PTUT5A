@@ -11,16 +11,18 @@ public class EntitySignin {
     private String presentation;
     private Set<Role> roles;
     private boolean enable;
+    private String type;
     private String tokenJWT;
     private String tokenType = "Bearer";
 
-    public EntitySignin(Long id, String name, String email, String presentation, Set<Role> roles, boolean enable, String tokenJWT) {
+    public EntitySignin(Long id, String name, String email, String presentation, Set<Role> roles, boolean enable, String type, String tokenJWT) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.presentation = presentation;
         this.roles = roles;
         this.enable = enable;
+        this.type = type;
         this.tokenJWT = tokenJWT;
     }
 
@@ -54,5 +56,9 @@ public class EntitySignin {
 
     public String getPresentation() {
         return presentation;
+    }
+
+    public String getType() {
+        return type;
     }
 }
