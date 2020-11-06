@@ -9,9 +9,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @javax.persistence.Entity(name = "Entity")
 @Table(	name = "entity",
@@ -25,16 +22,12 @@ public class Entity implements UserDetails {
 	@Column(name = "entity_id")
 	private Long idEntity;
 
-	@NotBlank
 	@Column(length = 50)
 	private String name;
 
-	@NotBlank
 	@Column(length = 50)
-	@Email
 	private String email;
 
-	@NotBlank
 	@Column(length = 120)
 	@JsonIgnore
 	private String password;
@@ -42,7 +35,6 @@ public class Entity implements UserDetails {
 	@Column(length = 500)
 	private String presentation;
 
-	@NotBlank
 	private boolean enable;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -51,7 +43,7 @@ public class Entity implements UserDetails {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Company company;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(	name = "entity_role",
 				joinColumns = @JoinColumn(name = "entity_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -60,7 +52,7 @@ public class Entity implements UserDetails {
 	public Entity() {
 	}
 
-	public Entity(@NotBlank @Size(max = 50) String name, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(max = 120) String password, String presentation, @NotBlank boolean enable, Role role) {
+	public Entity(String name, String email, String password, String presentation, boolean enable, Role role) {
 		this.name = name;
 		this.email = email;
 		this.password = password;

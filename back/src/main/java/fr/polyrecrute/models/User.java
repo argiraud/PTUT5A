@@ -1,7 +1,6 @@
 package fr.polyrecrute.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,19 +16,15 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private fr.polyrecrute.models.Entity entity;
 
-    @NotBlank
     @Column(length = 50)
     private String firstName;
 
-    @NotBlank
     @Column(length = 8)
     private String etudiantNumber;
 
-    @NotBlank
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @NotBlank
     @Column(length = 10)
     private String status;
 
@@ -37,7 +32,7 @@ public class User {
     public User() {
     }
 
-    public User(@NotBlank String firstName, @NotBlank String etudiantNumber, @NotBlank Date birthDate, @NotBlank String status) {
+    public User(String firstName, String etudiantNumber, Date birthDate, String status) {
         this.firstName = firstName;
         this.etudiantNumber = etudiantNumber;
         this.birthDate = birthDate;
