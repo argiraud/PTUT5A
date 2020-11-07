@@ -72,7 +72,7 @@
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
 
-      <button>  Ajouter </button>
+      <button>   Ajouter </button>
     </div>
 
     <br>
@@ -137,12 +137,14 @@ export default {
       align: 'start',
       sortable: false,
       value: 'name',
-    }
+    },
+    { text: '', value: 'del' },
   ],
   doc: [
       //A COMPLETER
     {
       name: 'Mon CV.pdf',
+      del : false,
     },
   ],
 
