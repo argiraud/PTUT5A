@@ -79,6 +79,19 @@
 
     <br>
 
+    <v-data-table
+    :headers="headers"
+    :items="doc"
+    :items-per-page="5"
+    class="elevation-1"
+    >
+
+    </v-data-table>
+
+    <br>
+
+    <br>
+
     <v-btn
         :disabled="!valid"
         color="Valider"
@@ -95,6 +108,7 @@
 
 <script>
 export default {
+  props: ['isClick'],
   data: () => ({
     valid: true,
     name: '',
@@ -117,6 +131,23 @@ export default {
     presentation:'',
     file:''
   }),
+  headers: [
+    {
+      text: 'Nom du document',
+      align: 'start',
+      sortable: false,
+      value: 'name',
+    },
+    { text: '', value: 'del' },
+  ],
+  doc: [
+      //A COMPLETER
+    {
+      name: 'Mon CV.pdf',
+      del : false,
+    },
+  ],
+
   watch: {
     menu (val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
@@ -124,7 +155,9 @@ export default {
   },
   methods: {
     validate () {
-      this.$refs.form.validate()
+      this.$emit("step1-finish", "true")
+      this.$refs.form.validate();
+
     },
 
     handleFileUpload(){

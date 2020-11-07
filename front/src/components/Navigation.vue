@@ -69,6 +69,18 @@
           </v-list-item-icon>
           <v-list-item-title>Création du compte</v-list-item-title>
         </v-list-item>
+        <v-list-item to="Register">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Inscription</v-list-item-title>
+        </v-list-item>
+        <v-list-item to="Connexion">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Connexion</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>
