@@ -1,19 +1,23 @@
 <template>
   <div>
-    <h1> Depot offre d'apprentissage</h1>
+    <h1> Depot offre </h1>
 
     <br>
 
+    <div class="large-12 medium-12 small-12 cell">
+      <label> Document
+        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+      </label>
 
-    <v-btn large @click.stop="showScheduleForm=true" > Nouvelle offre </v-btn>
-    <AjoutOffre v-model="showScheduleForm" />
+      <button>  Ajouter </button>
+    </div>
 
     <br>
 
     <v-data-table
-        v-model="offers"
+        v-model="selected"
         :headers="headers"
-        :items="offers"
+        :items="offre"
         item-key="name"
         show-select
         :items-per-page="5"
@@ -22,19 +26,19 @@
       <template v-slot="props">
         <td>
           <v-checkbox
-              v-model="props.offers"
+              v-model="props.selected"
               primary
               hide-details
           ></v-checkbox>
         </td>
-        <td>{{ props.offre.name }}</td>
+        <td>{{ props.item.name }}</td>
       </template>
     </v-data-table>
 
     <br>
 
     <div>
-      <v-btn color="primary" @click="deleteItem"  :disabled='isDisabled' >Supprimer</v-btn>
+      <v-btn color="primary" @click="deleteItem">Supprimer</v-btn>
     </div>
 
     <br>
@@ -46,86 +50,50 @@
     >
       Valider
     </v-btn>
-
   </div>
 </template>
 
 <script>
-import AjoutOffre from "@/components/AjoutOffre";
-//import OfferDataService from "@/service/OfferDataService";
-import CompanyDataService from "@/service/CompanyDataService";
-
 export default {
 name: "DepotOffreForm",
-
-  components:{
-  AjoutOffre
-  },
   data () {
     return {
-      fileName: '',
-      showScheduleForm: false,
-      offers: [
-      ],
+      selected: [],
       headers: [
         {
           text: 'Nom du document',
           align: 'start',
           sortable: false,
-          value: 'title',
-        },
-        {
-          text: 'Mots clés',
-          value: 'keyWord',
-        },
-        {
-          text: 'Description',
-          value: 'description',
+          value: 'name',
         },
       ],
-
+      offre: [
+        {
+          name: 'CV.pdf',
+        },
+        {
+          name: 'Portfolio.pdf',
+        },
+      ],
     }
   },
 
   methods: {
-
     validate() {
       this.$emit("step2-finish", "true")
       this.$refs.form.validate();
 
     },
     deleteItem () {
-      if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
+      if(confirm('Are you sure you want to delete this item?')){
         for(var i = 0; i <this.selected.length; i++){
-          const index = this.offers.indexOf(this.selected[i]);
-          this.offers.splice(index, 1);
+          const index = this.desserts.indexOf(this.selected[i]);
+          this.desserts.splice(index, 1);
         }
       }
     },
-    add: function(item) {
-        this.offers.push(item);
-      },
-
-    APIGetOffer(){
-      let idEntity = window.sessionStorage.getItem("idEntity");
-      console.log("idEntity : " + idEntity)
-      CompanyDataService.get(idEntity).then(response => {
-        this.offers = response.data;
-      })
-          .catch(e => {
-            console.error(e);
-          })
-
-    }
-
   },
-
-  mounted: function() {
-    this.APIGetOffer()
-  },
-
 }
-
 </script>
 
 <style scoped>
