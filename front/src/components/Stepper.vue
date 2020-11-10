@@ -8,7 +8,7 @@
       <v-stepper-step :complete="currentStep > 3" step="3"> Saisie des voeux </v-stepper-step>
     </v-stepper-header>
     <v-stepper-content step="1" currentStep=1>
-      <AdminDonnee @step1-finish="updateMes"></AdminDonnee>
+      <Presentation @step1-finish="updateMes"></Presentation>
     </v-stepper-content>
     <v-stepper-content step="2" currentStep=2>
       <DepotOffre @step2-finish="updateMes2"></DepotOffre>
@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import AdminDonnee from '@/views/AdmiDonneeForm'
 import SaisieVoeux from '@/views/SaisieVoeuxForm'
 import DepotOffre from "@/views/DepotOffreForm";
+import Presentation from "@/components/Presentation";
 
 export default {
 name: "Stepper",
@@ -33,7 +33,7 @@ name: "Stepper",
     }
   },
   components :{
-    AdminDonnee,
+    Presentation,
     SaisieVoeux,
     DepotOffre
   },
