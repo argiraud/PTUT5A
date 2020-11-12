@@ -84,6 +84,18 @@
                 };
                 fetch("https://api.polyrecrute.tk/auth/company/signup", options).then(response => {
                     console.log(response);
+                    switch (response.status) {
+                        case 201 :
+                            // Alerte votre compte a bien été créer
+                            //redirige vers stepper 1
+                            break;
+                        case 400 :
+                            alert("Email ou nom trop long");
+                            break;
+                        case 409 :
+                            alert("L'Email existe déjà !");
+                            break;
+                    }
                     return response.json();
                 }).then(data => {
                     console.log(data);
