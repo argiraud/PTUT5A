@@ -72,8 +72,21 @@
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
 
-      <button>   Ajouter </button>
+      <button>  Ajouter </button>
     </div>
+
+    <br>
+
+    <br>
+
+    <v-data-table
+    :headers="headers"
+    :items="doc"
+    :items-per-page="5"
+    class="elevation-1"
+    >
+
+    </v-data-table>
 
     <br>
 
@@ -118,6 +131,21 @@ export default {
     presentation:'',
     file:''
   }),
+  headers: [
+    {
+      text: 'Nom du document',
+      align: 'start',
+      sortable: false,
+      value: 'name',
+    }
+  ],
+  doc: [
+      //A COMPLETER
+    {
+      name: 'Mon CV.pdf',
+    },
+  ],
+
   watch: {
     menu (val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
@@ -125,7 +153,7 @@ export default {
   },
   methods: {
     validate () {
-      this.$emit("message-sent", "true")
+      this.$emit("step1-finish", "true")
       this.$refs.form.validate();
 
     },
