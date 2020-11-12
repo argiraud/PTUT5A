@@ -10,7 +10,13 @@
       <v-toolbar-title>Ptut</v-toolbar-title>
       <v-spacer></v-spacer>
       <router-link to="/Connexion">
-      <v-btn >Se Connecter</v-btn>
+      <v-btn v-if="!isConnected">Se connecter</v-btn>
+      </router-link>
+      <router-link to="/adminDonnees">
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUsername}}</v-btn>
+      </router-link>
+      <router-link to="/Connexion">
+        <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut"><v-icon>exit_to_app</v-icon></v-btn>
       </router-link>
     </v-app-bar>
     <v-navigation-drawer
@@ -75,8 +81,7 @@
 </template>
 
 <script>
-// import {Slide} from 'vue-burger-menu'
-
+  import {mapState} from 'vuex';
 export default {
   name: 'home',
   components: {
@@ -85,11 +90,57 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
+    CurrentUser: {
+      UserId : null,
+      UserName : null,
+      UserRoleId : null,
+      UserToken : null
+    }
   }),
+  created(){
+      this.CurrentUser.UserId = window.sessionStorage.getItem("UserId");
+      this.CurrentUser.UserName = window.sessionStorage.getItem("UserName");
+      this.CurrentUser.UserRoleId = window.sessionStorage.getItem("UserRoleId");
+      this.CurrentUser.UserToken = window.sessionStorage.getItem("UserToken");
+      if(this.CurrentUser.UserId == '' || this.CurrentUser.UserId == null || this.CurrentUser.UserId === undefined ){
+        this.$store.commit('CONNEXION_MANAGEMENT', false);
+      }else{
+        this.$store.commit('CONNEXION_MANAGEMENT', true);
+      }
+      this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
+  },
   methods: {
+    LogOut(){
+      window.sessionStorage.clear();
+      this.CurrentUser.UserId = null;
+      this.CurrentUser.UserName = null;
+      this.CurrentUser.UserRoleId = null;
+      this.CurrentUser.UserToken = null;
+      this.$store.commit('CONNEXION_MANAGEMENT', false);
+      this.$store.commit('SET_CURRENTUSERNAME', '');
+      alert("Vous êtes déconnecté.")
+    },
+    forceRerender(){
+      console.log()
+      this.$forceUpdate();
+    }
+  },
+  watch: {
+    CurrentUsername: function(){
+
+    }
+  },
+  computed: {
+    ...mapState({
+      isConnected: 'isConnected',
+      currentUsername: 'currentUsername'
+    }),
   }
 }
 </script>
 
 <style>
+  a{
+    text-decoration: none;
+  }
 </style>

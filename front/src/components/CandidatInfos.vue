@@ -25,7 +25,6 @@
                     color="teal accent-3"
                     required
             ></v-text-field>
-
             <v-text-field
                     v-model="studentNumber"
                     id="studentNumber"
@@ -34,7 +33,40 @@
                     type="number"
                     label="N° Etudiant"
                     required
+                    prepend-inner-icon="confirmation_number"
             ></v-text-field>
+            <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                    prepend-inner-icon="calendar_today"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-text-field
+                            v-model="date"
+                            label="Date de naissance"
+                            readonly
+                            v-on="on"
+                            prepend-inner-icon="calendar_today"
+                    ></v-text-field>
+                </template>
+                <v-date-picker
+                        ref="picker"
+                        v-model="date"
+                        hint="MM/DD/YYYY format"
+                        persistent-hint
+                        :max="new Date().toISOString().substr(0, 10)"
+                        min="1950-01-01"
+                        @change="save"
+                        prepend-inner-icon="calendar_today"
+                ></v-date-picker>
+            </v-menu>
 
             <v-text-field
                     v-model="email"
@@ -88,7 +120,15 @@
             mdpRules: [
                 v => !!v || 'Le mot de passe est requis',
             ],
+            picker: new Date().toISOString().substr(0, 10),
+            menu: false,
+            date: null
         }),
+        watch: {
+            menu (val) {
+                val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+            }
+        },
 
         methods: {
             SignUp(){
@@ -115,6 +155,18 @@
                 };
                 fetch("https://api.polyrecrute.tk/auth/user/signup", options).then(response => {
                     console.log(response);
+                    switch (response.status) {
+                        case 201 :
+                        // Alerte votre compte a bien été créer
+                        //redirige vers stepper 1
+                            break;
+                        case 400 :
+                            alert("Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte");
+                            break;
+                        case 409 :
+                            alert("L'Email existe déjà !");
+                            break;
+                    }
                     return response.json();
                 }).then(data => {
                     console.log(data);

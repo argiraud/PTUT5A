@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
         <h3 class="text--center display-1 teal--text text--accent-3">Type de compte</h3>
     </v-row>
-    <v-row align="center" justify="center">
+    <v-row align="center" justify="center" style="margin-top: 1%; margin-bottom: 1%">
         <v-btn id="btnEntreprise" v-bind:outlined="!isEntreprise" rounded color="black" dark @click="changeUserType">Entreprise</v-btn>
         <v-btn id="btnCandidat" v-bind:outlined="isEntreprise" rounded color="black" dark @click="changeUserType">Candidat</v-btn>
     </v-row>
@@ -119,6 +119,7 @@
 <script>
 import EntrepriseInfos from "@/components/EntrepriseInfos"
 import CandidatInfos from "@/components/CandidatInfos"
+
 export default {
     name: 'ConnexionForm',
     components: {
@@ -140,7 +141,7 @@ export default {
         APISignIn(){
             let email = document.getElementById('emailConnexion').value.toString();
             let mdp = document.getElementById('mdpConnexion').value.toString();
-            let url = "https://api.polyrecrute.tk/auth/signin?mail="+email+"&password="+mdp;
+            let url = "https://api.polyrecrute.tk/auth/signin?email="+email+"&password="+mdp;
             fetch(url,{
                 method: "GET",
                 headers:{
@@ -149,10 +150,27 @@ export default {
             }).then(response => {
                 console.log("response : ")
                 console.log(response)
+                switch (response.status) {
+                    case 200 :
+                        console.log("case 200")
+                        response.json().then(respjson => {
+                            console.log("json id : " + respjson.id);
+                            window.sessionStorage.setItem("UserId",respjson.id);
+                            window.sessionStorage.setItem("UserName",respjson.name);
+                            window.sessionStorage.setItem("UserRoleId",respjson.roles[0].idRole);
+                            window.sessionStorage.setItem("UserToken", respjson.tokenJWT);
+                            this.$store.commit('CONNEXION_MANAGEMENT', true);
+                            this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
+                            alert("Connexion réussie");
+                            this.$router.push("/Home");
+
+                        })
+                        break;
+                    case 404 :
+                        alert("Email ou Mot de passe incorrecte !");
+                        break;
+                }
                 return response.json();
-            }).then(data => {
-                console.log("data : ")
-                console.log(data)
             }).catch(err => {
                 console.log("erreur : " + err);
             });

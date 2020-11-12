@@ -1,7 +1,7 @@
 <template>
   <v-stepper v-model="currentStep">
     <v-stepper-header>
-      <v-stepper-step :complete="currentStep > 1" step="1"> Création de compte </v-stepper-step>
+      <v-stepper-step :complete="currentStep > 1" step="1"> Finalisation du compte </v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step :complete="currentStep > 2" step="2"> Dépôt de documents </v-stepper-step>
       <v-divider></v-divider>
