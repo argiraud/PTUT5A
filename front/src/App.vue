@@ -21,7 +21,12 @@ export default {
   },
 
   data: () => ({
-    //
   }),
+  methods: {
+    forceRerender(){
+      console.log("force update");
+      this.$forceUpdate();
+    }
+  }
 };
 </script>
