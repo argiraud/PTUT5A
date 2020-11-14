@@ -6,10 +6,10 @@
 
     <div class="large-12 medium-12 small-12 cell">
       <label> Document
-        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+        <input type="file" id="file" ref="file" @change="selectedFile"/>
       </label>
 
-      <button>  Ajouter </button>
+      <v-btn color="primary" @click="add({name:files})">   Ajouter</v-btn>
     </div>
 
     <br>
@@ -31,7 +31,7 @@
               hide-details
           ></v-checkbox>
         </td>
-        <td>{{ props.item.name }}</td>
+        <td>{{ props.offre.name }}</td>
       </template>
     </v-data-table>
 
@@ -58,6 +58,7 @@ export default {
 name: "DepotOffreForm",
   data () {
     return {
+      files: '',
       selected: [],
       headers: [
         {
@@ -68,13 +69,8 @@ name: "DepotOffreForm",
         },
       ],
       offre: [
-        {
-          name: 'CV.pdf',
-        },
-        {
-          name: 'Portfolio.pdf',
-        },
       ],
+
     }
   },
 
@@ -84,15 +80,27 @@ name: "DepotOffreForm",
       this.$refs.form.validate();
 
     },
+    selectedFile(e) {
+      this.files = e.target.files;
+
+    },
     deleteItem () {
       if(confirm('Are you sure you want to delete this item?')){
         for(var i = 0; i <this.selected.length; i++){
-          const index = this.desserts.indexOf(this.selected[i]);
-          this.desserts.splice(index, 1);
+          const index = this.offre.indexOf(this.selected[i]);
+          this.offre.splice(index, 1);
         }
       }
     },
-  },
+    add: function(item) {
+        this.offre.push(item);
+      }
+    },
+    mounted: function() {
+      this.add({name:'CV.pdf'});
+      this.add({name:'Portfolio.pdf'});
+    },
+
 }
 </script>
 
