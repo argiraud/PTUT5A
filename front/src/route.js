@@ -15,7 +15,7 @@ export const routes = [
     {
         path: '/home',
         name: 'home',
-        component: Home
+        components: Home
     },
     {
         path: '/Profil/:id',
