@@ -56,7 +56,7 @@ public class AuthController {
 					@ApiResponse(responseCode = "400", description = "Email or name is too long", content = @Content),
 					@ApiResponse(responseCode = "409", description = "Email already exists", content = @Content) })
 	@PostMapping(value = "/company/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity companySignCompany( @RequestBody CompanySignup companySignup) {
+	public ResponseEntity companySignCompany(@RequestBody CompanySignup companySignup) {
 		companyService.registerEntity(companySignup);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}

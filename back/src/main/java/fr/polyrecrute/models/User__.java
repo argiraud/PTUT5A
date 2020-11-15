@@ -1,20 +1,22 @@
 package fr.polyrecrute.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 @javax.persistence.Entity(name = "User")
 @Table(name = "\"user\"")
-public class User {
+public class User__ {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "user_id")
-    private Long idUser;
+    private String idUser;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private fr.polyrecrute.models.Entity entity;
+    @OneToOne(targetEntity = Entity__.class, mappedBy = "user", fetch = FetchType.LAZY)
+    private Entity__ entity;
 
     @Column(length = 50)
     private String firstName;
@@ -29,21 +31,21 @@ public class User {
     private String status;
 
 
-    public User() {
+    public User__() {
     }
 
-    public User(String firstName, String etudiantNumber, Date birthDate, String status) {
+    public User__(String firstName, String etudiantNumber, Date birthDate, String status) {
         this.firstName = firstName;
         this.etudiantNumber = etudiantNumber;
         this.birthDate = birthDate;
         this.status = status;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public Entity getEntity() {
+    public Entity__ getEntity() {
         return entity;
     }
 
@@ -63,7 +65,7 @@ public class User {
         return status;
     }
 
-    public void setEntity(Entity entity) {
+    public void setEntity(Entity__ entity) {
         this.entity = entity;
     }
 }
