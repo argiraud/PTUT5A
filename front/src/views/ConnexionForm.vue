@@ -139,6 +139,7 @@ export default {
                 console.log(response)
                 switch (response.status) {
                     case 200 :
+                        console.log("case 200")
                         response.json().then(respjson => {
                             console.log("data : ")
                             console.log(respjson)
