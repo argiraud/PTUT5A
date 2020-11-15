@@ -9,7 +9,7 @@ export const routes = [
     {
         path: '/home',
         name: 'home',
-        components: Home
+        component: Home
     },
     {
         path: '/Connexion',
