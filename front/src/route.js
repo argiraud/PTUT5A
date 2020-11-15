@@ -2,6 +2,7 @@ import Home from '@/views/Home.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import NotFound from '@/views/NotFound.vue';
 import ConnexionForm from "@/views/ConnexionForm";
+import Navigation from "@/components/Navigation";
 import AdmiDonnee from "@/views/AdmiDonneeForm";
 import QuestionnaireSatisfaction from "@/views/QuestionnaireSatisfactionForm";
 import Profile from "@/views/Profile";
