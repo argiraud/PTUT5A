@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @javax.persistence.Entity(name = "Roles")
 @Table(name = "role")
-public class Role {
+public class Role__ {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,11 @@ public class Role {
 	@Column(length = 20)
 	private ERole name;
 
-	public Role() {
+	public Role__() {
 
 	}
 
-	public Role(ERole name) {
+	public Role__(ERole name) {
 		this.name = name;
 	}
 

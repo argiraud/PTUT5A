@@ -19,6 +19,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://idsvr.example.com/oauth/v2/oauth-anonymou
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
 
 server:
   port: 7777
@@ -32,10 +38,3 @@ springdoc:
     enabled: true
     path: /api-docs
   pathsToMatch: /**
-
-
-
-
-
-
-
