@@ -49,6 +49,7 @@
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
+                            id="birthDate"
                             v-model="date"
                             label="Date de naissance"
                             readonly
@@ -138,10 +139,11 @@
             APISignUp(){
                 const user = {
                     name: document.getElementById('name').value.toString(),
-                    firstname: document.getElementById('firstname').value.toString(),
-                    studentNumber: document.getElementById('studentNumber').value.toString(),
                     email: document.getElementById('emailInscription').value.toString(),
                     password: document.getElementById('mdpInscription').value.toString(),
+                    firstName: document.getElementById('firstname').value.toString(),
+                    etudiantNumber: document.getElementById('studentNumber').value.toString(),
+                    birthDate: document.getElementById('birthDate').value.toString()
                 };
                 const options = {
                     method: 'POST',
@@ -176,9 +178,6 @@
                             });
                             break;
                     }
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
                 }).catch(err => {
                     console.log(err);
                 });

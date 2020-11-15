@@ -148,7 +148,7 @@ export default {
                             window.sessionStorage.setItem("UserToken", respjson.tokenJWT);
                             this.$store.commit('CONNEXION_MANAGEMENT', true);
                             this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
-                            if(respjson.presentation == null){
+                            if(respjson.presentation == null || respjson.presentation == ""){
                                 this.$router.push("/creationCompte");
                             }else{
                                 this.$router.push("/home");
