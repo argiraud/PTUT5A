@@ -1,9 +1,6 @@
 package fr.polyrecrute.responceType;
 
-import fr.polyrecrute.models.Role;
-
 import java.util.Date;
-import java.util.Set;
 
 public class UserSignup extends EntitySignup {
 

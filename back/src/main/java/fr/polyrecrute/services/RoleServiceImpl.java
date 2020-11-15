@@ -1,7 +1,7 @@
 package fr.polyrecrute.services;
 
 import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Role;
+import fr.polyrecrute.models.Role__;
 import fr.polyrecrute.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findByName(ERole role){
-        Optional<Role> currentRole = roleRepository.findByName(role);
+    public Role__ findByName(ERole role){
+        Optional<Role__> currentRole = roleRepository.findByName(role);
         if (!currentRole.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found");
         }
@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findAll() {
+    public List<Role__> findAll() {
         return roleRepository.findAll();
     }
 }

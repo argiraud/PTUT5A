@@ -2,7 +2,7 @@ package fr.polyrecrute.security;
 
 import java.util.Date;
 
-import fr.polyrecrute.models.Entity;
+import fr.polyrecrute.models.Entity__;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class JwtUtils {
 
 	public String generateJwtToken(Authentication authentication) {
 
-		Entity entityPrincipal = (Entity) authentication.getPrincipal();
+		Entity__ entityPrincipal = (Entity__) authentication.getPrincipal();
 
 		int jwtExpirationMs = 86400000;
 		return Jwts.builder()
