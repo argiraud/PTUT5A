@@ -1,16 +1,11 @@
 <template>
 <v-container class="fill-height" fluid>
-    <v-snackbar v-model="snackbar" top>
+    <v-snackbar v-model="snackbarError" top color="red">
         {{Erreur}}
-        <template>
-            <v-btn
-                    color="red"
-                    text
-                    @click="snackbar = false"
-            >
-                Fermer
-            </v-btn>
-        </template>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbarSuccess" top color="success">
+        {{Message}}
     </v-snackbar>
     <v-row align="center" justify="center">
         <v-card class="elevation-12">
@@ -96,8 +91,8 @@
                                     <v-btn id="btnCandidat" v-bind:outlined="isEntreprise" rounded color="black" dark @click="changeUserType">Candidat</v-btn>
                                 </div>
                                 <h4 class="text-center mt-4">Vérifiez votre adresse mail pour finaliser l'inscription</h4>
-                                <EntrepriseInfos v-if="isEntreprise" @erreur-inscription="setSnackbar"></EntrepriseInfos>
-                                <CandidatInfos v-if="!isEntreprise" @erreur-inscription="setSnackbar"></CandidatInfos>
+                                <EntrepriseInfos v-if="isEntreprise" @erreur-inscription="setSnackbarError" @inscription-ok="setSnackbarSuccess"></EntrepriseInfos>
+                                <CandidatInfos v-if="!isEntreprise" @erreur-inscription="setSnackbarError" @inscription-ok="setSnackbarSuccess"></CandidatInfos>
                             </v-card-text>
                         </v-col>
                     </v-row>
@@ -145,44 +140,57 @@ export default {
                 switch (response.status) {
                     case 200 :
                         response.json().then(respjson => {
+                            console.log("data : ")
+                            console.log(respjson)
                             window.sessionStorage.setItem("UserId",respjson.id);
                             window.sessionStorage.setItem("UserName",respjson.name);
                             window.sessionStorage.setItem("UserRoleId",respjson.roles[0].idRole);
                             window.sessionStorage.setItem("UserToken", respjson.tokenJWT);
                             this.$store.commit('CONNEXION_MANAGEMENT', true);
                             this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
-                            this.$router.push("/creationCompte");
+                            if(respjson.presentation == null){
+                                this.$router.push("/creationCompte");
+                            }else{
+                                this.$router.push("/home");
+                            }
+
                         })
                         break;
                     case 404 :
                         this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbar = true;
+                        this.snackbarError = true;
                         break;
                     case 401 :
                         this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbar = true;
+                        this.snackbarError = true;
                         break;
                     case 500 :
                         this.Erreur = 'Problème du serveur : erreur 500';
-                        this.snackbar = true;
+                        this.snackbarError = true;
                         break;
 
                 }
-                return response.json();
             }).catch(err => {
                 console.log("erreur : " + err);
             });
         },
-        setSnackbar(payload){
-            this.snackbar = true;
+        setSnackbarError(payload){
+            this.snackbarError = true;
             this.Erreur = payload.message;
+        },
+        setSnackbarSuccess(payload){
+            this.step--;
+            this.snackbarSuccess = true;
+            this.Message = payload.message;
         }
      },
     data: () => ({
         valid: true,
         step: 1,
-        snackbar : false,
+        snackbarSuccess : false,
+        snackbarError : false,
         Erreur: '',
+        Message: '',
         isEntreprise: true,
         email: '',
         emailRules: [

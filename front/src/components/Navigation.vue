@@ -124,7 +124,6 @@ export default {
       this.CurrentUser.UserToken = null;
       this.$store.commit('CONNEXION_MANAGEMENT', false);
       this.$store.commit('SET_CURRENTUSERNAME', '');
-      alert("Vous êtes déconnecté.")
     },
     forceRerender(){
       console.log()

@@ -155,7 +155,10 @@
                     console.log(response);
                     switch (response.status) {
                         case 201 :
-                            this.$router.push("/creationCompte");
+                            this.$router.push("/Connexion");
+                            this.$emit('inscription-ok',{
+                                message: "Inscription réussie, veuillez vous connecter",
+                            });
                             break;
                         case 400 :
                             this.$emit('erreur-inscription',{
