@@ -36,13 +36,13 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item to="adminDonnees">
+          <v-list-item v-if="isConnected" to="adminDonnees">
             <v-list-item-icon>
               <v-icon>mdi-database-cog</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Administration des données</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home2">
+          <v-list-item v-if="isConnected" to="home2">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -50,38 +50,32 @@
               / de candidature
             </v-list-item-title>
           </v-list-item>
-          <v-list-item to="home3">
+          <v-list-item v-if="isConnected" to="home3">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home4">
+          <v-list-item v-if="isConnected" to="home4">
             <v-list-item-icon>
               <v-icon>mdi-calendar-month</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Planification d'entretiens</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home5">
+          <v-list-item v-if="isConnected" to="home5">
             <v-list-item-icon>
               <v-icon>mdi-desktop-mac-dashboard</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Tableau de bord</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
-        <v-list-item to="creationCompte">
+        <v-list-item v-if="isConnected" to="creationCompte">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Création du compte</v-list-item-title>
         </v-list-item>
-        <v-list-item to="Register">
-          <v-list-item-icon>
-            <v-icon>mdi-database-cog</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Inscription</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="Connexion">
+        <v-list-item v-if="!isConnected" to="Connexion">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>

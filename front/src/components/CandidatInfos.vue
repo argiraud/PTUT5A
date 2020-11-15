@@ -63,7 +63,6 @@
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
                         min="1950-01-01"
-                        @change="save"
                         prepend-inner-icon="calendar_today"
                 ></v-date-picker>
             </v-menu>
@@ -109,7 +108,7 @@
             studentNumber : '',
             studentNumberRules: [
                 //v => /.+@.+\..+/.test(v) || 'Le numéro étudiant doit être composé uniquement de chiffres',
-                v => (v.length == 8) || 'Le numéro étudiant est composé de 8 chiffres'
+                v => (v.length == 8 || v.length == 0) || 'Le numéro étudiant est composé de 8 chiffres'
             ],
             email: '',
             emailRules: [
@@ -133,7 +132,6 @@
         methods: {
             SignUp(){
                 if(this.$refs.form.validate()){
-                    alert("bite");
                     this.APISignUp();
                 }
             },
@@ -157,14 +155,22 @@
                     console.log(response);
                     switch (response.status) {
                         case 201 :
-                        // Alerte votre compte a bien été créer
-                        //redirige vers stepper 1
+                            this.$router.push("/creationCompte");
                             break;
                         case 400 :
-                            alert("Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte");
+                            this.$emit('erreur-inscription',{
+                                message: "Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte",
+                            });
                             break;
                         case 409 :
-                            alert("L'Email existe déjà !");
+                            this.$emit('erreur-inscription',{
+                                message: "L'Email existe déjà !",
+                            });
+                            break;
+                        case 500 :
+                            this.$emit('erreur-inscription',{
+                                message: "Problème du serveur : erreur 500",
+                            });
                             break;
                     }
                     return response.json();
