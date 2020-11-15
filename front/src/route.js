@@ -1,7 +1,6 @@
 import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
 import ConnexionForm from "@/views/ConnexionForm";
-import Navigation from "@/components/Navigation";
 import AdmiDonnee from "@/views/AdmiDonneeForm";
 import QuestionnaireSatisfaction from "@/views/QuestionnaireSatisfactionForm";
 
@@ -9,7 +8,7 @@ export const routes = [
     {
         path: '/home',
         name: 'home',
-        components: Home
+        component: Home
     },
     {
         path: '/Connexion',
