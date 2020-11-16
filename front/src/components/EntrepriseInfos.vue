@@ -86,19 +86,27 @@
                     console.log(response);
                     switch (response.status) {
                         case 201 :
-                            // Alerte votre compte a bien été créer
-                            //redirige vers stepper 1
+                            this.$router.push("/Connexion");
+                            this.$emit('inscription-ok',{
+                                message: "Inscription réussie, veuillez vous connecter",
+                            });
                             break;
                         case 400 :
-                            alert("Email ou nom trop long");
+                            this.$emit('erreur-inscription',{
+                                message: "Email ou nom trop long",
+                            });
                             break;
                         case 409 :
-                            alert("L'Email existe déjà !");
+                            this.$emit('erreur-inscription',{
+                                message: "L'Email existe déjà !",
+                            });
+                            break;
+                        case 500 :
+                            this.$emit('erreur-inscription',{
+                                message: "Problème du serveur : erreur 500",
+                            });
                             break;
                     }
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
                 }).catch(err => {
                         console.log(err);
                     });

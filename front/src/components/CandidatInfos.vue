@@ -49,6 +49,7 @@
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
+                            id="birthDate"
                             v-model="date"
                             label="Date de naissance"
                             readonly
@@ -63,7 +64,6 @@
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
                         min="1950-01-01"
-                        @change="save"
                         prepend-inner-icon="calendar_today"
                 ></v-date-picker>
             </v-menu>
@@ -109,7 +109,7 @@
             studentNumber : '',
             studentNumberRules: [
                 //v => /.+@.+\..+/.test(v) || 'Le numéro étudiant doit être composé uniquement de chiffres',
-                v => (v.length == 8) || 'Le numéro étudiant est composé de 8 chiffres'
+                v => (v.length == 8 || v.length == 0) || 'Le numéro étudiant est composé de 8 chiffres'
             ],
             email: '',
             emailRules: [
@@ -133,17 +133,17 @@
         methods: {
             SignUp(){
                 if(this.$refs.form.validate()){
-                    alert("bite");
                     this.APISignUp();
                 }
             },
             APISignUp(){
                 const user = {
                     name: document.getElementById('name').value.toString(),
-                    firstname: document.getElementById('firstname').value.toString(),
-                    studentNumber: document.getElementById('studentNumber').value.toString(),
                     email: document.getElementById('emailInscription').value.toString(),
                     password: document.getElementById('mdpInscription').value.toString(),
+                    firstName: document.getElementById('firstname').value.toString(),
+                    etudiantNumber: document.getElementById('studentNumber').value.toString(),
+                    birthDate: document.getElementById('birthDate').value.toString()
                 };
                 const options = {
                     method: 'POST',
@@ -157,19 +157,27 @@
                     console.log(response);
                     switch (response.status) {
                         case 201 :
-                        // Alerte votre compte a bien été créer
-                        //redirige vers stepper 1
+                            this.$router.push("/Connexion");
+                            this.$emit('inscription-ok',{
+                                message: "Inscription réussie, veuillez vous connecter",
+                            });
                             break;
                         case 400 :
-                            alert("Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte");
+                            this.$emit('erreur-inscription',{
+                                message: "Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte",
+                            });
                             break;
                         case 409 :
-                            alert("L'Email existe déjà !");
+                            this.$emit('erreur-inscription',{
+                                message: "L'Email existe déjà !",
+                            });
+                            break;
+                        case 500 :
+                            this.$emit('erreur-inscription',{
+                                message: "Problème du serveur : erreur 500",
+                            });
                             break;
                     }
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
                 }).catch(err => {
                     console.log(err);
                 });
