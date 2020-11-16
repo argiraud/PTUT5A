@@ -37,6 +37,12 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
+          <v-list-item v-if="isConnected" to="adminDonnees">
+            <v-list-item-icon>
+              <v-icon>mdi-database-cog</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="white-space: normal">Administration des données</v-list-item-title>
+          </v-list-item>
           <v-list-item v-if="isConnected" to="home2">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
