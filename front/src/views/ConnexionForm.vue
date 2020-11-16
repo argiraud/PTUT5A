@@ -1,12 +1,12 @@
 <template>
 <v-container class="fill-height" fluid>
-    <v-row align="center" justify="center">
-        <h3 class="text--center display-1 teal--text text--accent-3">Type de compte</h3>
-    </v-row>
-    <v-row align="center" justify="center" style="margin-top: 1%; margin-bottom: 1%">
-        <v-btn id="btnEntreprise" v-bind:outlined="!isEntreprise" rounded color="black" dark @click="changeUserType">Entreprise</v-btn>
-        <v-btn id="btnCandidat" v-bind:outlined="isEntreprise" rounded color="black" dark @click="changeUserType">Candidat</v-btn>
-    </v-row>
+    <v-snackbar v-model="snackbarError" top color="red">
+        {{Erreur}}
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbarSuccess" top color="success">
+        {{Message}}
+    </v-snackbar>
     <v-row align="center" justify="center">
         <v-card class="elevation-12">
             <v-window v-model="step">
@@ -85,27 +85,14 @@
                         </v-col>
                         <v-col cols="12" md="8">
                             <v-card-text class="mt-12">
-                                <h1 class="text--center display-2 teal--text text--accent-3">Créer un compte</h1>
+                                <h1 class="text-center display-2 teal--text text--accent-3">Créer un compte</h1>
                                 <div class="text-center mt-4">
-                                    <v-btn class="mx-2" fab color="black" outlined>
-                                        <v-icon>
-                                            fab fa-facebook
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn class="mx-2" fab color="black" outlined>
-                                        <v-icon>
-                                            fab fa-google-plus-g
-                                        </v-icon>
-                                    </v-btn>
-                                    <v-btn class="mx-2" fab color="black" outlined>
-                                        <v-icon>
-                                            fab fa-linkedin-in
-                                        </v-icon>
-                                    </v-btn>
+                                    <v-btn id="btnEntreprise" v-bind:outlined="!isEntreprise" rounded color="black" dark @click="changeUserType">Entreprise</v-btn>
+                                    <v-btn id="btnCandidat" v-bind:outlined="isEntreprise" rounded color="black" dark @click="changeUserType">Candidat</v-btn>
                                 </div>
                                 <h4 class="text-center mt-4">Vérifiez votre adresse mail pour finaliser l'inscription</h4>
-                                <EntrepriseInfos v-if="isEntreprise"></EntrepriseInfos>
-                                <CandidatInfos v-if="!isEntreprise"></CandidatInfos>
+                                <EntrepriseInfos v-if="isEntreprise" @erreur-inscription="setSnackbarError" @inscription-ok="setSnackbarSuccess"></EntrepriseInfos>
+                                <CandidatInfos v-if="!isEntreprise" @erreur-inscription="setSnackbarError" @inscription-ok="setSnackbarSuccess"></CandidatInfos>
                             </v-card-text>
                         </v-col>
                     </v-row>
@@ -152,33 +139,58 @@ export default {
                 console.log(response)
                 switch (response.status) {
                     case 200 :
-                        console.log("case 200")
                         response.json().then(respjson => {
-                            console.log("json id : " + respjson.id);
+                            console.log("data : ")
+                            console.log(respjson)
                             window.sessionStorage.setItem("UserId",respjson.id);
                             window.sessionStorage.setItem("UserName",respjson.name);
                             window.sessionStorage.setItem("UserRoleId",respjson.roles[0].idRole);
                             window.sessionStorage.setItem("UserToken", respjson.tokenJWT);
                             this.$store.commit('CONNEXION_MANAGEMENT', true);
                             this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
-                            alert("Connexion réussie");
-                            this.$router.push("/Home");
+                            if(respjson.presentation == null || respjson.presentation == ""){
+                                this.$router.push("/creationCompte");
+                            }else{
+                                this.$router.push("/home");
+                            }
 
                         })
                         break;
                     case 404 :
-                        alert("Email ou Mot de passe incorrecte !");
+                        this.Erreur = 'Email ou mot de passe incorrecte !';
+                        this.snackbarError = true;
                         break;
+                    case 401 :
+                        this.Erreur = 'Email ou mot de passe incorrecte !';
+                        this.snackbarError = true;
+                        break;
+                    case 500 :
+                        this.Erreur = 'Problème du serveur : erreur 500';
+                        this.snackbarError = true;
+                        break;
+
                 }
-                return response.json();
             }).catch(err => {
                 console.log("erreur : " + err);
             });
+        },
+        setSnackbarError(payload){
+            this.snackbarError = true;
+            this.Erreur = payload.message;
+        },
+        setSnackbarSuccess(payload){
+            this.step--;
+            this.snackbarSuccess = true;
+            this.Message = payload.message;
         }
      },
     data: () => ({
         valid: true,
         step: 1,
+        snackbarSuccess : false,
+        snackbarError : false,
+        Erreur: '',
+        Message: '',
         isEntreprise: true,
         email: '',
         emailRules: [
