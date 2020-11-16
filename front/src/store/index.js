@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isConnected : false,
-    currentUsername : ''
+    currentUsername : '',
+    currentUserRole : ''
   },
   mutations: {
     CONNEXION_MANAGEMENT(state, payload){
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     SET_CURRENTUSERNAME(state, payload){
       state.currentUsername = payload;
+    },
+    SET_CURRENTUSERROLE(state, payload) {
+      state.currentUserRole = payload;
     }
   },
   actions: {
