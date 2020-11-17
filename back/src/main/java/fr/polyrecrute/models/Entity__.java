@@ -148,6 +148,14 @@ public class Entity__ implements UserDetails {
 		this.company = company;
 	}
 
+	public Set<File__> getFiles() {
+		return files;
+	}
+
+	public void addFile(File__ file){
+		files.add(file);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -157,6 +165,4 @@ public class Entity__ implements UserDetails {
 		Entity__ entity = (Entity__) o;
 		return Objects.equals(idEntity, entity.idEntity);
 	}
-
-
 }

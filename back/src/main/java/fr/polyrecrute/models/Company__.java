@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import fr.polyrecrute.responceType.Entity;
+import fr.polyrecrute.responceType.Company;
 
 @javax.persistence.Entity(name = "Company")
 @Table(name = "company")
@@ -47,7 +47,11 @@ public class Company__ {
         return offers;
     }
 
-    public Entity getTransactionalObject() {
-        return new Entity(entity.getIdEntity(), entity.getName());
+    public Company getTransactionalObject() {
+        return new Company(idCompany, entity.getName());
+    }
+
+    public void addOffer(Offer__ offer){
+        offers.add(offer);
     }
 }
