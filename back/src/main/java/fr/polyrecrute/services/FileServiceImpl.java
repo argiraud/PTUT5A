@@ -45,6 +45,6 @@ public class FileServiceImpl implements FileService {
     @Transactional
     public File__ findById(String fileId) {
         return fileRepository.findByIdFile(fileId)
-                .orElseThrow(() -> {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found");});
+                .orElseThrow(() -> {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");});
     }
 }

@@ -35,6 +35,8 @@ public class Offer__ {
     @Column(length = 500)
     private String description;
 
+    private boolean validate;
+
     public Offer__() {
     }
 
@@ -43,6 +45,7 @@ public class Offer__ {
         this.title = title;
         this.keyWord = keyWord;
         this.description = description;
+        this.validate = false;
     }
 
     public String getIdOffer() {
@@ -69,11 +72,15 @@ public class Offer__ {
         return description;
     }
 
+    public boolean isValidate() {
+        return validate;
+    }
+
     public void addFile(File__ file){
         files.add(file);
     }
 
     public Offer getTransactionalObject() {
-        return new Offer(idOffer, company, files, title, keyWord, description);
+        return new Offer(idOffer, company, files, title, keyWord, description, validate);
     }
 }

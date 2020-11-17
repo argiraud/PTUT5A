@@ -9,16 +9,17 @@ import java.util.Set;
 public class Offer {
 
     private String idOffer;
-    private Entity company;
+    private Company company;
     private Set<File> files = new HashSet<>();
     private String title;
     private String keyWord;
     private String description;
+    private boolean validate;
 
     public Offer() {
     }
 
-    public Offer(String idOffer, Company__ pCompany, Set<File__> pFiles, String title, String keyWord, String description) {
+    public Offer(String idOffer, Company__ pCompany, Set<File__> pFiles, String title, String keyWord, String description, boolean validate) {
         this.idOffer = idOffer;
         this.company = pCompany.getTransactionalObject();
         for (File__ file: pFiles) {
@@ -27,13 +28,14 @@ public class Offer {
         this.title = title;
         this.keyWord = keyWord;
         this.description = description;
+        this.validate = validate;
     }
 
     public String getIdOffer() {
         return idOffer;
     }
 
-    public Entity getCompany() {
+    public Company getCompany() {
         return company;
     }
 
@@ -51,5 +53,9 @@ public class Offer {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean isValidate() {
+        return validate;
     }
 }

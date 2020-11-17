@@ -15,8 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -26,13 +28,15 @@ public class EntityServiceImpl implements EntityService {
     private final EntityRepository entityRepository;
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
+    private final FileService fileService;
 
     @Autowired
-    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService) {
         this.authenticationManager = authenticationManager;
         this.entityRepository = entityRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
+        this.fileService = fileService;
     }
 
     @Override
@@ -94,16 +98,17 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
+    @Transactional
     public EntityDetails getDetails(Entity__ entity) {
         EntityDetails entityDetails = null;
         if (entity.getCompany() != null){
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
-                    entity.getPresentation(),entity.getRoles(),entity.isEnabled(),
+                    entity.getPresentation(),entity.getRoles(),entity.getFiles(),entity.isEnabled(),
                     "","",null,"");
         }
         else{
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
-                    entity.getPresentation(),entity.getRoles(),entity.isEnabled(),
+                    entity.getPresentation(),entity.getRoles(),entity.getFiles(), entity.isEnabled(),
                     entity.getUser().getFirstName(),entity.getUser().getEtudiantNumber(),
                     entity.getUser().getBirthDate(),entity.getUser().getStatus());
         }
@@ -117,6 +122,13 @@ public class EntityServiceImpl implements EntityService {
         }
         tokenJwt =  tokenJwt.substring(7);
         return findByEmail(jwtUtils.getEmailFromJwtToken(tokenJwt));
+    }
+
+    @Override
+    public void storeFile(MultipartFile pFile, Entity__ entity) {
+        File__ file = fileService.storeFile(pFile, entity);
+        entity.addFile(file);
+        entityRepository.save(entity);
     }
 
 }

@@ -6,6 +6,7 @@ import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface EntityService {
 
@@ -16,4 +17,5 @@ public interface EntityService {
     Entity__ findByEmail(String email);
     EntityDetails getDetails(Entity__ entity);
     Entity__ getEntityFromToken(String tokenJwt);
+    void storeFile(MultipartFile pFile, Entity__ entity);
 }

@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService{
         userCreated.setEntity(entityCreated);
         userRepository.save(userCreated);
     }
+
+    @Override
+    public long countAll() {
+        return userRepository.count();
+    }
 }

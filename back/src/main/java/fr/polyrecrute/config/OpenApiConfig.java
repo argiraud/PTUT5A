@@ -37,7 +37,7 @@ import java.util.List;
         name = "Authorization",
         description = "Enter JWT Bearer token",
         type = SecuritySchemeType.HTTP,
-        scheme = "bearer",
+        scheme = "Bearer",
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER)
 public class OpenApiConfig {
