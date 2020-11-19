@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navigation style="margin-bottom: 100px"></Navigation>
+    <Navigation style="margin-bottom: 80px"></Navigation>
     <v-main>
       <router-view></router-view>
     </v-main>

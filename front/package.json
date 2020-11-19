@@ -10,6 +10,7 @@
     "start": "vue-cli-service serve --open"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.12",
     "vue-router": "^3.4.8",
@@ -25,7 +26,6 @@
     "@vue/cli-plugin-router": "^4.5.8",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0-0",
     "babel-eslint": "^10.1.0",
     "cache-loader": "^4.1.0",
     "eslint": "^6.7.2",
