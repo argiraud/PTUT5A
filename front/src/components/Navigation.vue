@@ -11,8 +11,8 @@
       <router-link to="/Connexion">
         <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
-      <router-link to="/adminDonnees">
-        <v-btn v-if="isConnected" style="margin-right: 5px">{{ currentUsername }}</v-btn>
+      <router-link to="/Profile">
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUserName}}</v-btn>
       </router-link>
       <router-link to="/Connexion">
         <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
@@ -36,12 +36,6 @@
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
-          </v-list-item>
-          <v-list-item v-if="isConnected" to="adminDonnees">
-            <v-list-item-icon>
-              <v-icon>mdi-database-cog</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Administration des données</v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isConnected" to="home2">
             <v-list-item-icon>
@@ -82,6 +76,12 @@
           </v-list-item-icon>
           <v-list-item-title>Connexion</v-list-item-title>
         </v-list-item>
+        <v-list-item v-if="isConnected" to="Profile">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Profile</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>
@@ -97,50 +97,27 @@ export default {
   },
   data: () => ({
     drawer: false,
-    group: null,
-    CurrentUser: {
-      UserId: null,
-      UserName: null,
-      UserRoleId: null,
-      UserToken: null
-    }
+    group: null
   }),
-  created() {
-    this.CurrentUser.UserId = window.sessionStorage.getItem("UserId");
-    this.CurrentUser.UserName = window.sessionStorage.getItem("UserName");
-    this.CurrentUser.UserRoleId = window.sessionStorage.getItem("UserRoleId");
-    this.CurrentUser.UserToken = window.sessionStorage.getItem("UserToken");
-    if (this.CurrentUser.UserId == '' || this.CurrentUser.UserId == null || this.CurrentUser.UserId === undefined) {
-      this.$store.commit('CONNEXION_MANAGEMENT', false);
-    } else {
-      this.$store.commit('CONNEXION_MANAGEMENT', true);
-    }
-    this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
+  created(){
+      if(window.sessionStorage.getItem("UserToken") == '' || window.sessionStorage.getItem("UserToken") == null || window.sessionStorage.getItem("UserToken") === undefined ){
+        this.$store.commit('CONNEXION_MANAGEMENT', false);
+      }else{
+        this.$store.commit('CONNEXION_MANAGEMENT', true);
+      }
+      console.log("created : " + window.sessionStorage.getItem("UserName"));
+      this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
   },
   methods: {
-    LogOut() {
+    LogOut(){
       window.sessionStorage.clear();
-      this.CurrentUser.UserId = null;
-      this.CurrentUser.UserName = null;
-      this.CurrentUser.UserRoleId = null;
-      this.CurrentUser.UserToken = null;
       this.$store.commit('CONNEXION_MANAGEMENT', false);
-      this.$store.commit('SET_CURRENTUSERNAME', '');
-    },
-    forceRerender() {
-      console.log()
-      this.$forceUpdate();
-    }
-  },
-  watch: {
-    CurrentUsername: function () {
-
     }
   },
   computed: {
     ...mapState({
       isConnected: 'isConnected',
-      currentUsername: 'currentUsername'
+      currentUserName : 'currentUserName'
     }),
   }
 }
