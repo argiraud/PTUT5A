@@ -1,9 +1,6 @@
 <template>
-        <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-        >
+    <v-container>
+        <v-form>
             <v-text-field
                     v-model="name"
                     :rules="nameRules"
@@ -89,16 +86,15 @@
                     color="teal accent-3"/>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
+                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="Save" dark :disabled="!valid">Enregistrer</v-btn>
             </div>
-
         </v-form>
+    </v-container>
 </template>
 
 <script>
-    import Authentification from "@/service/Authentification";
     export default {
-        name: 'CandidatInfos',
+        name: "ProfileCandidat",
         data: () => ({
             valid: true,
             name: '',
@@ -130,51 +126,68 @@
                 val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
             }
         },
-
-        methods: {
-            SignUp(){
-                if(this.$refs.form.validate()){
-                    this.APISignUp();
-                }
+        methods:{
+            save(){
+                console.log("Je sauvegarde les données en base");
             },
-            APISignUp(){
-                const user = {
-                    name: document.getElementById('name').value.toString(),
-                    email: document.getElementById('emailInscription').value.toString(),
-                    password: document.getElementById('mdpInscription').value.toString(),
-                    firstName: document.getElementById('firstname').value.toString(),
-                    etudiantNumber: document.getElementById('studentNumber').value.toString(),
-                    birthDate: document.getElementById('birthDate').value.toString()
-                };
-                Authentification.userSignUp(JSON.stringify(user)).then(response => {
-                    console.log(response);
+            beforeCreate(){
+                let url = "https://api.polyrecrute.tk/auth/userdetails?";
+                fetch(url,{
+                    method: "GET",
+                    headers:{
+                        "accept": "application/json"
+                    }
+                }).then(response => {
+                    console.log("response : ")
+                    console.log(response)
                     switch (response.status) {
-                        case 201 :
-                            this.$router.push("/Connexion");
-                            this.$emit('inscription-ok',{
-                                message: "Inscription réussie, veuillez vous connecter",
-                            });
+                        case 200 :
+                            console.log("case 200")
+                            response.json().then(respjson => {
+                                console.log("data : ")
+                                console.log(respjson)
+
+                                this.$store.commit('SET_SESSION_FROM_JSON', respjson);
+                                this.$store.commit('CONNEXION_MANAGEMENT', true);
+
+                                if(respjson.presentation == null || respjson.presentation == ""){
+                                    this.$router.push("/creationCompte");
+                                }else{
+                                    this.$router.push("/home");
+                                }
+                            })
                             break;
-                        case 400 :
-                            this.$emit('erreur-inscription',{
-                                message: "Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte",
-                            });
+                        case 404 :
+                            this.Erreur = 'Email ou mot de passe incorrecte !';
+                            this.snackbarError = true;
                             break;
-                        case 409 :
-                            this.$emit('erreur-inscription',{
-                                message: "L'Email existe déjà !",
-                            });
+                        case 401 :
+                            this.Erreur = 'Email ou mot de passe incorrecte !';
+                            this.snackbarError = true;
                             break;
                         case 500 :
-                            this.$emit('erreur-inscription',{
-                                message: "Problème du serveur : erreur 500",
-                            });
+                            this.Erreur = 'Problème du serveur : erreur 500';
+                            this.snackbarError = true;
                             break;
+
                     }
                 }).catch(err => {
-                    console.log(err);
+                    console.log("erreur : " + err);
                 });
-            }
+            },
+            data: () => ({
+                userInfos: {
+                    name: '',
+                    email: '',
+                    birthDate: '',
+                    presentation: ''
+                }
+            })
         },
+
     }
 </script>
+
+<style scoped>
+
+</style>
