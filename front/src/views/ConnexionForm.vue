@@ -143,19 +143,16 @@ export default {
                         response.json().then(respjson => {
                             console.log("data : ")
                             console.log(respjson)
-                            window.sessionStorage.setItem("UserId",respjson.id);
-                            window.sessionStorage.setItem("UserName",respjson.name);
-                            window.sessionStorage.setItem("UserRoleId",respjson.roles[0].idRole);
-                            window.sessionStorage.setItem("UserToken", respjson.tokenType +' '+ respjson.tokenJWT);
+
+                            this.$store.commit('SET_SESSION_FROM_JSON', respjson);
                             this.$store.commit('CONNEXION_MANAGEMENT', true);
-                            this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
-                            this.$store.commit('SET_CURRENTUSERROLE', window.sessionStorage.getItem("UserRoleId"));
+                            this.$store.commit('SET_CURRENTUSERNAME', respjson.name);
+
                             if(respjson.presentation == null || respjson.presentation == ""){
                                 this.$router.push("/creationCompte");
                             }else{
                                 this.$router.push("/home");
                             }
-
                         })
                         break;
                     case 404 :

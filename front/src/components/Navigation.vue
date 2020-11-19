@@ -12,7 +12,7 @@
         <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
       <router-link to="/Profile">
-        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUsername}}</v-btn>
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUserName}}</v-btn>
       </router-link>
       <router-link to="/Connexion">
         <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
@@ -103,28 +103,27 @@ export default {
   },
   data: () => ({
     drawer: false,
-    group: null,
+    group: null
   }),
   created(){
-      if(window.sessionStorage.getItem("UserName") == '' || window.sessionStorage.getItem("UserName") == null || window.sessionStorage.getItem("UserName") === undefined ){
+      if(window.sessionStorage.getItem("UserToken") == '' || window.sessionStorage.getItem("UserToken") == null || window.sessionStorage.getItem("UserToken") === undefined ){
         this.$store.commit('CONNEXION_MANAGEMENT', false);
       }else{
         this.$store.commit('CONNEXION_MANAGEMENT', true);
       }
       console.log("created : " + window.sessionStorage.getItem("UserName"));
-      this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
+      this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
   },
   methods: {
     LogOut(){
       window.sessionStorage.clear();
       this.$store.commit('CONNEXION_MANAGEMENT', false);
-      this.$store.commit('SET_CURRENTUSERNAME', '');
     }
   },
   computed: {
     ...mapState({
       isConnected: 'isConnected',
-      currentUsername: 'currentUsername'
+      currentUserName : 'currentUserName'
     }),
   }
 }
