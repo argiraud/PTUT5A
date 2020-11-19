@@ -1,9 +1,9 @@
 import http from "../http-common";
 
 class StudentDataService {
-    // getAll() {
-    //     return http.get("/users");
-    // }
+    getAll() {
+        return http.get("/users");
+    }
 
     count(){
         return http.get("/kpi/users");

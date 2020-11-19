@@ -29,61 +29,45 @@
 <script>
 
 import DashboardCard from "@/components/Dashboard/DashboardCard";
+import StudentDataService from "@/service/StudentDataService";
 
 export default {
   name: "DashboardEtudiant",
   components: {DashboardCard},
   data() {
     return {
+      students: [],
+      nbStudents: 0,
       headers: [
-        {
-          text: 'Nom',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        {text: 'Prenom', value: 'prenom'},
-        {text: 'Statut', value: 'statut'},
-      ],
-      etudiants: [
-        {
-          name: 'Baudin',
-          prenom: 'Maxime',
-          statut: 'Disponible'
-        },
-        {
-          name: 'Giroud',
-          prenom: 'Olivier',
-          statut: 'En contact'
-        },
-        {
-          name: 'Blaise',
-          prenom: 'Matuidi',
-          statut: 'Terminé'
-        },
-        {
-          name: 'Baudin',
-          prenom: 'Maxime',
-          statut: 'Disponible'
-        },
-        {
-          name: 'Baudin',
-          prenom: 'Maxime',
-          statut: 'Disponible'
-        },
-        {
-          name: 'Baudin',
-          prenom: 'Maxime',
-          statut: 'Disponible'
-        },
-        {
-          name: 'Baudin',
-          prenom: 'Maxime',
-          statut: 'Disponible'
-        },
+        {text: "Id", align: "start", value: "idEntity", sortable: true},
+        {text: "Nom", value: "name", sortable: true},
       ],
     }
   },
+  methods: {
+    getAllStudents() {
+      StudentDataService.getAll()
+          .then(response => {
+            this.students = response.data;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
+    countStudents() {
+      StudentDataService.count()
+          .then(response => {
+            this.nbStudents = response.data;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    }
+  },
+  mounted() {
+    this.getAllStudents();
+    this.countStudents();
+  }
 }
 </script>
 
