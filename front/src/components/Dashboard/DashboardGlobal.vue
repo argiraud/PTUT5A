@@ -40,7 +40,7 @@ export default {
     countCompanies() {
       CompanyDataService.count()
           .then(response => {
-            this.nbCompanies = response.data;
+            this.nbCompanies = response.data.response;
           })
           .catch(e => {
             console.error(e);
@@ -49,7 +49,7 @@ export default {
     countStudents() {
       CompanyDataService.count()
           .then(response => {
-            this.nbStudents = response.data;
+            this.nbStudents = response.data.response;
           })
           .catch(e => {
             console.error(e);

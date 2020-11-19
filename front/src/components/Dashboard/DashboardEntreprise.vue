@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-account" title="Entreprises" v-bind:text="nbCompanies"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="28"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="0"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -47,7 +47,7 @@ export default {
     getAllCompanies() {
       CompanyDataService.getAll()
           .then(response => {
-            this.companies = response.data;
+            this.companies = response.data.response;
           })
           .catch(e => {
             console.error(e);
@@ -56,7 +56,7 @@ export default {
     countCompanies() {
       CompanyDataService.count()
           .then(response => {
-            this.nbCompanies = response.data;
+            this.nbCompanies = response.data.response;
           })
           .catch(e => {
             console.error(e);

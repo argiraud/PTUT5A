@@ -2,14 +2,14 @@
   <v-container>
     <v-row>
       <v-col>
-        <DashboardCard color="blue" icon="mdi-account" title="Offres" text="28"></DashboardCard>
+        <DashboardCard color="blue" icon="mdi-account" title="Offres" text="0"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="28"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="0"></DashboardCard>
       </v-col>
       <v-col>
         <DashboardCard color="orange" icon="mdi-account" title="Offres à valider"
-                       text="28"></DashboardCard>
+                       text="0"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
