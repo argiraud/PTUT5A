@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/front/src/service/Authentification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/CandidatInfos.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/CandidatInfos.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/EntrepriseInfos.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/EntrepriseInfos.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/http-common.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/http-common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" afterDir="false" />
-    </list>
+    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/front/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,10 +20,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/src/views/ConnexionForm.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="145" column="65" lean-forward="true" selection-start-line="145" selection-start-column="65" selection-end-line="145" selection-end-column="65" />
+            <state relative-caret-position="2431">
+              <caret line="149" column="30" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
               <folding>
                 <element signature="e#6142#6200#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front/src/store/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,7 +62,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/src/components/EntrepriseInfos.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
+            <state relative-caret-position="1309">
               <caret line="77" column="46" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="46" />
             </state>
           </provider>
@@ -68,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/src/components/CandidatInfos.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
+            <state relative-caret-position="2550">
               <caret line="150" column="46" selection-start-line="150" selection-start-column="46" selection-end-line="150" selection-end-column="46" />
             </state>
           </provider>
@@ -86,28 +89,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/src/components/ProfileCandidat.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
+            <state relative-caret-position="3179">
               <caret line="187" column="5" selection-start-line="187" selection-start-column="5" selection-end-line="187" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/src/components/Navigation.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-              <folding>
-                <element signature="n#style#0;n#v-btn#0;n#router-link#1;n#v-app-bar#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-btn#0;n#router-link#2;n#v-app-bar#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h1#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#0;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#2;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#3;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#4;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#5;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="748">
+              <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -161,6 +153,56 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="store" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -222,56 +264,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WSPTUT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WSPTUT" type="462c0819:PsiDirectoryNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -325,7 +317,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12981000" />
+    <option name="totallyTimeSpent" value="13150000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -338,9 +330,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18914647" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18914647" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -352,7 +343,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49367756" weight="0.219935" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4910432" visible="true" weight="0.23943663" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.4910432" visible="true" weight="0.23943663" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5089568" side_tool="true" weight="0.23943663" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -396,6 +387,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1605630346534">
@@ -442,8 +437,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/store/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+        <state relative-caret-position="221">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -497,7 +492,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/components/ProfileCandidat.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
+        <state relative-caret-position="3179">
           <caret line="187" column="5" selection-start-line="187" selection-start-column="5" selection-end-line="187" selection-end-column="5" />
         </state>
       </provider>
@@ -511,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/views/ConnexionForm.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="145" column="65" lean-forward="true" selection-start-line="145" selection-start-column="65" selection-end-line="145" selection-end-column="65" />
+        <state relative-caret-position="2431">
+          <caret line="149" column="30" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
           <folding>
             <element signature="e#6142#6200#0" expanded="true" />
           </folding>
@@ -521,7 +516,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/components/EntrepriseInfos.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
+        <state relative-caret-position="1309">
           <caret line="77" column="46" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="46" />
         </state>
       </provider>
@@ -531,26 +526,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/components/CandidatInfos.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
+        <state relative-caret-position="2550">
           <caret line="150" column="46" selection-start-line="150" selection-start-column="46" selection-end-line="150" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front/src/components/Navigation.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-          <folding>
-            <element signature="n#style#0;n#v-btn#0;n#router-link#1;n#v-app-bar#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-btn#0;n#router-link#2;n#v-app-bar#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h1#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#0;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#2;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#3;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#4;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-list-item-title#0;n#v-list-item#5;n#v-list-item-group#0;n#v-list#0;n#v-navigation-drawer#0;n#header#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="748">
+          <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
         </state>
       </provider>
     </entry>
