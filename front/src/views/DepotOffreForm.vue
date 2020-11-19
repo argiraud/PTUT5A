@@ -4,15 +4,6 @@
 
     <br>
 
-    <div class="large-12 medium-12 small-12 cell">
-      <label> Document
-        <input type="file" id="file" ref="file" @change="onFileChange"/>
-      </label>
-
-      <v-btn color="primary" @click="AddDoc">   Ajouter</v-btn>
-    </div>
-
-    <br>
 
     <v-btn large @click.stop="showScheduleForm=true" > Nouvelle offre </v-btn>
     <AjoutOffre v-model="showScheduleForm" />
@@ -69,7 +60,6 @@ name: "DepotOffreForm",
   },
   data () {
     return {
-      filesObj:{},
       fileName: '',
       showScheduleForm: false,
       selected: [],
@@ -80,6 +70,14 @@ name: "DepotOffreForm",
           sortable: false,
           value: 'name',
         },
+        {
+          text: 'Mots clés',
+          value: 'keyword',
+        },
+        {
+          text: 'Description',
+          value: 'description',
+        },
       ],
       offre: [
       ],
@@ -88,59 +86,11 @@ name: "DepotOffreForm",
   },
 
   methods: {
-    AddDoc(){
-      this.APIAddDocument();
-    },
-    APIAddDocument(){
-      const offer = {
-        file: this.filesObj,
-        idOffer: window.sessionStorage.getItem("idOffer"),
-      };
-      alert(window.sessionStorage.getItem("idOffer"));
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(offer),
-        headers: {
-          "accept": "*/*",
-          "Authorization": window.sessionStorage.getItem("UserToken"),
-          "Content-Type": "application/json"
-        }
-      };
-      fetch("https://api.polyrecrute.tk/company/offer/uploadFile", options).then(response => {
-        console.log(response);
-        switch (response.status) {
-          case 201 :
-            // Alerte votre compte a bien été créer
-            //redirige vers stepper 1
-            alert("Ajout du document effectuée");
-            break;
-          case 400 :
-            alert("Title, key word or description is too long");
-            break;
-          case 401 :
-            alert("Authentification error");
-            break;
-          case 403:
-            alert("No sufficient right");
-            break;
-        }
-        return response.json();
-      }).then(data => {
-        console.log(data);
-      }).catch(err => {
-        console.log(err);
-      });
-    },
+
     validate() {
       this.$emit("step2-finish", "true")
       this.$refs.form.validate();
 
-    },
-    onFileChange(event){
-      let fileData =  event.target.files[0];
-      this.filesObj = fileData;
-      console.log('file Object:==>',this.filesObj);
-      this.fileName=fileData.name;
     },
     deleteItem () {
       if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
@@ -151,13 +101,88 @@ name: "DepotOffreForm",
       }
     },
     add: function(item) {
-        alert("test");
-        this.APIAddDocument();
         this.offre.push(item);
+      },
+
+    APIGetOffer(){
+      let idEntity = window.sessionStorage.getItem("idEntity");
+      let url = "https://api.polyrecrute.tk/company/"+idEntity+"/offers";
+      fetch(url,{
+        method: "GET",
+        headers:{
+          "accept": "application/json",
+          "Authorization": window.sessionStorage.getItem("UserToken"),
+        }
+      }).then(response => {
+        console.log("response : ")
+        console.log(response)
+        switch (response.status) {
+          case 201 :
+            console.log("case 201")
+            response.json().then(respjson => {
+              for (let pas = 0; pas < respjson.length; pas++){
+                this.add({name:respjson[pas].title, keyword:respjson[pas].keyWord, description:respjson[pas].description});
+              }
+
+            })
+            break;
+          case 401 :
+            alert("Authentification error");
+            break;
+          case 403 :
+            alert("No sufficient right");
+            break;
+          case 404 :
+            alert("Company not found");
+            break;
+        }
+        return response.json();
+      }).catch(err => {
+        console.log("erreur : " + err);
+      });
+    },
+
+
+  APIGetCompany(){
+    let url = "https://api.polyrecrute.tk/companies";
+    fetch(url,{
+      method: "GET",
+      headers:{
+        "accept": "application/json",
+        "Authorization": window.sessionStorage.getItem("UserToken"),
       }
-    },
-    mounted: function() {
-    },
+    }).then(response => {
+      console.log("response : ")
+      console.log(response)
+      switch (response.status) {
+        case 200 :
+          console.log("case 200")
+          response.json().then(respjson => {
+            console.log("json " + respjson);
+            window.sessionStorage.setItem("idEntity",respjson[0].idEntity);
+
+          })
+          break;
+        case 401 :
+          alert("Authentification error");
+          break;
+          case 403:
+            alert("No sufficient right");
+            break;
+      }
+      return response.json();
+    }).catch(err => {
+      console.log("erreur : " + err);
+    });
+  },
+
+  },
+
+  mounted: function() {
+    this.APIGetCompany();
+    this.APIGetOffer()
+  },
+
 }
 
 </script>
