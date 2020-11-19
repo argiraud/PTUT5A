@@ -37,3 +37,5 @@ Il faut d'abord avoir poussé les changements sur sa branche
 
 Ensuite sur [Github](https://github.com/MatthieuBalmont/PTUT5A/pulls)
 
+Suivre le tuto [PullRequest](./githubPullRequest.pdf)
+
