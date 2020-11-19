@@ -42,6 +42,7 @@
 </template>
 
 <script>
+    import Authentification from "@/service/Authentification";
     export default {
         name: 'EntrepriseInfos',
         data: () => ({
@@ -74,15 +75,7 @@
                     email: document.getElementById('emailInscription').value.toString(),
                     password: document.getElementById('mdpInscription').value.toString(),
                 };
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(user),
-                    headers: {
-                        "accept": "*/*",
-                        "Content-Type": "application/json"
-                    }
-                };
-                fetch("https://api.polyrecrute.tk/auth/company/signup", options).then(response => {
+                Authentification.companySignUp(JSON.stringify(user)).then(response => {
                     console.log(response);
                     switch (response.status) {
                         case 201 :

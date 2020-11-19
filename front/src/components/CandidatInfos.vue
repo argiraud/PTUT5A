@@ -96,6 +96,7 @@
 </template>
 
 <script>
+    import Authentification from "@/service/Authentification";
     export default {
         name: 'CandidatInfos',
         data: () => ({
@@ -145,15 +146,7 @@
                     etudiantNumber: document.getElementById('studentNumber').value.toString(),
                     birthDate: document.getElementById('birthDate').value.toString()
                 };
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(user),
-                    headers: {
-                        "accept": "*/*",
-                        "Content-Type": "application/json"
-                    }
-                };
-                fetch("https://api.polyrecrute.tk/auth/user/signup", options).then(response => {
+                Authentification.userSignUp(JSON.stringify(user)).then(response => {
                     console.log(response);
                     switch (response.status) {
                         case 201 :
