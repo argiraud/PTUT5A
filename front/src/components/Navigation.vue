@@ -6,17 +6,18 @@
         fixed
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
       <v-toolbar-title>Ptut</v-toolbar-title>
       <v-spacer></v-spacer>
       <router-link to="/Connexion">
-      <v-btn v-if="!isConnected">Se connecter</v-btn>
+        <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
       <router-link to="/adminDonnees">
-        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUsername}}</v-btn>
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{ currentUsername }}</v-btn>
       </router-link>
       <router-link to="/Connexion">
-        <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut"><v-icon>exit_to_app</v-icon></v-btn>
+        <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
+          <v-icon>exit_to_app</v-icon>
+        </v-btn>
       </router-link>
     </v-app-bar>
     <v-navigation-drawer
@@ -87,7 +88,8 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+import {mapState} from 'vuex';
+
 export default {
   name: 'home',
   components: {
@@ -97,26 +99,26 @@ export default {
     drawer: false,
     group: null,
     CurrentUser: {
-      UserId : null,
-      UserName : null,
-      UserRoleId : null,
-      UserToken : null
+      UserId: null,
+      UserName: null,
+      UserRoleId: null,
+      UserToken: null
     }
   }),
-  created(){
-      this.CurrentUser.UserId = window.sessionStorage.getItem("UserId");
-      this.CurrentUser.UserName = window.sessionStorage.getItem("UserName");
-      this.CurrentUser.UserRoleId = window.sessionStorage.getItem("UserRoleId");
-      this.CurrentUser.UserToken = window.sessionStorage.getItem("UserToken");
-      if(this.CurrentUser.UserId == '' || this.CurrentUser.UserId == null || this.CurrentUser.UserId === undefined ){
-        this.$store.commit('CONNEXION_MANAGEMENT', false);
-      }else{
-        this.$store.commit('CONNEXION_MANAGEMENT', true);
-      }
-      this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
+  created() {
+    this.CurrentUser.UserId = window.sessionStorage.getItem("UserId");
+    this.CurrentUser.UserName = window.sessionStorage.getItem("UserName");
+    this.CurrentUser.UserRoleId = window.sessionStorage.getItem("UserRoleId");
+    this.CurrentUser.UserToken = window.sessionStorage.getItem("UserToken");
+    if (this.CurrentUser.UserId == '' || this.CurrentUser.UserId == null || this.CurrentUser.UserId === undefined) {
+      this.$store.commit('CONNEXION_MANAGEMENT', false);
+    } else {
+      this.$store.commit('CONNEXION_MANAGEMENT', true);
+    }
+    this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
   },
   methods: {
-    LogOut(){
+    LogOut() {
       window.sessionStorage.clear();
       this.CurrentUser.UserId = null;
       this.CurrentUser.UserName = null;
@@ -125,13 +127,13 @@ export default {
       this.$store.commit('CONNEXION_MANAGEMENT', false);
       this.$store.commit('SET_CURRENTUSERNAME', '');
     },
-    forceRerender(){
+    forceRerender() {
       console.log()
       this.$forceUpdate();
     }
   },
   watch: {
-    CurrentUsername: function(){
+    CurrentUsername: function () {
 
     }
   },
@@ -145,7 +147,7 @@ export default {
 </script>
 
 <style>
-  a{
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+}
 </style>

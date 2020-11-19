@@ -1,7 +1,7 @@
 import App from './App.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router';
-import { routes } from './route';
+import {routes} from './route';
 import vuetify from './plugins/vuetify';
 import store from './store'
 
@@ -16,7 +16,7 @@ const router = new VueRouter({
             return savedPosition;
         }
         if (to.hash) {
-            return { selector: to.hash };
+            return {selector: to.hash};
         }
         return {x: 0, y: 0};
     }

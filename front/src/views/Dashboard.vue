@@ -10,8 +10,8 @@
       <v-tabs-slider color="yellow"></v-tabs-slider>
 
       <v-tab
-          v-for="item in items"
-          :key="item"
+          v-for="(item, index) in items"
+          :key="index"
       >
         {{ item.tab }}
       </v-tab>
@@ -19,10 +19,10 @@
 
     <v-tabs-items v-model="tabs">
       <v-tab-item
-          v-for="tabItem in items"
-          :key="tabItem"
+          v-for="(item, index) in items"
+          :key="index"
       >
-        <component v-bind:is="tabItem.component"></component>
+        <component v-bind:is="item.component"></component>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -32,6 +32,7 @@
 import DashboardGlobal from "@/components/Dashboard/DashboardGlobal";
 import DashboardEntreprise from "@/components/Dashboard/DashboardEntreprise";
 import DashboardEtudiant from "@/components/Dashboard/DashboardEtudiant";
+import DashboardOffre from "@/components/Dashboard/DashboardOffre";
 
 export default {
   name: 'dashboard',
@@ -41,7 +42,8 @@ export default {
       tabs: null,
       items: [
         {tab: 'Global', component: DashboardGlobal},
-        {tab: 'Entreprise', component: DashboardEntreprise},
+        {tab: 'Offres', component: DashboardOffre},
+        {tab: 'Entreprises', component: DashboardEntreprise},
         {tab: 'Etudiants', component: DashboardEtudiant},
       ],
     }
