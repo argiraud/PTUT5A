@@ -21,7 +21,7 @@ public class Company__ {
     @OneToOne(targetEntity = Entity__.class, mappedBy = "company", fetch = FetchType.LAZY)
     private Entity__ entity;
 
-    @OneToMany(targetEntity= Offer__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY	)
+    @OneToMany(targetEntity= Offer__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Offer__> offers = new HashSet<>();
 
     public Company__() {
@@ -48,10 +48,14 @@ public class Company__ {
     }
 
     public Company getTransactionalObject() {
-        return new Company(idCompany, entity.getName());
+        return new Company(entity.getIdEntity(), entity.getName());
     }
 
     public void addOffer(Offer__ offer){
         offers.add(offer);
+    }
+
+    public void deleteoffer(Offer__ offer){
+        offers.remove(offer);
     }
 }

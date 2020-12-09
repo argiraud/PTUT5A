@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,14 +31,16 @@ public class EntityServiceImpl implements EntityService {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
     private final FileService fileService;
+    private final RoleService roleService;
 
     @Autowired
-    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService) {
+    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService, RoleService roleService) {
         this.authenticationManager = authenticationManager;
         this.entityRepository = entityRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.fileService = fileService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -129,6 +133,22 @@ public class EntityServiceImpl implements EntityService {
         File__ file = fileService.storeFile(pFile, entity);
         entity.addFile(file);
         entityRepository.save(entity);
+    }
+
+    @Override
+    public long countAllStudents() {
+        return entityRepository.countAllByUserIsNotNullAndRolesNotContains(roleService.findByName(ERole.ADMIN));
+    }
+
+    @Override
+    public List<User__> getAllStudents() {
+
+        List<Entity__> entities = entityRepository.findAllByUserIsNotNullAndRolesNotContains(roleService.findByName(ERole.ADMIN));
+        List<User__> users = new ArrayList<User__>();
+        for (Entity__ entity : entities){
+            users.add(entity.getUser());
+        }
+        return users;
     }
 
 }

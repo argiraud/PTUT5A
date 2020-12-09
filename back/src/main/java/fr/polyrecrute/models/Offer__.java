@@ -35,6 +35,9 @@ public class Offer__ {
     @Column(length = 500)
     private String description;
 
+    @Column(length = 10)
+    private String state;
+
     private boolean validate;
 
     public Offer__() {
@@ -46,6 +49,7 @@ public class Offer__ {
         this.keyWord = keyWord;
         this.description = description;
         this.validate = false;
+        this.state = null;
     }
 
     public String getIdOffer() {
@@ -81,6 +85,14 @@ public class Offer__ {
     }
 
     public Offer getTransactionalObject() {
-        return new Offer(idOffer, company, files, title, keyWord, description, validate);
+        return new Offer(idOffer, company, files, title, keyWord, description, state, validate);
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

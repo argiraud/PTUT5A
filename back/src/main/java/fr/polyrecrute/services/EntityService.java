@@ -8,6 +8,9 @@ import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.parser.Entity;
+import java.util.List;
+
 public interface EntityService {
 
     Entity__ findByUserId(Long id);
@@ -18,4 +21,6 @@ public interface EntityService {
     EntityDetails getDetails(Entity__ entity);
     Entity__ getEntityFromToken(String tokenJwt);
     void storeFile(MultipartFile pFile, Entity__ entity);
+    long countAllStudents();
+    List<User__> getAllStudents();
 }

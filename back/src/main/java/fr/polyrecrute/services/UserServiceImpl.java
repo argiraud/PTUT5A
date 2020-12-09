@@ -2,15 +2,20 @@ package fr.polyrecrute.services;
 
 import fr.polyrecrute.models.ERole;
 import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.models.Offer__;
 import fr.polyrecrute.models.User__;
 import fr.polyrecrute.repository.UserRepository;
+import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.User;
 import fr.polyrecrute.responceType.UserSignup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -43,7 +48,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public long countAll() {
-        return userRepository.count();
+    public List<User> getTransactionalObjectList(List<User__> pUsers) {
+        List<User> users = new ArrayList<>();
+        for (User__ user : pUsers){
+            users.add(user.getTransactionalObject());
+        }
+        return users;
     }
 }

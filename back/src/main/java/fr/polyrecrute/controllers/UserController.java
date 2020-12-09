@@ -44,7 +44,7 @@ public class UserController {
                     @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
     @GetMapping(value = "/user/details", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EntityDetails> userDetails(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
-        return new ResponseEntity<>(entityService.getDetails(entityService.getEntityFromToken(token)) , HttpStatus.OK);
+        return new ResponseEntity(entityService.getDetails(entityService.getEntityFromToken(token)) , HttpStatus.OK);
     }
 
     @Operation(summary = "Entity upload a file", description = "",
@@ -65,13 +65,12 @@ public class UserController {
                     @ApiResponse(responseCode = "201", description = "Files was upload", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
                     @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
                     @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content) })
-    @PostMapping(value = "/user/offer/uploadMultipleFiles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user/uploadMultipleFiles", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ResponseEntity> uploadMultipleFilesOffer(@RequestParam("files") MultipartFile[] files,
                                                          @Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
         return Arrays.stream(files)
                 .map(file -> uploadFile(file, token))
                 .collect(Collectors.toList());
     }
-
 
 }

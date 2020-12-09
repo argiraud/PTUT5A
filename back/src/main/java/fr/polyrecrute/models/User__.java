@@ -1,5 +1,7 @@
 package fr.polyrecrute.models;
 
+import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -65,7 +67,11 @@ public class User__ {
         return status;
     }
 
-    public void setEntity(Entity__ entity) {
+    public void setEntity(Entity__ entity){
         this.entity = entity;
+    }
+
+    public User getTransactionalObject() {
+        return new User(entity.getIdEntity(), entity.getName(), entity.getEmail(), entity.getPresentation(), firstName);
     }
 }

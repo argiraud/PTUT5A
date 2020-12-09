@@ -17,18 +17,16 @@ import java.util.List;
 @Service
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
-    private final CompanyService companyService;
     private final FileService fileService;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, CompanyService companyService, FileService fileService) {
+    public OfferServiceImpl(OfferRepository offerRepository, FileService fileService) {
         this.offerRepository = offerRepository;
-        this.companyService = companyService;
         this.fileService = fileService;
     }
 
     @Override
-    public Offer__ createOffer(Company__ company, Offer pOffer) {
+    public Offer__ create(Company__ company, Offer pOffer) {
         if (pOffer.getTitle().length() > 100)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title is too long");
         if (pOffer.getKeyWord().length() > 50)
@@ -36,8 +34,7 @@ public class OfferServiceImpl implements OfferService {
         if (pOffer.getDescription().length() > 500)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description is too long");
         Offer__ offer = new Offer__(company, pOffer.getTitle(), pOffer.getKeyWord(), pOffer.getDescription());
-        offerRepository.save(offer);
-        companyService.addOffer(company, offer);
+        offerRepository.save(offer);;
         return offer;
     }
 
@@ -77,5 +74,10 @@ public class OfferServiceImpl implements OfferService {
             offers.add(offer.getTransactionalObject());
         }
         return offers;
+    }
+
+    @Override
+    public void delete(Offer__ offer) {
+        offerRepository.delete(offer);
     }
 }

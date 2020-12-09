@@ -4,15 +4,15 @@ import javax.persistence.Column;
 
 public class Company {
 
-    private String idCompany;
+    private long idCompany;
     private String name;
 
-    public Company(String idCompany, String name) {
+    public Company(long idCompany, String name) {
         this.idCompany = idCompany;
         this.name = name;
     }
 
-    public String getIdEntity() {
+    public long getIdEntity() {
         return idCompany;
     }
 

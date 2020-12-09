@@ -4,6 +4,7 @@ import fr.polyrecrute.models.Company__;
 import fr.polyrecrute.models.Offer__;
 import fr.polyrecrute.responceType.Company;
 import fr.polyrecrute.responceType.CompanySignup;
+import fr.polyrecrute.responceType.Offer;
 
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface CompanyService {
     List<Company__> findAll();
     long countAll();
     List<Company> getTransactionalObjectList(List<Company__> companies);
-    void addOffer(Company__ company, Offer__ offer);
+    void deleteOffer(Company__ company, String offerId);
+    Offer__ createOffer(Company__ company, Offer offer);
 }

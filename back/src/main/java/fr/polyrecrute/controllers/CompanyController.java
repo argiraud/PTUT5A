@@ -52,11 +52,11 @@ public class CompanyController {
                     @ApiResponse(responseCode = "400", description = "Title, key word or description is too long", content = @Content),
                     @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content),
                     @ApiResponse(responseCode = "409", description = "Email already exists", content = @Content) })
-    @PostMapping(value = "/company/offer/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/company/offer", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> createOffer(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
                                              @RequestBody Offer pOffer) {
         Entity__ entity = entityService.getEntityFromToken(token);
-        Offer__ offer = offerService.createOffer(entity.getCompany(), pOffer);
+        Offer__ offer = companyService.createOffer(entity.getCompany(), pOffer);
         return new ResponseEntity<>(offer.getTransactionalObject(), HttpStatus.CREATED);
     }
 
@@ -68,8 +68,8 @@ public class CompanyController {
                     @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
     @PostMapping(value = "/company/offer/uploadFile", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> uploadFileOffer(@RequestParam("file") MultipartFile pFile,
-                                                   @Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
-                                                   @Parameter(description = "idOffer") String idOffer) {
+                                                 @Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                                 @Parameter(description = "idOffer") String idOffer) {
         Offer__ offer = offerService.findById(idOffer);
         if (!offer.getCompany().getIdCompany().equals(entityService.getEntityFromToken(token).getCompany().getIdCompany()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No sufficient right");
@@ -109,10 +109,10 @@ public class CompanyController {
                     @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
                     @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content),
                     @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)})
-    @GetMapping(value = "/company/{idCompany}/offers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Offer>> getOffersByCompany(@Parameter(description = "idCompany") @PathVariable String idCompany) {
-        Company__ company = companyService.findCompanyById(idCompany);
-        List<Offer__> offers = new ArrayList<>(company.getOffers());
+    @GetMapping(value = "/company/{idEntity}/offers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Offer>> getOffersByCompany(@Parameter(description = "idEntity") @PathVariable long idEntity) {
+        Entity__ entity = entityService.findByUserId(idEntity);
+        List<Offer__> offers = new ArrayList<>(entity.getCompany().getOffers());
         return new ResponseEntity<>(offerService.getTransactionalObjectList(offers), HttpStatus.CREATED);
     }
 
@@ -125,5 +125,18 @@ public class CompanyController {
     public ResponseEntity<List<Company>> getCompanies() {
         List<Company__> companies = companyService.findAll();
         return new ResponseEntity<>(companyService.getTransactionalObjectList(companies), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Delete offer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Delete offer", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @DeleteMapping(value = "/company/offer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteOffer(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                      @Parameter(description = "idOffer") @RequestParam String idOffer) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        companyService.deleteOffer(entity.getCompany(), idOffer);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
