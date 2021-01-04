@@ -42,6 +42,7 @@
 </template>
 
 <script>
+    import Authentification from "@/service/Authentification";
     export default {
         name: 'EntrepriseInfos',
         data: () => ({
@@ -74,19 +75,31 @@
                     email: document.getElementById('emailInscription').value.toString(),
                     password: document.getElementById('mdpInscription').value.toString(),
                 };
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(user),
-                    headers: {
-                        "accept": "*/*",
-                        "Content-Type": "application/json"
-                    }
-                };
-                fetch("https://api.polyrecrute.tk/auth/company/signup", options).then(response => {
+                Authentification.companySignUp(JSON.stringify(user)).then(response => {
                     console.log(response);
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
+                    switch (response.status) {
+                        case 201 :
+                            this.$router.push("/Connexion");
+                            this.$emit('inscription-ok',{
+                                message: "Inscription réussie, veuillez vous connecter",
+                            });
+                            break;
+                        case 400 :
+                            this.$emit('erreur-inscription',{
+                                message: "Email ou nom trop long",
+                            });
+                            break;
+                        case 409 :
+                            this.$emit('erreur-inscription',{
+                                message: "L'Email existe déjà !",
+                            });
+                            break;
+                        case 500 :
+                            this.$emit('erreur-inscription',{
+                                message: "Problème du serveur : erreur 500",
+                            });
+                            break;
+                    }
                 }).catch(err => {
                         console.log(err);
                     });

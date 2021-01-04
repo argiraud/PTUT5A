@@ -6,11 +6,18 @@
         fixed
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
       <v-toolbar-title>Ptut</v-toolbar-title>
       <v-spacer></v-spacer>
       <router-link to="/Connexion">
-      <v-btn >Se Connecter</v-btn>
+        <v-btn v-if="!isConnected">Se connecter</v-btn>
+      </router-link>
+      <router-link to="/Profile">
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUserName}}</v-btn>
+      </router-link>
+      <router-link to="/Connexion">
+        <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
+          <v-icon>exit_to_app</v-icon>
+        </v-btn>
       </router-link>
     </v-app-bar>
     <v-navigation-drawer
@@ -30,13 +37,7 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item to="adminDonnees">
-            <v-list-item-icon>
-              <v-icon>mdi-database-cog</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Administration des données</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="home2">
+          <v-list-item v-if="isConnected" to="home2">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -44,30 +45,42 @@
               / de candidature
             </v-list-item-title>
           </v-list-item>
-          <v-list-item to="home3">
+          <v-list-item v-if="isConnected" to="home3">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home4">
+          <v-list-item v-if="isConnected" to="home4">
             <v-list-item-icon>
               <v-icon>mdi-calendar-month</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Planification d'entretiens</v-list-item-title>
           </v-list-item>
-          <v-list-item to="home5">
+          <v-list-item v-if="isConnected" to="dashboard">
             <v-list-item-icon>
               <v-icon>mdi-desktop-mac-dashboard</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Tableau de bord</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
-        <v-list-item to="creationCompte">
+        <v-list-item v-if="isConnected" to="creationCompte">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Création du compte</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="!isConnected" to="Connexion">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Connexion</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="isConnected" to="Profile">
+          <v-list-item-icon>
+            <v-icon>mdi-database-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Profile</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -75,7 +88,7 @@
 </template>
 
 <script>
-// import {Slide} from 'vue-burger-menu'
+import {mapState} from 'vuex';
 
 export default {
   name: 'home',
@@ -84,12 +97,34 @@ export default {
   },
   data: () => ({
     drawer: false,
-    group: null,
+    group: null
   }),
+  created(){
+      if(window.sessionStorage.getItem("UserToken") == '' || window.sessionStorage.getItem("UserToken") == null || window.sessionStorage.getItem("UserToken") === undefined ){
+        this.$store.commit('CONNEXION_MANAGEMENT', false);
+      }else{
+        this.$store.commit('CONNEXION_MANAGEMENT', true);
+      }
+      console.log("created : " + window.sessionStorage.getItem("UserName"));
+      this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
+  },
   methods: {
+    LogOut(){
+      window.sessionStorage.clear();
+      this.$store.commit('CONNEXION_MANAGEMENT', false);
+    }
+  },
+  computed: {
+    ...mapState({
+      isConnected: 'isConnected',
+      currentUserName : 'currentUserName'
+    }),
   }
 }
 </script>
 
 <style>
+a {
+  text-decoration: none;
+}
 </style>

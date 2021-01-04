@@ -1,7 +1,8 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.Entity;
-import fr.polyrecrute.models.User;
+import fr.polyrecrute.models.ERole;
+import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.models.User__;
 import fr.polyrecrute.repository.UserRepository;
 import fr.polyrecrute.responceType.UserSignup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,13 @@ import java.util.Date;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-
+    private final RoleService roleService;
     private final EntityService entityService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EntityService entityService) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, EntityService entityService) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
         this.entityService = entityService;
     }
 
@@ -33,11 +35,15 @@ public class UserServiceImpl implements UserService{
         if (userSignup.getBirthDate().compareTo(new Date()) > 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Birth date is wrong");
 
-        User userCreated = new User(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate(), "OK");
-
-        Entity entityCreated = entityService.registerEntity(userSignup, userCreated);
-
+        User__ userCreated = new User__(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate(), "OK");
+        Entity__ entityCreated = entityService.registerEntity(userSignup, userCreated);
+        entityCreated.addRole(roleService.findByName(ERole.USER));
         userCreated.setEntity(entityCreated);
         userRepository.save(userCreated);
+    }
+
+    @Override
+    public long countAll() {
+        return userRepository.count();
     }
 }

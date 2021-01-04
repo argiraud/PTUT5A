@@ -1,18 +1,21 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.Company;
-import fr.polyrecrute.models.Entity;
-import fr.polyrecrute.models.User;
+import fr.polyrecrute.models.Company__;
+import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface EntityService {
 
-    Entity findByUserId(Long id);
-    Entity registerEntity(EntitySignup entitySignup, User user);
-    Entity registerEntity(EntitySignup entitySignup, Company company);
+    Entity__ findByUserId(Long id);
+    Entity__ registerEntity(EntitySignup entitySignup, User__ user);
+    Entity__ registerEntity(EntitySignup entitySignup, Company__ company);
     EntitySignin loginEntity(String email, String password);
-    Entity findByEmail(String email);
-    EntityDetails getDetails(String tokenJwt);
+    Entity__ findByEmail(String email);
+    EntityDetails getDetails(Entity__ entity);
+    Entity__ getEntityFromToken(String tokenJwt);
+    void storeFile(MultipartFile pFile, Entity__ entity);
 }

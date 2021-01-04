@@ -1,5 +1,6 @@
 package fr.polyrecrute.config;
 
+import fr.polyrecrute.models.ERole;
 import fr.polyrecrute.security.AuthEntryPointJwt;
 import fr.polyrecrute.security.AuthTokenFilter;
 import fr.polyrecrute.services.EntityDetailsServiceImpl;
@@ -59,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
-                //.antMatchers("/hello/**").hasAuthority("USER")
-                //.antMatchers("/lol").hasAuthority("ADMIN")
+                .antMatchers("/company/**").hasAnyAuthority(ERole.COMPANY.toString(), ERole.ADMIN.toString())
+                .antMatchers("/kpi/**").hasAuthority(ERole.ADMIN.toString())
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

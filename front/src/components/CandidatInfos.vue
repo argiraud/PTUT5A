@@ -25,7 +25,6 @@
                     color="teal accent-3"
                     required
             ></v-text-field>
-
             <v-text-field
                     v-model="studentNumber"
                     id="studentNumber"
@@ -34,7 +33,40 @@
                     type="number"
                     label="N° Etudiant"
                     required
+                    prepend-inner-icon="confirmation_number"
             ></v-text-field>
+            <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                    prepend-inner-icon="calendar_today"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-text-field
+                            id="birthDate"
+                            v-model="date"
+                            label="Date de naissance"
+                            readonly
+                            v-on="on"
+                            prepend-inner-icon="calendar_today"
+                    ></v-text-field>
+                </template>
+                <v-date-picker
+                        ref="picker"
+                        v-model="date"
+                        hint="MM/DD/YYYY format"
+                        persistent-hint
+                        :max="new Date().toISOString().substr(0, 10)"
+                        min="1950-01-01"
+                        prepend-inner-icon="calendar_today"
+                ></v-date-picker>
+            </v-menu>
 
             <v-text-field
                     v-model="email"
@@ -64,6 +96,7 @@
 </template>
 
 <script>
+    import Authentification from "@/service/Authentification";
     export default {
         name: 'CandidatInfos',
         data: () => ({
@@ -77,7 +110,7 @@
             studentNumber : '',
             studentNumberRules: [
                 //v => /.+@.+\..+/.test(v) || 'Le numéro étudiant doit être composé uniquement de chiffres',
-                v => (v.length == 8) || 'Le numéro étudiant est composé de 8 chiffres'
+                v => (v.length == 8 || v.length == 0) || 'Le numéro étudiant est composé de 8 chiffres'
             ],
             email: '',
             emailRules: [
@@ -88,36 +121,56 @@
             mdpRules: [
                 v => !!v || 'Le mot de passe est requis',
             ],
+            picker: new Date().toISOString().substr(0, 10),
+            menu: false,
+            date: null
         }),
+        watch: {
+            menu (val) {
+                val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+            }
+        },
 
         methods: {
             SignUp(){
                 if(this.$refs.form.validate()){
-                    alert("bite");
                     this.APISignUp();
                 }
             },
             APISignUp(){
                 const user = {
                     name: document.getElementById('name').value.toString(),
-                    firstname: document.getElementById('firstname').value.toString(),
-                    studentNumber: document.getElementById('studentNumber').value.toString(),
                     email: document.getElementById('emailInscription').value.toString(),
                     password: document.getElementById('mdpInscription').value.toString(),
+                    firstName: document.getElementById('firstname').value.toString(),
+                    etudiantNumber: document.getElementById('studentNumber').value.toString(),
+                    birthDate: document.getElementById('birthDate').value.toString()
                 };
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(user),
-                    headers: {
-                        "accept": "*/*",
-                        "Content-Type": "application/json"
-                    }
-                };
-                fetch("https://api.polyrecrute.tk/auth/user/signup", options).then(response => {
+                Authentification.userSignUp(JSON.stringify(user)).then(response => {
                     console.log(response);
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
+                    switch (response.status) {
+                        case 201 :
+                            this.$router.push("/Connexion");
+                            this.$emit('inscription-ok',{
+                                message: "Inscription réussie, veuillez vous connecter",
+                            });
+                            break;
+                        case 400 :
+                            this.$emit('erreur-inscription',{
+                                message: "Email, le nom  le prénom ou le numéro d'étudiant est trop long / La date de naissance est incorrecte",
+                            });
+                            break;
+                        case 409 :
+                            this.$emit('erreur-inscription',{
+                                message: "L'Email existe déjà !",
+                            });
+                            break;
+                        case 500 :
+                            this.$emit('erreur-inscription',{
+                                message: "Problème du serveur : erreur 500",
+                            });
+                            break;
+                    }
                 }).catch(err => {
                     console.log(err);
                 });

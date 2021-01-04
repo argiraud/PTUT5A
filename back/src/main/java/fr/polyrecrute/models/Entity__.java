@@ -15,7 +15,7 @@ import javax.persistence.*;
 		uniqueConstraints = {
 			@UniqueConstraint(columnNames = "email") 
 		})
-public class Entity implements UserDetails {
+public class Entity__ implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,28 +37,30 @@ public class Entity implements UserDetails {
 
 	private boolean enable;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private User user;
+	@OneToOne(targetEntity= User__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private User__ user;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Company company;
+	@OneToOne(targetEntity= Company__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Company__ company;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = Role__.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(	name = "entity_role",
 				joinColumns = @JoinColumn(name = "entity_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+	private Set<Role__> roles = new HashSet<>();
 
-	public Entity() {
+	@OneToMany(targetEntity= File__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<File__> files = new HashSet<>();
+
+	public Entity__() {
 	}
 
-	public Entity(String name, String email, String password, String presentation, boolean enable, Role role) {
+	public Entity__(String name, String email, String password, String presentation, boolean enable) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.presentation = presentation;
 		this.enable = enable;
-		this.roles.add(role);
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class Entity implements UserDetails {
 		return email;
 	}
 
-	public Set<Role> getRoles() {
+	public Set<Role__> getRoles() {
 		return roles;
 	}
 
@@ -122,11 +124,11 @@ public class Entity implements UserDetails {
 		return name;
 	}
 
-	public void addRole(Role role) {
+	public void addRole(Role__ role) {
 		roles.add(role);
 	}
 
-	public User getUser() {
+	public User__ getUser() {
 		return user;
 	}
 
@@ -134,16 +136,24 @@ public class Entity implements UserDetails {
 		this.idEntity = idEntity;
 	}
 
-	public void setUser(User user) {
+	public void setUser(User__ user) {
 		this.user = user;
 	}
 
-	public Company getCompany() {
+	public Company__ getCompany() {
 		return company;
 	}
 
-	public void setCompany(Company company) {
+	public void setCompany(Company__ company) {
 		this.company = company;
+	}
+
+	public Set<File__> getFiles() {
+		return files;
+	}
+
+	public void addFile(File__ file){
+		files.add(file);
 	}
 
 	@Override
@@ -152,9 +162,7 @@ public class Entity implements UserDetails {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Entity entity = (Entity) o;
+		Entity__ entity = (Entity__) o;
 		return Objects.equals(idEntity, entity.idEntity);
 	}
-
-
 }
