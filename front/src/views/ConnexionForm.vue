@@ -134,9 +134,13 @@ export default {
                 console.log(response)
                 switch (response.status) {
                     case 200 :
-                        this.$store.commit('SET_SESSION_FROM_JSON', response.data);
+                        console.log("case 200")
+                        console.log("data : ")
+                        console.log(response.data)
+
+                        window.sessionStorage.setItem("UserToken", response.data.tokenType + ' ' + response.data.tokenJWT);
+                        this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
-                        this.$store.commit('SET_CURRENTUSERNAME', response.data.name);
 
                         if(response.data.presentation == null || response.data.presentation == ""){
                             this.$router.push("/creationCompte");

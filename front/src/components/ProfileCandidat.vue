@@ -2,7 +2,7 @@
     <v-container>
         <v-form>
             <v-text-field
-                    v-model="name"
+                    v-model="currentUser.Name"
                     :rules="nameRules"
                     id="name"
                     label="Nom"
@@ -13,7 +13,7 @@
             ></v-text-field>
 
             <v-text-field
-                    v-model="firstname"
+                    v-model="currentUser.Firstname"
                     :rules="nameRules"
                     id="firstname"
                     label="Prénom"
@@ -23,7 +23,7 @@
                     required
             ></v-text-field>
             <v-text-field
-                    v-model="studentNumber"
+                    v-model="currentUser.StudentNumber"
                     id="studentNumber"
                     :counter="8"
                     :rules="studentNumberRules"
@@ -47,7 +47,7 @@
                 <template v-slot:activator="{ on }">
                     <v-text-field
                             id="birthDate"
-                            v-model="date"
+                            v-model="currentUser.BirthDate"
                             label="Date de naissance"
                             readonly
                             v-on="on"
@@ -56,7 +56,7 @@
                 </template>
                 <v-date-picker
                         ref="picker"
-                        v-model="date"
+                        v-model="currentUser.BirthDate"
                         hint="MM/DD/YYYY format"
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
@@ -66,7 +66,7 @@
             </v-menu>
 
             <v-text-field
-                    v-model="email"
+                    v-model="currentUser.Email"
                     id="emailInscription"
                     :rules="emailRules"
                     prepend-inner-icon="email"
@@ -75,40 +75,34 @@
                     required
             ></v-text-field>
 
-            <v-text-field
-                    id="mdpInscription"
-                    v-model="mdp"
-                    label="Mot de passe"
-                    prepend-inner-icon="lock"
-                    type="password"
-                    required
-                    :rules="mdpRules"
-                    color="teal accent-3"/>
+            <v-btn
+                    rounded outlined color="teal accent-3"
+                    @click="save"
+            >Modifier le mot de passe</v-btn>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="Save" dark :disabled="!valid">Enregistrer</v-btn>
+                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="save" :disabled="!valid">Enregistrer</v-btn>
             </div>
         </v-form>
     </v-container>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+    // eslint-disable-next-line no-unused-vars
+
     export default {
         name: "ProfileCandidat",
         data: () => ({
             valid: true,
-            name: '',
             nameRules: [
                 v => !!v || 'Le nom et le prénom sont requis',
                 v => (v && v.length <= 20) || 'Le nom ou le prénom doivent faire moins de 20 charactères',
             ],
-            firstname: '',
-            studentNumber : '',
             studentNumberRules: [
                 //v => /.+@.+\..+/.test(v) || 'Le numéro étudiant doit être composé uniquement de chiffres',
                 v => (v.length == 8 || v.length == 0) || 'Le numéro étudiant est composé de 8 chiffres'
             ],
-            email: '',
             emailRules: [
                 v => !!v || 'L\'addresse mail est requise',
                 v => /.+@.+\..+/.test(v) || 'L\'addresse mail doit être valide',
@@ -119,7 +113,6 @@
             ],
             picker: new Date().toISOString().substr(0, 10),
             menu: false,
-            date: null
         }),
         watch: {
             menu (val) {
@@ -127,64 +120,16 @@
             }
         },
         methods:{
-            save(){
-                console.log("Je sauvegarde les données en base");
-            },
-            beforeCreate(){
-                let url = "https://api.polyrecrute.tk/auth/userdetails?";
-                fetch(url,{
-                    method: "GET",
-                    headers:{
-                        "accept": "application/json"
-                    }
-                }).then(response => {
-                    console.log("response : ")
-                    console.log(response)
-                    switch (response.status) {
-                        case 200 :
-                            console.log("case 200")
-                            response.json().then(respjson => {
-                                console.log("data : ")
-                                console.log(respjson)
-
-                                this.$store.commit('SET_SESSION_FROM_JSON', respjson);
-                                this.$store.commit('CONNEXION_MANAGEMENT', true);
-
-                                if(respjson.presentation == null || respjson.presentation == ""){
-                                    this.$router.push("/creationCompte");
-                                }else{
-                                    this.$router.push("/home");
-                                }
-                            })
-                            break;
-                        case 404 :
-                            this.Erreur = 'Email ou mot de passe incorrecte !';
-                            this.snackbarError = true;
-                            break;
-                        case 401 :
-                            this.Erreur = 'Email ou mot de passe incorrecte !';
-                            this.snackbarError = true;
-                            break;
-                        case 500 :
-                            this.Erreur = 'Problème du serveur : erreur 500';
-                            this.snackbarError = true;
-                            break;
-
-                    }
-                }).catch(err => {
-                    console.log("erreur : " + err);
-                });
-            },
-            data: () => ({
-                userInfos: {
-                    name: '',
-                    email: '',
-                    birthDate: '',
-                    presentation: ''
+                save(){
+                    console.log("Je sauvegarde les données en base");
                 }
-            })
-        },
-
+            },
+        computed: {
+            ...mapState({
+                isConnected: 'isConnected',
+                currentUser: 'currentUser'
+            }),
+        }
     }
 </script>
 
