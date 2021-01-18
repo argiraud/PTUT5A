@@ -1,4 +1,4 @@
-import http from "../http-common";
+import {axiosAPI} from "@/http-common";
 
 class FileDataService {
     uploadUserFile(file, onUploadProgress) {
@@ -6,7 +6,7 @@ class FileDataService {
 
         formData.append("file", file);
 
-        return http.post("/user/uploadFile", formData, {
+        return axiosAPI.post("/user/uploadFile", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             },
@@ -15,7 +15,7 @@ class FileDataService {
     }
 
     getFiles() {
-        return http.get("/files");
+        return axiosAPI.get("/files");
     }
 }
 

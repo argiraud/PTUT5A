@@ -1,24 +1,24 @@
-import http from "../http-common";
+import {axiosAPI} from "@/http-common";
 
 class OfferDataService {
     getAll() {
-        return http.get("/companies");
+        return axiosAPI.get("/companies");
     }
 
     count(){
-        return http.get("/kpi/companies");
+        return axiosAPI.get("/kpi/companies");
     }
 
      get(id) {
-         return http.get(`/company/${id}/offer`);
+         return axiosAPI.get(`/company/${id}/offer`);
      }
 
     getOffer() {
-        return http.get(`/company/offers`);
+        return axiosAPI.get(`/company/offers`);
     }
 
     create(data) {
-        return http.post("/company/offer", data);
+        return axiosAPI.post("/company/offer", data);
     }
     //
     // update(id, data) {
