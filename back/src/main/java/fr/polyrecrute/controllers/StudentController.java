@@ -1,7 +1,5 @@
 package fr.polyrecrute.controllers;
 
-
-
 import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.User;
 import fr.polyrecrute.services.EntityService;

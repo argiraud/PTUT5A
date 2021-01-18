@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/UtilsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/responceType/LongResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/PolyRecrute.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/config/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/config/OpenApiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/CompanyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/TestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/models/Entity__.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/models/Entity__.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/models/Offer__.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/models/Offer__.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/CompanyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/OfferRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/OfferRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/responceType/EntityDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/responceType/EntityDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/responceType/Offer.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/responceType/Offer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/security/AuthEntryPointJwt.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/security/AuthEntryPointJwt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/security/AuthTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/security/AuthTokenFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/CompanyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/CompanyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/EntityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/EntityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/EntityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/EntityServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/FileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/FileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/OfferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/OfferService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/OfferServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/OfferServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/fr/polyrecrute/services/UserServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,6 +56,7 @@
       <workItem from="1604329685211" duration="7000" />
       <workItem from="1605630157206" duration="21000" />
       <workItem from="1605630189869" duration="184000" />
+      <workItem from="1610971664668" duration="5000" />
     </task>
     <servers />
   </component>
@@ -112,11 +85,12 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1605630346534" />
-    <state x="632" y="145" key="FileChooserDialogImpl" timestamp="1605630372246">
+    <state x="632" y="145" key="FileChooserDialogImpl" timestamp="1610971668409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="632" y="145" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1605630372246" />
     <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1604158794759" />
+    <state x="632" y="145" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610971668409" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1604329269165">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
