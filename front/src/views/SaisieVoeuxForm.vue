@@ -4,6 +4,11 @@
 
     <br>
 
+    <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <AjoutVoeux v-model="showScheduleForm" />
+
+    <br>
+
     <v-data-table
         v-model="selected"
         :headers="headers"
@@ -45,10 +50,16 @@
 </template>
 
 <script>
+import AjoutVoeux from "@/components/AjoutVoeux";
+
 export default {
   name: "SaisieVoeuxForm",
+  components:{
+    AjoutVoeux
+  },
   data () {
     return {
+      showScheduleForm: false,
       selected: [],
       headers: [
         {
@@ -82,6 +93,14 @@ export default {
       this.$emit("step3-finish", "true")
       this.$refs.form.validate();
 
+    },
+    deleteItem () {
+      if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
+        for(var i = 0; i <this.selected.length; i++){
+          const index = this.offers.indexOf(this.selected[i]);
+          this.offers.splice(index, 1);
+        }
+      }
     },
   },
 }

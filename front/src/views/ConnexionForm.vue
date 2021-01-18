@@ -134,10 +134,6 @@ export default {
                 console.log(response)
                 switch (response.status) {
                     case 200 :
-                        console.log("case 200")
-                        console.log("data : ")
-                        console.log(response.data)
-
                         this.$store.commit('SET_SESSION_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
                         this.$store.commit('SET_CURRENTUSERNAME', response.data.name);

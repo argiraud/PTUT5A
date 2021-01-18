@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class CompanyDataService {
+class OfferDataService {
     getAll() {
         return http.get("/companies");
     }
@@ -10,12 +10,16 @@ class CompanyDataService {
     }
 
      get(id) {
-         return http.get(`/company/${id}/offers`);
+         return http.get(`/company/${id}/offer`);
+     }
+
+    getOffer() {
+        return http.get(`/company/offers`);
     }
 
     create(data) {
-         return http.post("/company/offer/create", data);
-     }
+        return http.post("/company/offer", data);
+    }
     //
     // update(id, data) {
     //     return http.put(`/tutorials/${id}`, data);
@@ -34,4 +38,4 @@ class CompanyDataService {
     // }
 }
 
-export default new CompanyDataService();
+export default new OfferDataService();

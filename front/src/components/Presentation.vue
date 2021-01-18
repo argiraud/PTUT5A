@@ -1,10 +1,22 @@
 <template>
   <div id="header">
-    <h1> Présentez-vous </h1>
+    <h1> Présentation </h1>
     <br>
     <p style="white-space: pre-line;">{{ message }}</p>
     <br>
-    <textarea v-model="message" placeholder="Présentation..."></textarea>
+      <template>
+        <v-container fluid>
+          <v-textarea
+              clearable
+              clear-icon="mdi-close-circle"
+              name="input-7-1"
+              filled
+              label="Présentation"
+              auto-grow
+              placeholder="Présentez-vous"
+          ></v-textarea>
+        </v-container>
+      </template>
     <br>
     <v-btn
         color="Valider"
