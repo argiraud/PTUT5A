@@ -1,20 +1,20 @@
-import http from "../http-common";
+import {axiosAPI} from "@/http-common";
 
 class CompanyDataService {
     getAll() {
-        return http.get("/companies");
+        return axiosAPI.get("/companies");
     }
 
     count(){
-        return http.get("/kpi/companies");
+        return axiosAPI.get("/kpi/companies");
     }
 
      get(id) {
-         return http.get(`/company/${id}/offers`);
+         return axiosAPI.get(`/company/${id}/offers`);
     }
 
     create(data) {
-         return http.post("/company/offer/create", data);
+         return axiosAPI.post("/company/offer/create", data);
      }
     //
     // update(id, data) {

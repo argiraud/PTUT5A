@@ -1,12 +1,12 @@
-import http from "../http-common";
+import {axiosAPI} from "@/http-common";
 
 class StudentDataService {
     getAll() {
-        return http.get("/students");
+        return axiosAPI.get("/students");
     }
 
     count(){
-        return http.get("/kpi/users");
+        return axiosAPI.get("/kpi/users");
     }
 
     // get(id) {
