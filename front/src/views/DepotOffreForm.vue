@@ -4,15 +4,6 @@
 
     <br>
 
-    <div class="large-12 medium-12 small-12 cell">
-      <label> Document
-        <input type="file" id="file" ref="file" @change="onFileChange"/>
-      </label>
-
-      <v-btn color="primary" @click="AddDoc">   Ajouter</v-btn>
-    </div>
-
-    <br>
 
     <v-btn large @click.stop="showScheduleForm=true" > Nouvelle offre </v-btn>
     <AjoutOffre v-model="showScheduleForm" />
@@ -20,9 +11,9 @@
     <br>
 
     <v-data-table
-        v-model="selected"
+        v-model="offers"
         :headers="headers"
-        :items="offre"
+        :items="offers"
         item-key="name"
         show-select
         :items-per-page="5"
@@ -31,7 +22,7 @@
       <template v-slot="props">
         <td>
           <v-checkbox
-              v-model="props.selected"
+              v-model="props.offers"
               primary
               hide-details
           ></v-checkbox>
@@ -55,11 +46,14 @@
     >
       Valider
     </v-btn>
+
   </div>
 </template>
 
 <script>
 import AjoutOffre from "@/components/AjoutOffre";
+//import OfferDataService from "@/service/OfferDataService";
+import CompanyDataService from "@/service/CompanyDataService";
 
 export default {
 name: "DepotOffreForm",
@@ -69,95 +63,67 @@ name: "DepotOffreForm",
   },
   data () {
     return {
-      filesObj:{},
       fileName: '',
       showScheduleForm: false,
-      selected: [],
+      offers: [
+      ],
       headers: [
         {
           text: 'Nom du document',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'title',
         },
-      ],
-      offre: [
+        {
+          text: 'Mots clés',
+          value: 'keyWord',
+        },
+        {
+          text: 'Description',
+          value: 'description',
+        },
       ],
 
     }
   },
 
   methods: {
-    AddDoc(){
-      this.APIAddDocument();
-    },
-    APIAddDocument(){
-      const offer = {
-        file: this.filesObj,
-        idOffer: window.sessionStorage.getItem("idOffer"),
-      };
-      alert(window.sessionStorage.getItem("idOffer"));
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(offer),
-        headers: {
-          "accept": "*/*",
-          "Authorization": window.sessionStorage.getItem("UserToken"),
-          "Content-Type": "application/json"
-        }
-      };
-      fetch("https://api.polyrecrute.tk/company/offer/uploadFile", options).then(response => {
-        console.log(response);
-        switch (response.status) {
-          case 201 :
-            // Alerte votre compte a bien été créer
-            //redirige vers stepper 1
-            alert("Ajout du document effectuée");
-            break;
-          case 400 :
-            alert("Title, key word or description is too long");
-            break;
-          case 401 :
-            alert("Authentification error");
-            break;
-          case 403:
-            alert("No sufficient right");
-            break;
-        }
-        return response.json();
-      }).then(data => {
-        console.log(data);
-      }).catch(err => {
-        console.log(err);
-      });
-    },
+
     validate() {
       this.$emit("step2-finish", "true")
       this.$refs.form.validate();
 
     },
-    onFileChange(event){
-      let fileData =  event.target.files[0];
-      this.filesObj = fileData;
-      console.log('file Object:==>',this.filesObj);
-      this.fileName=fileData.name;
-    },
     deleteItem () {
       if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
         for(var i = 0; i <this.selected.length; i++){
-          const index = this.offre.indexOf(this.selected[i]);
-          this.offre.splice(index, 1);
+          const index = this.offers.indexOf(this.selected[i]);
+          this.offers.splice(index, 1);
         }
       }
     },
     add: function(item) {
-        alert("test");
-        this.APIAddDocument();
-        this.offre.push(item);
-      }
-    },
-    mounted: function() {
-    },
+        this.offers.push(item);
+      },
+
+    APIGetOffer(){
+      let idEntity = window.sessionStorage.getItem("idEntity");
+      console.log("idEntity : " + idEntity)
+      CompanyDataService.get(idEntity).then(response => {
+        this.offers = response.data;
+      })
+          .catch(e => {
+            console.error(e);
+          })
+
+    }
+
+  },
+
+  mounted: function() {
+    this.APIGetOffer()
+  },
+
 }
 
 </script>
