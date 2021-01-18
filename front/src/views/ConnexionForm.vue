@@ -106,6 +106,7 @@
 <script>
 import EntrepriseInfos from "@/components/EntrepriseInfos"
 import CandidatInfos from "@/components/CandidatInfos"
+import Authentification from "@/service/Authentification";
 
 export default {
     name: 'ConnexionForm',
@@ -128,33 +129,20 @@ export default {
         APISignIn(){
             let email = document.getElementById('emailConnexion').value.toString();
             let mdp = document.getElementById('mdpConnexion').value.toString();
-            let url = "https://api.polyrecrute.tk/auth/signin?email="+email+"&password="+mdp;
-            fetch(url,{
-                method: "GET",
-                headers:{
-                    "accept": "application/json"
-                }
-            }).then(response => {
+            Authentification.signin(email, mdp).then(response => {
                 console.log("response : ")
                 console.log(response)
                 switch (response.status) {
                     case 200 :
-                        response.json().then(respjson => {
-                            console.log("data : ")
-                            console.log(respjson)
-                            window.sessionStorage.setItem("UserId",respjson.id);
-                            window.sessionStorage.setItem("UserName",respjson.name);
-                            window.sessionStorage.setItem("UserRoleId",respjson.roles[0].idRole);
-                            window.sessionStorage.setItem("UserToken", respjson.tokenType +' '+ respjson.tokenJWT);
-                            this.$store.commit('CONNEXION_MANAGEMENT', true);
-                            this.$store.commit('SET_CURRENTUSERNAME', window.sessionStorage.getItem("UserName"));
-                            if(respjson.presentation == null || respjson.presentation == ""){
-                                this.$router.push("/creationCompte");
-                            }else{
-                                this.$router.push("/home");
-                            }
+                        this.$store.commit('SET_SESSION_FROM_JSON', response.data);
+                        this.$store.commit('CONNEXION_MANAGEMENT', true);
+                        this.$store.commit('SET_CURRENTUSERNAME', response.data.name);
 
-                        })
+                        if(response.data.presentation == null || response.data.presentation == ""){
+                            this.$router.push("/creationCompte");
+                        }else{
+                            this.$router.push("/home");
+                        }
                         break;
                     case 404 :
                         this.Erreur = 'Email ou mot de passe incorrecte !';

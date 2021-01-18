@@ -4,12 +4,18 @@ import NotFound from '@/views/NotFound.vue';
 import ConnexionForm from "@/views/ConnexionForm";
 import AdmiDonnee from "@/views/AdmiDonneeForm";
 import QuestionnaireSatisfaction from "@/views/QuestionnaireSatisfactionForm";
+import Profile from "@/views/Profile";
 
 export const routes = [
     {
         path: '/home',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: Profile
     },
     {
         path: '/Connexion',
