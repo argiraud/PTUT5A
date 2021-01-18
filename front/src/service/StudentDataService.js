@@ -9,10 +9,10 @@ class StudentDataService {
         return axiosAPI.get("/kpi/users");
     }
 
-    // get(id) {
-    //     return http.get(`/user/details/${id}`);
-    // }
-    //
+     getConnectedUser() {
+         return http.get(`/user/details`);
+     }
+
     // create(data) {
     //     return http.post("/tutorials", data);
     // }
