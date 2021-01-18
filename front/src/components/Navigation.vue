@@ -12,7 +12,7 @@
         <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
       <router-link to="/Profile">
-        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUserName}}</v-btn>
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUser.Name}}</v-btn>
       </router-link>
       <router-link to="/Connexion">
         <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
@@ -105,7 +105,6 @@ export default {
       }else{
         this.$store.commit('CONNEXION_MANAGEMENT', true);
       }
-      console.log("created : " + window.sessionStorage.getItem("UserName"));
       this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
   },
   methods: {
@@ -117,7 +116,7 @@ export default {
   computed: {
     ...mapState({
       isConnected: 'isConnected',
-      currentUserName : 'currentUserName'
+      currentUser: 'currentUser'
     }),
   }
 }
