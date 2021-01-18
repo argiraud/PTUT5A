@@ -2,7 +2,7 @@ import http from "../http-common";
 
 class StudentDataService {
     getAll() {
-        return http.get("/users");
+        return http.get("/students");
     }
 
     count(){

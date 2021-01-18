@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import CompanyDataService from "@/service/CompanyDataService";
+
 export default {
 name: "AjoutOffre",
   data: () => ({
@@ -130,44 +132,24 @@ name: "AjoutOffre",
       console.log('file Object:==>',this.filesObj);
     },
     APIAddOffer(){
-
       const offer = {
         title: document.getElementById('title').value.toString(),
         keyWord: document.getElementById('keyWord').value.toString(),
         description: document.getElementById('description').value.toString(),
       };
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(offer),
-        headers: {
-          "accept": "*/*",
-          "Authorization": window.sessionStorage.getItem("UserToken"),
-          "Content-Type": "application/json"
-        }
-      };
-      fetch("https://api.polyrecrute.tk/company/offer/create", options).then(response => {
-        console.log(response);
+      CompanyDataService.create(offer).then(response => {
         switch (response.status) {
           case 201 :
-            console.log("case 200")
-            response.json().then(respjson => {
-              window.sessionStorage.setItem("idOffer",respjson.idOffer);
-            })
-            alert("Ajout de l'offre effectuée");
-            break;
-          case 400 :
-            alert("Title, key word or description is too long");
-            break;
-          case 409 :
-            alert("le doc existe deja !");
+            window.sessionStorage.setItem("idOffer", response.data.idOffer);
+            window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
+            alert("Ajout du document effectuée");
             break;
         }
-        return response.json();
-      }).then(data => {
-        console.log(data);
-      }).catch(err => {
-        console.log(err);
-      });
+      })
+          .catch(e => {
+            console.error(e);
+          })
+
     }
   },
 }
