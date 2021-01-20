@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-form>
+        <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
                     v-model="currentUser.Name"
                     :rules="nameRules"
@@ -74,11 +74,7 @@
                     label="E-mail"
                     required
             ></v-text-field>
-
-            <v-btn
-                    rounded outlined color="teal accent-3"
-                    @click="save"
-            >Modifier le mot de passe</v-btn>
+            <ChangeMotDePasse></ChangeMotDePasse>
 
             <div class="text-center mt-n5">
                 <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="save" :disabled="!valid">Enregistrer</v-btn>
@@ -89,10 +85,11 @@
 
 <script>
     import {mapState} from 'vuex';
-    // eslint-disable-next-line no-unused-vars
+    import ChangeMotDePasse from "@/components/ChangeMotDePasse";
 
     export default {
         name: "ProfileCandidat",
+        components: {ChangeMotDePasse},
         data: () => ({
             valid: true,
             nameRules: [

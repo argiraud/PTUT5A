@@ -10,7 +10,7 @@ class StudentDataService {
     }
 
      getConnectedUser() {
-         return http.get(`/user/details`);
+         return axiosAPI.get(`/user/details`);
      }
 
     // create(data) {

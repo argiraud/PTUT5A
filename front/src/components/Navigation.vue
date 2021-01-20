@@ -89,6 +89,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import StudentDataService from "@/service/StudentDataService";
 
 export default {
   name: 'home',
@@ -104,8 +105,16 @@ export default {
         this.$store.commit('CONNEXION_MANAGEMENT', false);
       }else{
         this.$store.commit('CONNEXION_MANAGEMENT', true);
+        StudentDataService.getConnectedUser().then(response => {
+          switch (response.status) {
+            case 200 :
+              this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
+              break;
+          }
+        }).catch(err => {
+          console.log("erreur : " + err);
+        });
       }
-      this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
   },
   methods: {
     LogOut(){
