@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -45,9 +46,11 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity__ findByUserId(Long id) {
-        Optional<Entity__> registeredUser = entityRepository.findById(id);
-        return registeredUser.orElse(null);
+        return entityRepository.findById(id)
+                .orElseThrow(() -> {throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found");});
     }
+
 
     @Override
     public Entity__ registerEntity(EntitySignup entitySignup, User__ user) {

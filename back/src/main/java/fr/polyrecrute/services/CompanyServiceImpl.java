@@ -1,9 +1,6 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.Company__;
-import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.Offer__;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.CompanyRepository;
 import fr.polyrecrute.responceType.CompanySignup;
 import fr.polyrecrute.responceType.Company;
@@ -73,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteOffer(Company__ company, String offerId) {
         Offer__ offer = offerService.findById(offerId);
-        company.deleteoffer(offer);
+        company.deleteOffer(offer);
         companyRepository.save(company);
         offerService.delete(offer);
     }
@@ -84,5 +81,17 @@ public class CompanyServiceImpl implements CompanyService {
         company.addOffer(offer);
         companyRepository.save(company);
         return offer;
+    }
+
+    @Override
+    public void deleteWantedUser(Company__ company, User__ user) {
+        company.deleteWantedUser(user);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public void addWantedUser(Company__ company, User__ user) {
+        company.addWantedUser(user);
+        companyRepository.save(company);
     }
 }

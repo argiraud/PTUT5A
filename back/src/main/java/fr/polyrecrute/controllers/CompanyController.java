@@ -3,11 +3,14 @@ package fr.polyrecrute.controllers;
 import fr.polyrecrute.models.Company__;
 import fr.polyrecrute.models.Entity__;
 import fr.polyrecrute.models.Offer__;
+import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.Company;
 import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.User;
 import fr.polyrecrute.services.CompanyService;
 import fr.polyrecrute.services.EntityService;
 import fr.polyrecrute.services.OfferService;
+import fr.polyrecrute.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -38,12 +41,14 @@ public class CompanyController {
     private final OfferService offerService;
     private final EntityService entityService;
     private final CompanyService companyService;
+    private final UserService userService;
 
     @Autowired
-    public CompanyController(OfferService offerService, EntityService entityService, CompanyService companyService) {
+    public CompanyController(OfferService offerService, EntityService entityService, CompanyService companyService, UserService userService) {
         this.offerService = offerService;
         this.entityService = entityService;
         this.companyService = companyService;
+        this.userService = userService;
     }
 
     @Operation(summary = "Company create a new offer", description = "",
@@ -138,5 +143,53 @@ public class CompanyController {
         Entity__ entity = entityService.getEntityFromToken(token);
         companyService.deleteOffer(entity.getCompany(), idOffer);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Company want user", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "User was added in list", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @PostMapping(value = "/company/wantedUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addWantedUser(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                        @Parameter(description = "idUser") @RequestParam long idUser) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        User__ user = entityService.findByUserId(idUser).getUser();
+        if (user == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        companyService.addWantedUser(entity.getCompany(), user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Company want one user", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "User was delete in list", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @DeleteMapping(value = "/company/wantedUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteWantedUser(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                           @Parameter(description = "idUser") @RequestParam long idUser) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        User__ user = entityService.findByUserId(idUser).getUser();
+        companyService.deleteWantedUser(entity.getCompany(), user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Company want one user", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Get list of wanted users", content = @Content(schema = @Schema(implementation = User.class))),
+                    @ApiResponse(responseCode = "404", description = "Company not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/company/{idCompany}/wantedUsers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<User>> getWantedUsers(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                                     @Parameter(description = "idCompany") @PathVariable long idCompany) {
+        Entity__ entity = entityService.findByUserId(idCompany);
+        if (entity.getCompany() == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
+        List<User__> users = new ArrayList<>(entity.getCompany().getWantedUser());
+        return new ResponseEntity<>(userService.getTransactionalObjectList(users), HttpStatus.OK);
     }
 }

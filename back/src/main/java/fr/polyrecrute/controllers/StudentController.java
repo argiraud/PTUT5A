@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class StudentController {
             responses= {
                     @ApiResponse(responseCode = "200", description = "Get all students", content = @Content(schema = @Schema(implementation = User.class))),
                     @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content) })
-    @PostMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getStudents() {
         List<User__> users = entityService.getAllStudents();
         return new ResponseEntity<>(userService.getTransactionalObjectList(users), HttpStatus.OK);
