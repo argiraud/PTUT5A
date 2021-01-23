@@ -23,4 +23,6 @@ public interface EntityService {
     void storeFile(MultipartFile pFile, Entity__ entity);
     long countAllStudents();
     List<User__> getAllStudents();
+    Entity__ updateEntity(Entity__ entity, EntityDetails entityUpdate);
+    void updatePassword(Entity__ entity, String password);
 }

@@ -71,6 +71,18 @@ public class User__ {
         this.entity = entity;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setEtudiantNumber(String etudiantNumber) {
+        this.etudiantNumber = etudiantNumber;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public User getTransactionalObject() {
         return new User(entity.getIdEntity(), entity.getName(), entity.getEmail(), entity.getPresentation(), firstName);
     }

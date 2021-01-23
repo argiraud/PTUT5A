@@ -156,6 +156,22 @@ public class Entity__ implements UserDetails {
 		files.add(file);
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPresentation(String presentation) {
+		this.presentation = presentation;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

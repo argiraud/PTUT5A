@@ -154,4 +154,27 @@ public class EntityServiceImpl implements EntityService {
         return users;
     }
 
+    @Override
+    public Entity__ updateEntity(Entity__ entity, EntityDetails entityUpdate) {
+
+        entity.setName(entityUpdate.getName());
+        entity.setEmail(entityUpdate.getEmail());
+        entity.setPresentation(entityUpdate.getPresentation());
+
+        if (entity.getUser() != null){
+            entity.getUser().setFirstName(entityUpdate.getFirstName());
+            entity.getUser().setEtudiantNumber(entityUpdate.getEtudiantNumber());
+            entity.getUser().setBirthDate(entityUpdate.getBirthDate());
+        }
+
+        entityRepository.save(entity);
+        return entity;
+    }
+
+    @Override
+    public void updatePassword(Entity__ entity, String password) {
+        entity.setPassword(encoder.encode(password));
+        entityRepository.save(entity);
+    }
+
 }

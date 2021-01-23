@@ -1,6 +1,7 @@
 package fr.polyrecrute.controllers;
 
 import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.responceType.CompanySignup;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.LongResponse;
 import fr.polyrecrute.services.EntityService;
@@ -73,5 +74,29 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Update entity details", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Entity update details",
+                            content = @Content(schema = @Schema(implementation = EntityDetails.class))),
+                    @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
+    @PatchMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EntityDetails> updateDetails(@RequestBody EntityDetails entityUpdate,
+                                                        @Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        entity = entityService.updateEntity(entity, entityUpdate);
+        return new ResponseEntity(entityService.getDetails(entity) , HttpStatus.OK);
+    }
 
+    @Operation(summary = "Update entity password", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Entity password was update",
+                            content = @Content(schema = @Schema(implementation = EntityDetails.class))),
+                    @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
+    @PatchMapping(value = "/user/password", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updatePassword(@Parameter(description = "New password") @RequestParam String password,
+                                                       @Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        entityService.updatePassword(entity, password);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
