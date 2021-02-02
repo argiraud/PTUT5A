@@ -10,6 +10,7 @@ import SaisieVoeuxForm from "@/views/SaisieVoeuxForm";
 
 import DepotCandidatureForm from "@/views/DepotCandidatureForm";
 import SaisieVoeuxEtudiantForm from "@/views/SaisieVoeuxEtudiantForm";
+import Survey from "@/views/Survey";
 
 export const routes = [
     {
@@ -68,6 +69,11 @@ export const routes = [
     {
         path: '/dashboard', name: 'dashboard', components: {
             default: Dashboard,
+        }
+    },
+    {
+        path: '/survey', name: 'survey', components: {
+            default: Survey,
         }
     },
     {
