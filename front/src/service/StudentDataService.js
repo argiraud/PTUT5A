@@ -13,6 +13,13 @@ class StudentDataService {
          return axiosAPI.get(`/user/details`);
      }
 
+    setNewUserPassword(password) {
+        return axiosAPI.patch(`/user/password?password=${password}`);
+    }
+
+    updateUserInfos(user){ //On envoie un utilisateur au format JSON
+        return axiosAPI.patch(`/user`,user);
+    }
     // create(data) {
     //     return http.post("/tutorials", data);
     // }

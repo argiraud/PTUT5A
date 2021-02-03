@@ -147,6 +147,7 @@ export default {
             Authentification.signin(email, mdp).then(response => {
                 console.log("response : ")
                 console.log(response)
+                var payload
                 switch (response.status) {
                     case 200 :
                         console.log("case 200")
@@ -157,23 +158,29 @@ export default {
                         this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
 
-                        if(response.data.presentation == null || response.data.presentation == ""){
+                        if(response.data.presentation == null || response.data.presentation === ""){
                             this.$router.push("/creationCompte");
                         }else{
                             this.$router.push("/home");
                         }
                         break;
                     case 404 :
-                        this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Email ou mot de passe incorrecte !'
+                        }
+                        this.setSnackbarError(payload)
                         break;
                     case 401 :
-                        this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Email ou mot de passe incorrecte !'
+                        }
+                        this.setSnackbarError(payload)
                         break;
                     case 500 :
-                        this.Erreur = 'Problème du serveur : erreur 500';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Problème du serveur : erreur 500'
+                        }
+                        this.setSnackbarError(payload)
                         break;
 
                 }
@@ -186,7 +193,6 @@ export default {
             this.Erreur = payload.message;
         },
         setSnackbarSuccess(payload){
-            this.step--;
             this.snackbarSuccess = true;
             this.Message = payload.message;
         }

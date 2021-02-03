@@ -56,6 +56,8 @@
 </template>
 
 <script>
+    import StudentDataService from "@/service/StudentDataService";
+
     export default {
         name: "ChangeMotDePasse",
         data: () => ({
@@ -78,8 +80,31 @@
                 this.isPopUpShown = false;
             },
             SaveUser(){
+                let mdp = document.getElementById('mdp').value.toString();
                 if(this.$refs.form.validate()){
                     console.log("Je sauvegarde le mot de passe")
+                    StudentDataService.setNewUserPassword(mdp).then(response => {
+                        console.log("response : ")
+                        console.log(response)
+                        switch (response.status) {
+                         case 200:
+                             this.$emit('newpassword-ok',{
+                                 message: "Votre mot de passe a bien été modifié.",
+                             });
+                             this.HidePopUp()
+                             break;
+                        case 401 :
+                            this.$emit('error-newpassword',{
+                                message: "Vous devez être identifié pour changer votre mot de passe.",
+                            });
+                            break;
+                        case 400 :
+                            this.$emit('error-newpassword',{
+                                message: "Votre token est altéré ou périmé, reconnectez-vous.",
+                            });
+                            break;
+                        }
+                    } )
                 }
             },
             mdpConfirmationRule2(value){
