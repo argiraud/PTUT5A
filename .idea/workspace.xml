@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/service/StudentDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/StudentDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +223,7 @@
       <workItem from="1610956689904" duration="2332000" />
       <workItem from="1610961120097" duration="17847000" />
       <workItem from="1611129435433" duration="239000" />
-      <workItem from="1611130121210" duration="9740000" />
+      <workItem from="1611130121210" duration="10233000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -238,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610987121667</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin">
+      <created>1611142204064</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611142204064</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -319,7 +320,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="workspace" />
     <MESSAGE value="Nettoyage de la session, amélioration du data store vuex" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nettoyage de la session, amélioration du data store vuex" />
+    <MESSAGE value="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front/src/components/Stepper.vue">
