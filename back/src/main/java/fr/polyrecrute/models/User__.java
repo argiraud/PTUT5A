@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @javax.persistence.Entity(name = "User")
 @Table(name = "\"user\"")
@@ -31,6 +33,9 @@ public class User__ {
 
     @Column(length = 10)
     private String status;
+
+    @OneToMany(targetEntity= Offer__.class, fetch = FetchType.LAZY)
+    private Set<Offer__> wantedOffer = new HashSet<>();
 
 
     public User__() {
@@ -89,5 +94,17 @@ public class User__ {
 
     public User getTransactionalObject() {
         return new User(entity.getIdEntity(), entity.getName(), entity.getEmail(), entity.getPresentation(), firstName);
+    }
+
+    public void addWantedOffer(Offer__ offer){
+        wantedOffer.add(offer);
+    }
+
+    public void deleteWantedOffer(Offer__ offer){
+        wantedOffer.remove(offer);
+    }
+
+    public Set<Offer__> getWantedOffer() {
+        return wantedOffer;
     }
 }

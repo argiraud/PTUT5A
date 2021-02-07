@@ -1,9 +1,6 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.Offer__;
-import fr.polyrecrute.models.User__;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.UserRepository;
 import fr.polyrecrute.responceType.Offer;
 import fr.polyrecrute.responceType.User;
@@ -54,5 +51,17 @@ public class UserServiceImpl implements UserService{
             users.add(user.getTransactionalObject());
         }
         return users;
+    }
+
+    @Override
+    public void deleteWantedOffer(User__ user, Offer__ offer) {
+        user.deleteWantedOffer(offer);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addWantedOffer(User__ user, Offer__ offer) {
+        user.addWantedOffer(offer);
+        userRepository.save(user);
     }
 }

@@ -177,7 +177,7 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "Company want one user", description = "",
+    @Operation(summary = "Company wanted list", description = "",
             responses= {
                     @ApiResponse(responseCode = "200", description = "Get list of wanted users", content = @Content(schema = @Schema(implementation = User.class))),
                     @ApiResponse(responseCode = "404", description = "Company not found", content = @Content),
