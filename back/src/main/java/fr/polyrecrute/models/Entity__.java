@@ -172,6 +172,10 @@ public class Entity__ implements UserDetails {
 		this.presentation = presentation;
 	}
 
+	public void deleteFile(File__ file){
+		files.remove(file);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

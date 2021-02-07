@@ -1,6 +1,7 @@
 package fr.polyrecrute.controllers;
 
 import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.models.File__;
 import fr.polyrecrute.models.Offer__;
 import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.EntityDetails;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +54,10 @@ public class UserController {
                     @ApiResponse(responseCode = "200", description = "Entity details",
                             content = @Content(schema = @Schema(implementation = EntityDetails.class))),
                     @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
-    @GetMapping(value = "/user/details", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EntityDetails> userDetails(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
-        return new ResponseEntity(entityService.getDetails(entityService.getEntityFromToken(token)) , HttpStatus.OK);
+    @GetMapping(value = "/user/details/{idUser}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EntityDetails> userDetails(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token,
+                                                     @Parameter(description = "idUser") @PathVariable long idUser) {
+        return new ResponseEntity(entityService.getDetails(entityService.findByUserId(idUser)) , HttpStatus.OK);
     }
 
     @Operation(summary = "Entity upload a file", description = "",

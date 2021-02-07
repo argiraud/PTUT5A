@@ -178,4 +178,14 @@ public class EntityServiceImpl implements EntityService {
         entityRepository.save(entity);
     }
 
+    @Override
+    public void deleteFile(Entity__ entity, File__ file){
+        if (!entity.getFiles().contains(file)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No sufficient right");
+        }
+        entity.deleteFile(file);
+        entityRepository.save(entity);
+        fileService.deleteFile(file);
+    }
+
 }

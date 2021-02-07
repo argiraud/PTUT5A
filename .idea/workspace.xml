@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="" />
+    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +31,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/back" />
@@ -57,6 +60,8 @@
       <workItem from="1605630157206" duration="21000" />
       <workItem from="1605630189869" duration="184000" />
       <workItem from="1610971664668" duration="5000" />
+      <workItem from="1612722952644" duration="1000" />
+      <workItem from="1612722961713" duration="11000" />
     </task>
     <servers />
   </component>
@@ -79,21 +84,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1605630346534">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1605630346534" />
-    <state x="632" y="145" key="FileChooserDialogImpl" timestamp="1610971668409">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="632" y="145" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1605630372246" />
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1604158794759" />
-    <state x="632" y="145" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610971668409" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1604329269165">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1604329269165" />
   </component>
 </project>

@@ -2,6 +2,7 @@ package fr.polyrecrute.services;
 
 import fr.polyrecrute.models.Company__;
 import fr.polyrecrute.models.Entity__;
+import fr.polyrecrute.models.File__;
 import fr.polyrecrute.models.User__;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
@@ -25,4 +26,5 @@ public interface EntityService {
     List<User__> getAllStudents();
     Entity__ updateEntity(Entity__ entity, EntityDetails entityUpdate);
     void updatePassword(Entity__ entity, String password);
+    void deleteFile(Entity__ entity, File__ file);
 }
