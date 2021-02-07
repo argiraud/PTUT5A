@@ -1,12 +1,13 @@
 package fr.polyrecrute.controllers;
 
+import fr.polyrecrute.models.Company__;
 import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.File__;
 import fr.polyrecrute.models.Offer__;
 import fr.polyrecrute.models.User__;
+import fr.polyrecrute.responceType.Company;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.Offer;
-import fr.polyrecrute.responceType.User;
+import fr.polyrecrute.services.CompanyService;
 import fr.polyrecrute.services.EntityService;
 import fr.polyrecrute.services.OfferService;
 import fr.polyrecrute.services.UserService;
@@ -18,7 +19,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +39,14 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final EntityService entityService;
+    private final CompanyService companyService;
     private final OfferService offerService;
     private final UserService userService;
 
     @Autowired
-    public UserController(EntityService entityService, OfferService offerService, UserService userService) {
+    public UserController(EntityService entityService, CompanyService companyService, OfferService offerService, UserService userService) {
         this.entityService = entityService;
+        this.companyService = companyService;
         this.offerService = offerService;
         this.userService = userService;
     }
@@ -162,5 +164,22 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         List<Offer__> offers = new ArrayList<>(entity.getUser().getWantedOffer());
         return new ResponseEntity<>(offerService.getTransactionalObjectList(offers), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Companies who wanted user", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Get list of companies who wanted user", content = @Content(schema = @Schema(implementation = Company.class))),
+                    @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/user/{idUser}/cpompanyWhowanted", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Company>> getCompaniesWhoWantedUser(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                                                  @Parameter(description = "idUser") @PathVariable long idUser) {
+        Entity__ entity = entityService.findByUserId(idUser);
+        if(entity.getUser() == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        List<Company__> companies = companyService.FindCompanyWhoWantedUser(entity.getUser());
+
+        return new ResponseEntity<>(companyService.getTransactionalObjectList(companies), HttpStatus.OK);
     }
 }

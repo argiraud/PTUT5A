@@ -94,4 +94,9 @@ public class CompanyServiceImpl implements CompanyService {
         company.addWantedUser(user);
         companyRepository.save(company);
     }
+
+    @Override
+    public List<Company__> FindCompanyWhoWantedUser(User__ user) {
+        return companyRepository.findAllByWantedUserContains(user);
+    }
 }

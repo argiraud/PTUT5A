@@ -29,6 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -190,6 +191,23 @@ public class CompanyController {
         if (entity.getCompany() == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
         List<User__> users = new ArrayList<>(entity.getCompany().getWantedUser());
+        return new ResponseEntity<>(userService.getTransactionalObjectList(users), HttpStatus.OK);
+    }
+
+    @Operation(summary = "User who wanted company", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Get list of users who wanted company", content = @Content(schema = @Schema(implementation = User.class))),
+                    @ApiResponse(responseCode = "404", description = "Company not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/company/{idCompany}/userWhoWanted", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<User>> getUsersWhoWantedCompany(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                                                  @Parameter(description = "idCompany") @PathVariable long idCompany) {
+        Entity__ entity = entityService.findByUserId(idCompany);
+        if(entity.getCompany() == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
+        List<User__> users = userService.findUserWhoWantedOffer(entity.getCompany().getOffers());
+
         return new ResponseEntity<>(userService.getTransactionalObjectList(users), HttpStatus.OK);
     }
 }

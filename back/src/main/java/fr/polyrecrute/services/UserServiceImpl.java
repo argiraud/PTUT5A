@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -63,5 +61,9 @@ public class UserServiceImpl implements UserService{
     public void addWantedOffer(User__ user, Offer__ offer) {
         user.addWantedOffer(offer);
         userRepository.save(user);
+    }
+
+    public List<User__> findUserWhoWantedOffer(Set<Offer__> offers) {
+        return userRepository.findDistinctByWantedOfferIn(offers);
     }
 }

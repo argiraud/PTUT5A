@@ -20,4 +20,5 @@ public interface CompanyService {
     Offer__ createOffer(Company__ company, Offer offer);
     void deleteWantedUser(Company__ company, User__ user);
     void addWantedUser(Company__ company, User__ user);
+    List<Company__> FindCompanyWhoWantedUser(User__ user);
 }
