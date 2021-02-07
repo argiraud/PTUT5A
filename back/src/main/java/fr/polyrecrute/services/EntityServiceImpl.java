@@ -165,6 +165,7 @@ public class EntityServiceImpl implements EntityService {
             entity.getUser().setFirstName(entityUpdate.getFirstName());
             entity.getUser().setEtudiantNumber(entityUpdate.getEtudiantNumber());
             entity.getUser().setBirthDate(entityUpdate.getBirthDate());
+            entity.getUser().setStatus(entityUpdate.getStatus());
         }
 
         entityRepository.save(entity);

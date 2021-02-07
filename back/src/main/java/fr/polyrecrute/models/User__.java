@@ -83,6 +83,10 @@ public class User__ {
         this.birthDate = birthDate;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public User getTransactionalObject() {
         return new User(entity.getIdEntity(), entity.getName(), entity.getEmail(), entity.getPresentation(), firstName);
     }
