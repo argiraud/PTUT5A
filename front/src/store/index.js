@@ -13,6 +13,7 @@ export default new Vuex.Store({
       StudentNumber : '',
       BirthDate: '',
       Email: '',
+      Status: '',
       Presentation: '',
       RoleId: '',
       IsAdmin: ''
@@ -31,6 +32,7 @@ export default new Vuex.Store({
       state.currentUser.StudentNumber = payload.etudiantNumber != undefined ? payload.etudiantNumber : '';
       state.currentUser.BirthDate = payload.birthDate != undefined ? payload.birthDate : '';
       state.currentUser.Email = payload.email != undefined ? payload.email : '';
+      state.currentUser.Status = payload.status != undefined ? payload.status : '';
       state.currentUser.Presentation = payload.presentation != undefined ? payload.presentation : '';
       state.currentUser.RoleId = payload.roles[0].idRole != undefined ? payload.roles[0].idRole : '';
       state.currentUser.IsAdmin = payload.roles[1] != undefined ? true : false;
