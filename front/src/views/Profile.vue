@@ -1,5 +1,6 @@
 <template>
     <v-container class="fill-height" fluid>
+        <p>{{$route.params.id}}</p>
         <ProfileCandidat v-if="currentUser.RoleId == '1'"></ProfileCandidat>
         <ProfileEntreprise v-if="currentUser.RoleId == '2'"></ProfileEntreprise>
     </v-container>
@@ -21,9 +22,15 @@
                 currentUser: 'currentUser'
             }),
         },
-        beforeCreate() {
+        mounted() {
+            //Prévoir le faite qu'on puisse rafraichir la page
+            // ==> User/détails en passant par le token en session pour récupérer notre currentUSer
             console.log("BeforeCreate Profile");
-            StudentDataService.getConnectedUser().then(response => {
+            let userId = this.currentUser.Id;
+            if(typeof(this.$route.params.id ) != "undefined" && this.$route.params.id != null){
+                userId = this.$route.params.id;
+            }
+            StudentDataService.getConnectedUser(userId).then(response => {
                 console.log("response : ")
                 console.log(response)
                 switch (response.status) {

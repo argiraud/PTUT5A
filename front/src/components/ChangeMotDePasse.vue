@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-btn
+                :disabled="$route.params.id != null && $route.params.id != currentUser.Id && !currentUser.IsAdmin"
                 rounded outlined color="teal accent-3"
                 @click="ShowPopUp"
                 v-if="!isPopUpShown"

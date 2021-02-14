@@ -9,8 +9,8 @@ class StudentDataService {
         return axiosAPI.get("/kpi/users");
     }
 
-     getConnectedUser() {
-         return axiosAPI.get(`/user/details`);
+     getConnectedUser(userId) {
+         return axiosAPI.get(`/user/details/${userId}`);
      }
 
     setNewUserPassword(password) {

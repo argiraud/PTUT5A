@@ -6,8 +6,10 @@
       <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/service/StudentDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/StudentDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
     </list>
     <list id="aeb45250-c996-42de-9839-7ecad2c947b3" name="Changes by argiraud" comment="" />
     <list id="4632cf94-934d-47ce-bde8-67f9757a81b8" name="Changes by Maxou" comment="" />
@@ -208,7 +210,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -235,7 +237,11 @@
       <workItem from="1611129435433" duration="239000" />
       <workItem from="1611130121210" duration="10233000" />
       <workItem from="1612346072579" duration="3879000" />
-      <workItem from="1612349994185" duration="7708000" />
+      <workItem from="1612349994185" duration="7855000" />
+      <workItem from="1612520644738" duration="297000" />
+      <workItem from="1612520988825" duration="1365000" />
+      <workItem from="1612605402716" duration="10523000" />
+      <workItem from="1613318145048" duration="3518000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -251,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611142204064</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Change mdp et changement du profile sauvegardé en base.">
+      <created>1612363815761</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1612363815761</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -333,7 +346,20 @@
     <MESSAGE value="workspace" />
     <MESSAGE value="Nettoyage de la session, amélioration du data store vuex" />
     <MESSAGE value="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin" />
+    <MESSAGE value="Change mdp et changement du profile sauvegardé en base." />
+    <option name="LAST_COMMIT_MESSAGE" value="Change mdp et changement du profile sauvegardé en base." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/front/src/views/Profile.vue</url>
+          <line>29</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front/src/components/Stepper.vue">

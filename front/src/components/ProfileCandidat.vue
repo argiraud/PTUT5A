@@ -9,6 +9,7 @@
         </v-snackbar>
         <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Name"
                     :rules="nameRules"
                     id="name"
@@ -20,6 +21,7 @@
             ></v-text-field>
 
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Firstname"
                     :rules="nameRules"
                     id="firstname"
@@ -30,6 +32,7 @@
                     required
             ></v-text-field>
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.StudentNumber"
                     id="studentNumber"
                     :counter="8"
@@ -40,6 +43,7 @@
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
             <v-menu
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
@@ -73,6 +77,7 @@
             </v-menu>
 
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Email"
                     id="emailInscription"
                     :rules="emailRules"
@@ -81,8 +86,39 @@
                     label="E-mail"
                     required
             ></v-text-field>
-
+            <v-select
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    id="comboStatus"
+                    label="Renseignez votre status actuel"
+                    small-chips
+                    v-model="currentUser.Status"
+                    :items="items"
+            >
+                <template v-slot:selection="{ item, selected }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            :input-value="selected"
+                            label
+                            small
+                    >
+                      <span class="pr-2">
+                        {{ item.text }}
+                      </span>
+                    </v-chip>
+                </template>
+                <template v-slot:item="{ item }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            dark
+                            label
+                            small
+                    >
+                        {{ item.text }}
+                    </v-chip>
+                </template>
+            </v-select>
             <v-textarea
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     name="presentation"
                     v-model="currentUser.Presentation"
                     id="presentation"
@@ -93,9 +129,25 @@
             <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="save" :disabled="!valid">Enregistrer</v-btn>
+                <v-btn
+                        style="margin-top: 5%"
+                        rounded outlined
+                        color="teal accent-3"
+                        @click="save"
+                        :disabled="!valid || ($route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin)">Enregistrer</v-btn>
             </div>
         </v-form>
+        <p></p>
+        <v-card
+                elevation="10"
+        >
+            <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+            <v-data-table
+                    :headers="headers"
+                    :items="companies"
+                    :items-per-page="5"
+            ></v-data-table>
+        </v-card>
     </v-container>
 </template>
 
@@ -108,6 +160,27 @@
         name: "ProfileCandidat",
         components: {ChangeMotDePasse},
         data: () => ({
+            items: [
+                    {
+                        text: 'Disponible',
+                        color: 'green',
+                        value: 'available'
+                    },
+                    {
+                        text: 'En cours',
+                        color: 'orange',
+                        value: 'in progress'
+                    },
+                    {
+                        text: 'Terminé',
+                        color: 'red',
+                        value: 'finished'
+                    }],
+            companies: [],//A remplir
+            headers: [
+                {text: "Id", align: "start", value: "idEntity", sortable: true},
+                {text: "Nom", value: "name", sortable: true},
+            ],
             snackbarSuccess : false,
             snackbarError : false,
             Erreur: '',
@@ -151,7 +224,7 @@
                     "firstName" : currentuser.Firstname,
                     "etudiantNumber" : currentuser.StudentNumber,
                     "birthDate" : currentuser.BirthDate,
-                    "status" : "",
+                    "status" : currentuser.Status,
                 };
                 StudentDataService.updateUserInfos(user).then(response => {
                     console.log("response : ")
@@ -197,6 +270,12 @@
                 window.sessionStorage.clear();
                 this.$store.commit('CONNEXION_MANAGEMENT', false);
                 this.$router.push("/Connexion");
+            },
+            mounted(){
+               this.getAllVoeux();
+            },
+            getAllVoeux(){
+                //Je remplie mon tableau de company m'ayant mis dans leurs voeux.
             }
             },
         computed: {

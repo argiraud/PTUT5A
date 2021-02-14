@@ -11,7 +11,7 @@
       <router-link to="/Connexion">
         <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
-      <router-link to="/Profile">
+      <router-link to="/Profil">
         <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUser.Name}}</v-btn>
       </router-link>
       <router-link to="/Connexion">
@@ -76,11 +76,11 @@
           </v-list-item-icon>
           <v-list-item-title>Connexion</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="isConnected" to="Profile">
+        <v-list-item v-if="isConnected" to="/Profil">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Profile</v-list-item-title>
+          <v-list-item-title>Mon Profil</v-list-item-title>
         </v-list-item>
           <v-list-item v-if="isConnected && currentUser.IsAdmin" to="Connexion">
               <v-list-item-icon>

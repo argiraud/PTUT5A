@@ -13,8 +13,13 @@ export const routes = [
         component: Home
     },
     {
-        path: '/profile',
-        name: 'profile',
+        path: '/Profil/:id',
+        name: 'otherProfile',
+        component: Profile
+    },
+    {
+        path: '/Profil',
+        name: 'Profile',
         component: Profile
     },
     {
