@@ -9,10 +9,17 @@ class StudentDataService {
         return axiosAPI.get("/kpi/users");
     }
 
-     getConnectedUser() {
-         return http.get(`/user/details`);
+     getConnectedUser(userId) {
+         return axiosAPI.get(`/user/details/${userId}`);
      }
 
+    setNewUserPassword(password) {
+        return axiosAPI.patch(`/user/password?password=${password}`);
+    }
+
+    updateUserInfos(user){ //On envoie un utilisateur au format JSON
+        return axiosAPI.patch(`/user`,user);
+    }
     // create(data) {
     //     return http.post("/tutorials", data);
     // }

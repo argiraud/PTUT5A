@@ -9,10 +9,10 @@
     </v-snackbar>
     <v-row align="center" justify="center">
         <v-card class="elevation-12">
-            <v-window v-model="step">
-                <v-window-item :value="1">
+            <v-window>
+                <v-window-item v-if="!isConnected">
                     <v-row>
-                        <v-col cols="12" md="8">
+                        <v-col cols="12" md="12">
                             <v-card-text class="mt-12">
                                 <h1 class="text-center display-2 teal--text text--accent-3">Se Connecter à PolyRecrute</h1>
                                 <div class="text-center" mt-4>
@@ -61,6 +61,7 @@
                                 <v-btn rounded color="teal accent-3" dark @click="SignIn">CONNEXION</v-btn>
                             </div>
                         </v-col>
+                      <!--Ancienne colonne pour switcher entre connexion et inscirption
                         <v-col cols="12" md="4" class="teal accent-3">
                             <v-card-text class="white--text mt-12">
                                 <h1 class="text-center display-1">Bienvenue !</h1>
@@ -69,11 +70,12 @@
                             <div class="text-center">
                                 <v-btn rounded outlined="" dark @click="step++">S'inscrire</v-btn>
                             </div>
-                        </v-col>
+                        </v-col>-->
                     </v-row>
                 </v-window-item>
-                <v-window-item :value="2">
+                <v-window-item v-if="isConnected && currentUser.IsAdmin">
                     <v-row class="fill-height">
+                        <!--Ancienne colonne pour switcher entre connexion et inscirption
                         <v-col cols="12" md="4" class="teal accent-3">
                             <v-card-text class="white--text mt-12">
                                 <h1 class="text-center display-1">De retour parmis nous ?</h1>
@@ -82,8 +84,8 @@
                             <div class="text-center">
                                 <v-btn rounded outlined dark @click="step--">Se connecter</v-btn>
                             </div>
-                        </v-col>
-                        <v-col cols="12" md="8">
+                        </v-col>-->
+                        <v-col cols="12" md="12">
                             <v-card-text class="mt-12">
                                 <h1 class="text-center display-2 teal--text text--accent-3">Créer un compte</h1>
                                 <div class="text-center mt-4">
@@ -97,6 +99,18 @@
                         </v-col>
                     </v-row>
                 </v-window-item>
+                <v-window-item v-if="isConnected && !currentUser.IsAdmin">
+                    <v-row>
+                      <v-col cols="12" md="12">
+                        <v-card-text class="mt-12">
+                          <h1 class="text-center display-2 teal--text text--accent-3">Vous êtes déjà connecté !</h1>
+                          <br/>
+                          <br/>
+                          <h4 class="text-center mlt-4">Déconnectez-vous en utilisant le bouton de déconnexion en haut à droite pour changer de compte.</h4>
+                        </v-card-text>
+                      </v-col>
+                    </v-row>
+                </v-window-item>
             </v-window>
         </v-card>
     </v-row>
@@ -107,6 +121,7 @@
 import EntrepriseInfos from "@/components/EntrepriseInfos"
 import CandidatInfos from "@/components/CandidatInfos"
 import Authentification from "@/service/Authentification";
+import {mapState} from "vuex";
 
 export default {
     name: 'ConnexionForm',
@@ -132,6 +147,7 @@ export default {
             Authentification.signin(email, mdp).then(response => {
                 console.log("response : ")
                 console.log(response)
+                var payload
                 switch (response.status) {
                     case 200 :
                         console.log("case 200")
@@ -142,23 +158,29 @@ export default {
                         this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
 
-                        if(response.data.presentation == null || response.data.presentation == ""){
+                        if(response.data.presentation == null || response.data.presentation === ""){
                             this.$router.push("/creationCompte");
                         }else{
                             this.$router.push("/home");
                         }
                         break;
                     case 404 :
-                        this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Email ou mot de passe incorrecte !'
+                        }
+                        this.setSnackbarError(payload)
                         break;
                     case 401 :
-                        this.Erreur = 'Email ou mot de passe incorrecte !';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Email ou mot de passe incorrecte !'
+                        }
+                        this.setSnackbarError(payload)
                         break;
                     case 500 :
-                        this.Erreur = 'Problème du serveur : erreur 500';
-                        this.snackbarError = true;
+                        payload = {
+                            "message" : 'Problème du serveur : erreur 500'
+                        }
+                        this.setSnackbarError(payload)
                         break;
 
                 }
@@ -171,14 +193,12 @@ export default {
             this.Erreur = payload.message;
         },
         setSnackbarSuccess(payload){
-            this.step--;
             this.snackbarSuccess = true;
             this.Message = payload.message;
         }
      },
     data: () => ({
         valid: true,
-        step: 1,
         snackbarSuccess : false,
         snackbarError : false,
         Erreur: '',
@@ -191,9 +211,15 @@ export default {
         ],
         mdpConnexion: '',
         mdpRules: [
-            v => !!v || 'Le mot de passe est requis',
+          v => !!v || 'Le mot de passe est requis',
         ]
     }),
+    computed: {
+      ...mapState({
+        currentUser: 'currentUser',
+        isConnected: 'isConnected'
+      }),
+    },
     props: {
         source: String
     }
