@@ -1,7 +1,15 @@
 <template>
     <v-container>
-        <v-form>
+        <v-snackbar v-model="snackbarError" multi-line top color="red">
+            {{Erreur}}
+        </v-snackbar>
+
+        <v-snackbar v-model="snackbarSuccess" multi-line top color="success">
+            {{Message}}
+        </v-snackbar>
+        <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Name"
                     :rules="nameRules"
                     id="name"
@@ -13,6 +21,7 @@
             ></v-text-field>
 
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Firstname"
                     :rules="nameRules"
                     id="firstname"
@@ -23,6 +32,7 @@
                     required
             ></v-text-field>
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.StudentNumber"
                     id="studentNumber"
                     :counter="8"
@@ -33,6 +43,7 @@
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
             <v-menu
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
@@ -66,6 +77,7 @@
             </v-menu>
 
             <v-text-field
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
                     v-model="currentUser.Email"
                     id="emailInscription"
                     :rules="emailRules"
@@ -74,26 +86,105 @@
                     label="E-mail"
                     required
             ></v-text-field>
-
-            <v-btn
-                    rounded outlined color="teal accent-3"
-                    @click="save"
-            >Modifier le mot de passe</v-btn>
+            <v-select
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    id="comboStatus"
+                    label="Renseignez votre status actuel"
+                    small-chips
+                    v-model="currentUser.Status"
+                    :items="items"
+            >
+                <template v-slot:selection="{ item, selected }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            :input-value="selected"
+                            label
+                            small
+                    >
+                      <span class="pr-2">
+                        {{ item.text }}
+                      </span>
+                    </v-chip>
+                </template>
+                <template v-slot:item="{ item }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            dark
+                            label
+                            small
+                    >
+                        {{ item.text }}
+                    </v-chip>
+                </template>
+            </v-select>
+            <v-textarea
+                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    name="presentation"
+                    v-model="currentUser.Presentation"
+                    id="presentation"
+                    prepend-inner-icon="create"
+                    type="text"
+                    label="Présentation"
+            ></v-textarea>
+            <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="save" :disabled="!valid">Enregistrer</v-btn>
+                <v-btn
+                        style="margin-top: 5%"
+                        rounded outlined
+                        color="teal accent-3"
+                        @click="save"
+                        :disabled="!valid || ($route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin)">Enregistrer</v-btn>
             </div>
         </v-form>
+        <p></p>
+        <v-card
+                elevation="10"
+        >
+            <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+            <v-data-table
+                    :headers="headers"
+                    :items="companies"
+                    :items-per-page="5"
+            ></v-data-table>
+        </v-card>
     </v-container>
 </template>
 
 <script>
     import {mapState} from 'vuex';
-    // eslint-disable-next-line no-unused-vars
+    import ChangeMotDePasse from "@/components/ChangeMotDePasse";
+    import StudentDataService from "@/service/StudentDataService";
 
     export default {
         name: "ProfileCandidat",
+        components: {ChangeMotDePasse},
         data: () => ({
+            items: [
+                    {
+                        text: 'Disponible',
+                        color: 'green',
+                        value: 'available'
+                    },
+                    {
+                        text: 'En cours',
+                        color: 'orange',
+                        value: 'in progress'
+                    },
+                    {
+                        text: 'Terminé',
+                        color: 'red',
+                        value: 'finished'
+                    }],
+            companies: [],//A remplir
+            headers: [
+                {text: "Id", align: "start", value: "idEntity", sortable: true},
+                {text: "Nom", value: "name", sortable: true},
+            ],
+            snackbarSuccess : false,
+            snackbarError : false,
+            Erreur: '',
+            Message: '',
             valid: true,
             nameRules: [
                 v => !!v || 'Le nom et le prénom sont requis',
@@ -120,9 +211,72 @@
             }
         },
         methods:{
-                save(){
-                    console.log("Je sauvegarde les données en base");
-                }
+            save(){
+                let currentuser = this.currentUser;
+                let user = {
+                    "id" : currentuser.Id,
+                    "name" : currentuser.Name,
+                    "email" : currentuser.Email,
+                    "presentation" : currentuser.Presentation,
+                    "roles" : [],
+                    "files" : [],
+                    "enable" : "",
+                    "firstName" : currentuser.Firstname,
+                    "etudiantNumber" : currentuser.StudentNumber,
+                    "birthDate" : currentuser.BirthDate,
+                    "status" : currentuser.Status,
+                };
+                StudentDataService.updateUserInfos(user).then(response => {
+                    console.log("response : ")
+                    console.log(response)
+                    var payload;
+                    switch(response.status){
+                        case 200:
+                            payload = {
+                                "message" : "Modifications enregistrées. - Redirection dans 2 secondes..."
+                            }
+                            this.setSnackbarSuccess(payload)
+                                var store = this.$store
+                                var router = this.$router
+                            setTimeout(function(){
+                                window.sessionStorage.clear();
+                                store.commit('CONNEXION_MANAGEMENT', false);
+                                router.push("/Connexion");
+                            }, 2000)
+                            break;
+                        case 401:
+                            payload = {
+                                "message" : "Vous devez être authentifié pour modifier votre profil"
+                            }
+                            this.setSnackbarError(payload)
+                            break;
+                        case 400:payload = {
+                            "message" : "Votre token de session est compromis ou périmé, veuillez vous reconnecter."
+                            }
+                            this.setSnackbarError(payload)
+                            break;
+                    }
+                })
+            },
+            setSnackbarError(payload){
+                this.snackbarError = true;
+                this.Erreur = payload.message;
+            },
+            setSnackbarSuccess(payload){
+                this.snackbarSuccess = true;
+                this.Message = payload.message;
+            },
+            LogOut(){
+                window.sessionStorage.clear();
+                this.$store.commit('CONNEXION_MANAGEMENT', false);
+                this.$router.push("/Connexion");
+            },
+            mounted(){
+               this.getAllVoeux();
+            },
+            getAllVoeux(){
+                //Je remplie mon tableau de company m'ayant mis dans leurs voeux.
+            }
             },
         computed: {
             ...mapState({
