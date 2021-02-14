@@ -1,16 +1,10 @@
 package fr.polyrecrute.controllers;
 
-import fr.polyrecrute.models.Company__;
-import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.Offer__;
-import fr.polyrecrute.models.User__;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.responceType.Company;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.Offer;
-import fr.polyrecrute.services.CompanyService;
-import fr.polyrecrute.services.EntityService;
-import fr.polyrecrute.services.OfferService;
-import fr.polyrecrute.services.UserService;
+import fr.polyrecrute.services.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,13 +36,15 @@ public class UserController {
     private final CompanyService companyService;
     private final OfferService offerService;
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(EntityService entityService, CompanyService companyService, OfferService offerService, UserService userService) {
+    public UserController(EntityService entityService, CompanyService companyService, OfferService offerService, UserService userService, RoleService roleService) {
         this.entityService = entityService;
         this.companyService = companyService;
         this.offerService = offerService;
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Operation(summary = "Get entity details by id", description = "Get more details like first name, birth date, etc",
@@ -107,6 +103,10 @@ public class UserController {
     public ResponseEntity<EntityDetails> updateDetails(@RequestBody EntityDetails entityUpdate,
                                                         @Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
         Entity__ entity = entityService.getEntityFromToken(token);
+        if(!entityUpdate.getId().equals(entity.getIdEntity()) && !entity.getRoles().contains(roleService.findByName(ERole.ADMIN)))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error");
+
+        entity = entityService.findByUserId(entityUpdate.getId());
         entity = entityService.updateEntity(entity, entityUpdate);
         return new ResponseEntity(entityService.getDetails(entity) , HttpStatus.OK);
     }
