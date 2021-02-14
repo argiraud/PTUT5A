@@ -11,10 +11,12 @@
       <Presentation @step1-finish="updateMes"></Presentation>
     </v-stepper-content>
     <v-stepper-content step="2" currentStep=2>
-      <DepotOffre @step2-finish="updateMes2"></DepotOffre>
+      <DepotOffre v-if="this.$store.state.currentUser.RoleId == 2" @step2-finish="updateMes2"></DepotOffre>
+      <DepotCandidatureForm v-if="this.$store.state.currentUser.RoleId == 1" @step2-finish="updateMes2"></DepotCandidatureForm>
     </v-stepper-content>
     <v-stepper-content step="3" currentStep=3>
-      <SaisieVoeux @step3-finish="updateMes3"></SaisieVoeux>
+      <SaisieVoeux v-if="this.$store.state.currentUser.RoleId == 2" @step3-finish="updateMes3"></SaisieVoeux>
+      <SaisieVoeuxEtudiantForm v-if="this.$store.state.currentUser.RoleId == 1" @step3-finish="updateMes3"></SaisieVoeuxEtudiantForm>
     </v-stepper-content>
 
   </v-stepper>
@@ -23,7 +25,9 @@
 <script>
 import SaisieVoeux from '@/views/SaisieVoeuxForm'
 import DepotOffre from "@/views/DepotOffreForm";
+import DepotCandidatureForm from "@/views/DepotCandidatureForm";
 import Presentation from "@/components/Presentation";
+import SaisieVoeuxEtudiantForm from "@/views/SaisieVoeuxEtudiantForm";
 
 export default {
 name: "Stepper",
@@ -33,9 +37,11 @@ name: "Stepper",
     }
   },
   components :{
+    SaisieVoeuxEtudiantForm,
     Presentation,
     SaisieVoeux,
-    DepotOffre
+    DepotOffre,
+    DepotCandidatureForm
   },
   methods :{
     updateMes(){

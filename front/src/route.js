@@ -5,6 +5,11 @@ import ConnexionForm from "@/views/ConnexionForm";
 import AdmiDonnee from "@/views/AdmiDonneeForm";
 import QuestionnaireSatisfaction from "@/views/QuestionnaireSatisfactionForm";
 import Profile from "@/views/Profile";
+import DepotOffreForm from "@/views/DepotOffreForm";
+import SaisieVoeuxForm from "@/views/SaisieVoeuxForm";
+
+import DepotCandidatureForm from "@/views/DepotCandidatureForm";
+import SaisieVoeuxEtudiantForm from "@/views/SaisieVoeuxEtudiantForm";
 
 export const routes = [
     {
@@ -36,6 +41,26 @@ export const routes = [
         path: '/questionSatisf',
         name: 'Questionnaire de Satisfaction',
         component: QuestionnaireSatisfaction
+    },
+    {
+        path: '/depotOffre',
+        name: 'depotOffre',
+        component: DepotOffreForm
+    },
+    {
+        path: '/depotCandidature',
+        name: 'depotCandidature',
+        component: DepotCandidatureForm
+    },
+    {
+        path: '/saisieVoeuxEtudiant',
+        name: 'saisieVoeuxEtudiant',
+        component: SaisieVoeuxEtudiantForm
+    },
+    {
+        path: '/saisieVoeux',
+        name: 'saisieVoeux',
+        component: SaisieVoeuxForm
     },
     {
         path: '/creationCompte',
