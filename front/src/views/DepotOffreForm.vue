@@ -99,7 +99,6 @@ name: "DepotOffreForm",
     validate() {
       this.$emit("step2-finish", "true")
       this.$refs.form.validate();
-
     },
 
 
@@ -127,6 +126,7 @@ name: "DepotOffreForm",
         this.offers.push(item);
       },
 
+
     APIGetOffer(){
       let idEntity = this.$store.state.currentUser.Id;
       console.log("idEntity : " + idEntity)
@@ -137,9 +137,7 @@ name: "DepotOffreForm",
           .catch(e => {
             console.error(e);
           })
-
     }
-
   },
 
   mounted: function() {
