@@ -66,6 +66,21 @@ public class CompanyController {
         return new ResponseEntity<>(offer.getTransactionalObject(), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update offer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Offer was update", content = @Content(schema = @Schema(implementation = Offer.class))),
+                    @ApiResponse(responseCode = "400", description = "Title, key word or description is too long", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content),
+                    @ApiResponse(responseCode = "409", description = "Email already exists", content = @Content) })
+    @PatchMapping(value = "/company/offer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Offer> updateOffer(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                             @RequestBody Offer pOffer) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        Offer__ offer = offerService.findById(pOffer.getIdOffer());
+        offerService.update(pOffer, offer);
+        return new ResponseEntity<>(offer.getTransactionalObject(), HttpStatus.OK);
+    }
+
     @Operation(summary = "Company upload a file for one offer", description = "",
             responses= {
                     @ApiResponse(responseCode = "201", description = "File was upload", content = @Content(schema = @Schema(implementation = Offer.class))),

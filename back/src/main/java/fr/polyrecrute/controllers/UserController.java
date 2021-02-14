@@ -51,15 +51,25 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Operation(summary = "Get entity details", description = "Get more details like first name, birth date, etc",
+    @Operation(summary = "Get entity details by id", description = "Get more details like first name, birth date, etc",
             responses= {
                     @ApiResponse(responseCode = "200", description = "Entity details",
                             content = @Content(schema = @Schema(implementation = EntityDetails.class))),
                     @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
     @GetMapping(value = "/user/details/{idUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EntityDetails> userDetails(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token,
+    public ResponseEntity<EntityDetails> userDetailsId(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token,
                                                      @Parameter(description = "idUser") @PathVariable long idUser) {
         return new ResponseEntity(entityService.getDetails(entityService.findByUserId(idUser)) , HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get entity details", description = "Get more details like first name, birth date, etc",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Entity details",
+                            content = @Content(schema = @Schema(implementation = EntityDetails.class))),
+                    @ApiResponse(responseCode = "400", description = "Error token", content = @Content) })
+    @GetMapping(value = "/user/details", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EntityDetails> userDetails(@Parameter(hidden=true) @RequestHeader(name="Authorization") String token) {
+        return new ResponseEntity(entityService.getDetails(entityService.getEntityFromToken(token)) , HttpStatus.OK);
     }
 
     @Operation(summary = "Entity upload a file", description = "",

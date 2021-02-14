@@ -33,7 +33,7 @@ public class OfferServiceImpl implements OfferService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Key word is too long");
         if (pOffer.getDescription().length() > 500)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description is too long");
-        Offer__ offer = new Offer__(company, pOffer.getTitle(), pOffer.getKeyWord(), pOffer.getDescription());
+        Offer__ offer = new Offer__(company, pOffer.getTitle(), pOffer.getKeyWord(), pOffer.getDescription(), "available");
         offerRepository.save(offer);;
         return offer;
     }
@@ -79,5 +79,14 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void delete(Offer__ offer) {
         offerRepository.delete(offer);
+    }
+
+    @Override
+    public void update(Offer upOffer, Offer__ offer) {
+        offer.setDescription(upOffer.getDescription());
+        offer.setTitle(upOffer.getTitle());
+        offer.setKeyWord(upOffer.getKeyWord());
+        offer.setState(upOffer.getState());
+        offerRepository.save(offer);
     }
 }

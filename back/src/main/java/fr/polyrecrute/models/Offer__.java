@@ -43,13 +43,13 @@ public class Offer__ {
     public Offer__() {
     }
 
-    public Offer__(Company__ company, String title, String keyWord, String description) {
+    public Offer__(Company__ company, String title, String keyWord, String description, String state) {
         this.company = company;
         this.title = title;
         this.keyWord = keyWord;
         this.description = description;
         this.validate = false;
-        this.state = null;
+        this.state = state;
     }
 
     public String getIdOffer() {
@@ -94,5 +94,21 @@ public class Offer__ {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setValidate(boolean validate) {
+        this.validate = validate;
     }
 }
