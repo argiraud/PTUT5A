@@ -10,35 +10,35 @@
         v-model="selected"
         :headers="headers"
         :items="profiles"
+        :single-expand="singleExpand"
         item-key="name"
-        show-select
         :items-per-page="5"
         class="elevation-1"
+        show-expand
     >
-      <template v-slot="props">
-        <td>
-          <v-checkbox
-              v-model="props.selected"
-              primary
-              hide-details
-          ></v-checkbox>
-        </td>
-        <td>{{ props.item.name }}</td>
+      <template v-slot:expanded-item="{item}">
+        <tr>
+          <td>
+            <v-btn color="primary" @click="addWish(item.id)">AJouter</v-btn>
+          </td>
+        </tr>
       </template>
     </v-data-table>
 
-    <v-btn color="primary" @click="APIGetStudents">Etudiants</v-btn>
   </div>
   </v-dialog>
 </template>
 
 <script>
 import StudentDataService from "@/service/StudentDataService";
+//import CompanyDataService from "@/service/CompanyDataService";
+import WishDataService from "@/service/WishDataService";
 
 export default {
 name: "AjoutVoeux",
   data () {
   return{
+    singleExpand: false,
     selected: [],
     profiles: [
     ],
@@ -51,7 +51,11 @@ name: "AjoutVoeux",
       },
       {
         text: 'Prénom du candidat',
-        value: 'firstname',
+        value: 'firstName',
+      },
+      {
+        text: 'Id',
+        value: 'id',
       },
     ],
   }
@@ -75,8 +79,7 @@ name: "AjoutVoeux",
   methods : {
 
     APIGetStudents(){
-      alert("test")
-      StudentDataService.get().then(response => {
+      StudentDataService.getAll().then(response => {
         alert(response.data)
         this.profiles = response.data;
       })
@@ -84,6 +87,19 @@ name: "AjoutVoeux",
             console.error(e);
           })
 
+    },
+
+    addWish (idUser) {
+      WishDataService.createVoeux(idUser).then(response => {
+        switch (response.status) {
+          case 200 :
+            alert("Ajout du voeux effectuée");
+            break;
+        }
+      })
+          .catch(e => {
+            console.error(e);
+          })
     },
 
     },

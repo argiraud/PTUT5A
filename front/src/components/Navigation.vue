@@ -37,15 +37,27 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home2">
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="depotOffre">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Dépôt d'offre d'apprentissage
-              / de candidature
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home3">
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="depotCandidature">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="white-space: normal">Dépôt de candidature
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="saisieVoeux">
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-list</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="saisieVoeuxEtudiant">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
