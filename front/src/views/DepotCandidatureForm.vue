@@ -56,6 +56,7 @@
 
 <script>
 import StudentDataService from "@/service/StudentDataService";
+import FileDataService from "@/service/FileDataService";
 
 export default {
 name: "DepotCandidatureForm",
@@ -71,7 +72,7 @@ name: "DepotCandidatureForm",
           text: 'Nom du fichier',
           align: 'start',
           sortable: false,
-          value: 'files.name',
+          value: 'idFile',
         }
       ],
 
@@ -108,16 +109,27 @@ name: "DepotCandidatureForm",
     },
 
     submitFile(){
-      /*
-              Initialize the form data
-          */
-      let formData = new FormData();
-
-      /*
-          Add the form data we need to submit
-      */
-      formData.append('file', this.file);
-
+      FileDataService.uploadUserFile(this.file, 1).then(response => {
+        console.log(response);
+        switch (response.status) {
+          case 201 :
+            alert("Ajout du document effectuée");
+            break;
+          case 400 :
+            alert("Titre, mots-clés ou description trop long");
+            break;
+          case 401 :
+            console.log("Authentification error");
+            break;
+          case 403:
+            console.log("No sufficient right");
+            break;
+        }
+      }).then(data => {
+        console.log(data);
+      }).catch(err => {
+        console.log(err);
+      });
     },
   },
 

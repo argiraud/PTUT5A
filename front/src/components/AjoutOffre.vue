@@ -94,7 +94,7 @@ name: "AjoutOffre",
     APIAddDocument(){
       let formData = new FormData();
       formData.append('file', this.filesObj);
-
+      console.log(window.sessionStorage.getItem("idOffer"));
       OfferDataService.uploadFile(formData, window.sessionStorage.getItem("idOffer")).then(response => {
         console.log(response);
         switch (response.status) {

@@ -79,8 +79,7 @@ name: "AjoutVoeux",
   methods : {
 
     APIGetStudents(){
-      alert("test")
-      StudentDataService.get().then(response => {
+      StudentDataService.getAll().then(response => {
         alert(response.data)
         this.profiles = response.data;
       })
