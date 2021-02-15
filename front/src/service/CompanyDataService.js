@@ -5,6 +5,10 @@ class CompanyDataService {
         return axiosAPI.get("/companies");
     }
 
+    getAllOffers(){
+        return axiosAPI.get("/company/offers");
+    }
+
     count(){
         return axiosAPI.get("/kpi/companies");
     }
@@ -14,8 +18,10 @@ class CompanyDataService {
     }
 
     create(data) {
-         return axiosAPI.post("/company/offer/create", data);
+         return axiosAPI.post("/company/offer", data);
      }
+
+
     //
     // update(id, data) {
     //     return http.put(`/tutorials/${id}`, data);
@@ -27,10 +33,6 @@ class CompanyDataService {
     //
     // deleteAll() {
     //     return http.delete(`/tutorials`);
-    // }
-    //
-    // findByTitle(title) {
-    //     return http.get(`/tutorials?title=${title}`);
     // }
 }
 

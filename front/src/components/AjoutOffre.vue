@@ -48,7 +48,7 @@
       <v-card-actions>
         <v-btn color="primary" @click="AddOffer">Ajouter</v-btn>
         <v-btn color="primary" @click="this.APIAddDocument">Ajouter File</v-btn>
-        <v-btn color="red" flat @click.stop="show=false">Fermer</v-btn>
+        <v-btn color="red" @click.stop="show=false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -56,6 +56,7 @@
 
 <script>
 import CompanyDataService from "@/service/CompanyDataService";
+import OfferDataService from "@/service/OfferDataService";
 
 export default {
 name: "AjoutOffre",
@@ -86,56 +87,51 @@ name: "AjoutOffre",
     AddOffer(){
         this.APIAddOffer();
         //this.APIAddDocument();
+        this.show = false;
     },
+
+
     APIAddDocument(){
-      const offer = {
-        file: this.filesObj,
-        idOffer: window.sessionStorage.getItem("idOffer"),
-      };
-      alert("test");
-      alert(window.sessionStorage.getItem("idOffer"));
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(offer),
-        headers: {
-          "accept": "*/*",
-          "Authorization": window.sessionStorage.getItem("UserToken"),
-          "Content-Type": "application/json"
-        }
-      };
-      fetch("https://api.polyrecrute.tk/company/offer/uploadFile", options).then(response => {
+      let formData = new FormData();
+      formData.append('file', this.filesObj);
+      console.log(window.sessionStorage.getItem("idOffer"));
+      OfferDataService.uploadFile(formData, window.sessionStorage.getItem("idOffer")).then(response => {
         console.log(response);
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
             break;
           case 400 :
-            alert("Title, key word or description is too long");
+            alert("Titre, mots-clés ou description trop long");
             break;
           case 401 :
-            alert("Authentification error");
+            console.log("Authentification error");
             break;
           case 403:
-            alert("No sufficient right");
+            console.log("No sufficient right");
             break;
         }
-        return response.json();
       }).then(data => {
         console.log(data);
       }).catch(err => {
         console.log(err);
       });
     },
+
     onFileChange(event){
       let fileData =  event.target.files[0];
       this.filesObj = fileData;
       console.log('file Object:==>',this.filesObj);
+
     },
+
+
     APIAddOffer(){
       const offer = {
         title: document.getElementById('title').value.toString(),
         keyWord: document.getElementById('keyWord').value.toString(),
         description: document.getElementById('description').value.toString(),
+        state : "available",
       };
       CompanyDataService.create(offer).then(response => {
         switch (response.status) {
@@ -143,6 +139,7 @@ name: "AjoutOffre",
             window.sessionStorage.setItem("idOffer", response.data.idOffer);
             window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
             alert("Ajout du document effectuée");
+            console.log(response.data)
             break;
         }
       })

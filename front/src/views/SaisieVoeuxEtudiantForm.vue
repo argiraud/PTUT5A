@@ -4,7 +4,7 @@
     <br>
 
     <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
-    <AjoutVoeux v-model="showScheduleForm" />
+    <AjoutVoeuxEtudiant v-model="showScheduleForm" />
 
     <br>
     <br>
@@ -37,25 +37,25 @@
 
     <br>
 
-  <v-btn
-      color="Valider"
-      class="mr-4"
-      @click="validate"
-      to="home"
-  >
-    Valider
-  </v-btn>
+    <v-btn
+        color="Valider"
+        class="mr-4"
+        @click="validate"
+        to="home"
+    >
+      Valider
+    </v-btn>
   </div>
 </template>
 
 <script>
-import AjoutVoeux from "@/components/AjoutVoeux";
+import AjoutVoeuxEtudiant from "@/components/AjoutVoeuxEtudiant";
 import WishDataService from "@/service/WishDataService";
 
 export default {
-  name: "SaisieVoeuxForm",
+name: "SaisieVoeuxEtudiantForm",
   components:{
-    AjoutVoeux
+    AjoutVoeuxEtudiant,
   },
   data () {
     return {
@@ -68,19 +68,25 @@ export default {
           text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'id',
+          value: 'idOffer',
         },
         {
-          text: 'Nom',
+          text: 'Titre',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'title',
         },
         {
-          text: 'Prénom',
+          text: 'Mots-clés',
           align: 'start',
           sortable: false,
-          value: 'firstName',
+          value: 'keyWord',
+        },
+        {
+          text: 'Description',
+          align: 'start',
+          sortable: false,
+          value: 'description',
         },
       ],
       wish: [
@@ -98,22 +104,6 @@ export default {
 
     deleteItemById (id) {
       if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
-        if (this.$store.state.currentUser.RoleId == 2){
-          const index = this.wish.findIndex(wish => wish.id === id); // find the post index
-          if (~index) // if the post exists in array
-            this.wish.splice(index, 1) //delete the post
-
-          WishDataService.deleteVoeuxEntreprise(id).then(response => {
-            switch (response.status) {
-              case 201 :
-                alert("Suppression effectuée");
-
-                break;
-            }
-          }).catch(e => {
-            console.error(e);
-          })
-        } else {
           const index = this.wish.findIndex(wish => wish.id === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post
@@ -130,19 +120,9 @@ export default {
           })
         }
 
-      }
-    },
+      },
 
     APIGetVoeux(){
-      if(this.$store.state.currentUser.RoleId == 2) {
-        let idEntity = this.$store.state.currentUser.Id;
-        WishDataService.getVoeuxEntreprise(idEntity).then(response => {
-          this.wish = response.data;
-        })
-            .catch(e => {
-              console.error(e);
-            })
-      } else {
         let idEntity = this.$store.state.currentUser.Id;
         WishDataService.getVoeuxEtudiant(idEntity).then(response => {
           this.wish = response.data;
@@ -151,9 +131,6 @@ export default {
               console.error(e);
             })
       }
-
-
-    }
 
   },
 

@@ -20,6 +20,18 @@ class OfferDataService {
     create(data) {
         return axiosAPI.post("/company/offer", data);
     }
+
+    delete(id) {
+        return axiosAPI.delete(`/company/offer?idOffer=${id}`);
+    }
+
+    uploadFile(formData, idOffer) {
+        return axiosAPI.post("company/offer/uploadFile", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }, idOffer)
+    }
     //
     // update(id, data) {
     //     return http.put(`/tutorials/${id}`, data);
