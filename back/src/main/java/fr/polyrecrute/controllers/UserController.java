@@ -4,6 +4,7 @@ import fr.polyrecrute.models.*;
 import fr.polyrecrute.responceType.Company;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.Question;
 import fr.polyrecrute.services.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,14 +38,16 @@ public class UserController {
     private final OfferService offerService;
     private final UserService userService;
     private final RoleService roleService;
+    private final QuestionService questionService;
 
     @Autowired
-    public UserController(EntityService entityService, CompanyService companyService, OfferService offerService, UserService userService, RoleService roleService) {
+    public UserController(EntityService entityService, CompanyService companyService, OfferService offerService, UserService userService, RoleService roleService, QuestionService questionService) {
         this.entityService = entityService;
         this.companyService = companyService;
         this.offerService = offerService;
         this.userService = userService;
         this.roleService = roleService;
+        this.questionService = questionService;
     }
 
     @Operation(summary = "Get entity details by id", description = "Get more details like first name, birth date, etc",
@@ -141,6 +144,33 @@ public class UserController {
         userService.addWantedOffer(user, offer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Add answer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "201", description = "answer was created", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @PostMapping(value = "/user/question", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addQuestion(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                      @RequestBody Question question) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        entityService.addQuestion(entity, question);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get answer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "answer", content = @Content(schema = @Schema(implementation = Question.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @PostMapping(value = "/user/question/{questionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Question>> getQuestion(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                      @Parameter(description = "questionId") @PathVariable long questionId) {
+        Entity__ entity = entityService.getEntityFromToken(token);
+        List<Question__> questions = questionService.findQuestionByNoQuestion(questionId);
+        return new ResponseEntity<>(questionService.getTransactionalObjectList(questions), HttpStatus.OK);
+    }
+
 
     @Operation(summary = "Company want one user", description = "",
             responses= {

@@ -5,6 +5,7 @@ import fr.polyrecrute.repository.EntityRepository;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
+import fr.polyrecrute.responceType.Question;
 import fr.polyrecrute.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EntityServiceImpl implements EntityService {
@@ -33,15 +32,17 @@ public class EntityServiceImpl implements EntityService {
     private final JwtUtils jwtUtils;
     private final FileService fileService;
     private final RoleService roleService;
+    private final QuestionService questionService;
 
     @Autowired
-    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService, RoleService roleService) {
+    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService, RoleService roleService, QuestionService questionService) {
         this.authenticationManager = authenticationManager;
         this.entityRepository = entityRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.fileService = fileService;
         this.roleService = roleService;
+        this.questionService = questionService;
     }
 
     @Override
@@ -186,6 +187,14 @@ public class EntityServiceImpl implements EntityService {
         entity.deleteFile(file);
         entityRepository.save(entity);
         fileService.deleteFile(file);
+    }
+
+    @Override
+    public void addQuestion(Entity__ entity, Question question) {
+        Question__ q = new Question__(question.getNoQuestion(), question.getAnswer(), entity);
+        questionService.create(q);
+        entity.addQuestion(q);
+        entityRepository.save(entity);
     }
 
 }

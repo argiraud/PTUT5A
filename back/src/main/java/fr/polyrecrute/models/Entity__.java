@@ -1,6 +1,7 @@
 package fr.polyrecrute.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.polyrecrute.controllers.UserController;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +43,9 @@ public class Entity__ implements UserDetails {
 
 	@OneToOne(targetEntity= Company__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Company__ company;
+
+	@OneToMany(targetEntity= Question__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Question__> questions = new HashSet<>();
 
 	@ManyToMany(targetEntity = Role__.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(	name = "entity_role",
@@ -184,5 +188,21 @@ public class Entity__ implements UserDetails {
 			return false;
 		Entity__ entity = (Entity__) o;
 		return Objects.equals(idEntity, entity.idEntity);
+	}
+
+	public Set<Question__> getQuestions() {
+		return questions;
+	}
+
+	public void addQuestion(Question__ q) {
+		questions.add(q);
+    }
+
+	public Question__ getQuestionsID(Long id) {
+		for(Question__ q : questions){
+			if (q.getNoQuestion() == id)
+				return q;
+		}
+		return null;
 	}
 }
