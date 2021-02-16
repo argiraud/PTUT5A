@@ -81,16 +81,26 @@ public class CompanyController {
         return new ResponseEntity<>(offer.getTransactionalObject(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get offer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Offere", content = @Content(schema = @Schema(implementation = Offer.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content)})
+    @GetMapping(value = "/company/{idOffer}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Offer> getOffer(@Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
+                                             @Parameter(description = "idOffer") @PathVariable String idOffer) {
+        Offer__ offer = offerService.findById(idOffer);
+        return new ResponseEntity<>(offer.getTransactionalObject(), HttpStatus.CREATED);
+    }
+
     @Operation(summary = "Company upload a file for one offer", description = "",
             responses= {
                     @ApiResponse(responseCode = "201", description = "File was upload", content = @Content(schema = @Schema(implementation = Offer.class))),
                     @ApiResponse(responseCode = "400", description = "Title, key word or description is too long", content = @Content),
-                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
-                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
-    @PostMapping(value = "/company/offer/uploadFile", produces = MediaType.APPLICATION_JSON_VALUE)
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content)})
+    @PostMapping(value = "/company/{idOffer}/uploadFile", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> uploadFileOffer(@RequestParam("file") MultipartFile pFile,
                                                  @Parameter(hidden = true) @RequestHeader(name = "Authorization") String token,
-                                                 @Parameter(description = "idOffer") String idOffer) {
+                                                 @Parameter(description = "idOffer") @PathVariable String idOffer) {
         Offer__ offer = offerService.findById(idOffer);
         if (!offer.getCompany().getIdCompany().equals(entityService.getEntityFromToken(token).getCompany().getIdCompany()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No sufficient right");
