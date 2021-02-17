@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="questions">
+  <v-container >
     <h1 class="text-center" style="margin-bottom: 10px">Questionnaire</h1>
     <p>{{ 'La communication sur l\'événement a été :' }}</p>
     <v-radio-group
@@ -70,7 +70,9 @@
           value="insuffisante"
       ></v-radio>
     </v-radio-group>
-    <p>{{ 'Avez-vous trouvé des profils de candidats (entreprise) et des offres d\'entreprise intéressantes (candidat)?' }}</p>
+    <p>{{
+        'Avez-vous trouvé des profils de candidats (entreprise) et des offres d\'entreprise intéressantes (candidat)?'
+      }}</p>
     <v-radio-group
         v-model="question4"
         mandatory
@@ -118,6 +120,8 @@
     </v-radio-group>
     <p>{{ 'Avez-vous trouvé l\'application simple d\'utilisation ?' }}</p>
     <v-textarea
+        :rules="questionRule"
+        required
         name="input-7-1"
         filled
         label="Votre réponse"
@@ -148,6 +152,8 @@
     </v-radio-group>
     <p>{{ 'Avez-vous des remarques à partager sur le déroulement de vos entretiens ?' }}</p>
     <v-textarea
+        :rules="questionRule"
+        required
         name="input-7-1"
         filled
         label="Votre réponse"
@@ -155,40 +161,68 @@
     ></v-textarea>
     <p>{{ 'Selon vous, quels sont les points positifs du Forum virtuel ?' }}</p>
     <v-textarea
+        :rules="questionRule"
+        required
         name="input-7-1"
         filled
         label="Votre réponse"
         auto-grow
     ></v-textarea>
     <p>{{ 'Selon vous, quelles sont les améliorations à apporter ?' }}</p>
-    <v-textarea
+    <v-text-field
+        :rules="questionRule"
+        required
         name="input-7-1"
         filled
         label="Votre réponse"
         auto-grow
-    ></v-textarea>
+        style="margin-right: 50px"
+    ></v-text-field>
     <p>{{ 'Avez-vous d\'autres retours/suggestions à partager concernant le Forum virtuel ?' }}</p>
     <v-textarea
+        :rules="questionRule"
+        required
         name="input-7-1"
         filled
         label="Votre réponse"
         auto-grow
     ></v-textarea>
-
+    <div class="text-center">
+      <v-btn
+          color="Valider"
+          class="mr-4"
+          @click="validate"
+      >
+        Valider
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
 <script>
 export default {
-name: "Survey"
+  name: "Survey",
+  data: () => ({
+    questionRule: [
+      v => !!v || 'Une réponse est requise'
+    ],
+  }),
+
+  methods: {
+    validate() {
+
+    }
+  }
 }
 </script>
 
 <style scoped>
-  .questions {
-    margin-left: 50px;
-  }
-  .radio-group {
-    margin-left: 70px;
-  }
+.questions {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.radio-group {
+  margin-left: 70px;
+}
 </style>
