@@ -202,8 +202,7 @@ public class UserController {
         Entity__ entity = entityService.findByUserId(idUser);
         if (entity.getUser() == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        List<Offer__> offers = new ArrayList<>(entity.getUser().getWantedOffer());
-        return new ResponseEntity<>(offerService.getTransactionalObjectList(offers), HttpStatus.OK);
+        return new ResponseEntity<>(offerService.getTransactionalObjectList(entity.getUser().getWantedOffer()), HttpStatus.OK);
     }
 
     @Operation(summary = "Companies who wanted user", description = "",

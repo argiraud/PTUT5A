@@ -143,8 +143,7 @@ public class CompanyController {
     @GetMapping(value = "/company/{idEntity}/offers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Offer>> getOffersByCompany(@Parameter(description = "idEntity") @PathVariable long idEntity) {
         Entity__ entity = entityService.findByUserId(idEntity);
-        List<Offer__> offers = new ArrayList<>(entity.getCompany().getOffers());
-        return new ResponseEntity<>(offerService.getTransactionalObjectList(offers), HttpStatus.CREATED);
+        return new ResponseEntity<>(offerService.getTransactionalObjectList(entity.getCompany().getOffers()), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Get all companies", description = "",

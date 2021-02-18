@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -71,6 +72,16 @@ public class OfferServiceImpl implements OfferService {
         return offerRepository.findAllByIdOfferNotNull();
     }
 
+    @Transactional
+    public List<Offer> getTransactionalObjectList(Set<Offer__> pOffers){
+        List<Offer> offers = new ArrayList<>();
+        for (Offer__ offer : pOffers){
+            offers.add(offer.getTransactionalObject());
+        }
+        return offers;
+    }
+
+    @Transactional
     public List<Offer> getTransactionalObjectList(List<Offer__> pOffers){
         List<Offer> offers = new ArrayList<>();
         for (Offer__ offer : pOffers){
