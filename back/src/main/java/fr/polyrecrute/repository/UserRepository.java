@@ -12,4 +12,6 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User__, Long> {
     List<User__> findDistinctByWantedOfferIn(Set<Offer__> wantedOffer);
+    long countAllByWantedOfferIsNull();
+    long count();
 }

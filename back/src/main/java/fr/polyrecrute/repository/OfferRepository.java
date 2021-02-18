@@ -13,6 +13,7 @@ public interface OfferRepository extends JpaRepository<Offer__, Long> {
     Optional<Offer__> findByIdOffer(String idOffer);
     List<Offer__> findAllByIdOfferNotNull();
     List<Offer__> findAllByCompany(Company__ company);
+    long countAllByStateEquals(String state);
     long count();
     long countAllByValidateIsFalse();
 }

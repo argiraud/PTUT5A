@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public long countUserWithoutOffer(){
+        return  userRepository.countAllByWantedOfferIsNull() - (userRepository.count() - entityService.countAllStudents());
+    }
+
+    @Override
     public void deleteWantedOffer(User__ user, Offer__ offer) {
         user.deleteWantedOffer(offer);
         userRepository.save(user);

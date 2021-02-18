@@ -16,4 +16,5 @@ public interface UserService {
     void deleteWantedOffer(User__ user, Offer__ offer);
     void addWantedOffer(User__ user, Offer__ offer);
     List<User__> findUserWhoWantedOffer(Set<Offer__> offers);
+    public long countUserWithoutOffer();
 }

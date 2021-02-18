@@ -62,6 +62,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public long countAllByState(String state) {
+        return offerRepository.countAllByStateEquals(state);
+    }
+
+    @Override
     public long countOffersPending() {
         return offerRepository.countAllByValidateIsFalse();
     }

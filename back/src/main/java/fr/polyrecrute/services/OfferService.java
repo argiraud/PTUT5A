@@ -19,4 +19,5 @@ public interface OfferService {
     List<Offer> getTransactionalObjectList(List<Offer__> pOffers);
     void delete(Offer__ offer);
     void update(Offer upOffer, Offer__ offer);
+    long countAllByState(String state);
 }
