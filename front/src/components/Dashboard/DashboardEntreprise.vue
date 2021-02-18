@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-account" title="Entreprises" v-bind:text="nbCompanies"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="0"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="test"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -13,12 +13,32 @@
         <v-card
             elevation="10"
         >
-          <v-card-title class="display-1"> Liste des entreprises</v-card-title>
+          <v-card-title> Liste des entreprises
+            <v-spacer></v-spacer>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+            ></v-text-field>
+          </v-card-title>
           <v-data-table
               :headers="headers"
               :items="companies"
-              :items-per-page="5"
-          ></v-data-table>
+              :items-per-page="10"
+              :search="search"
+          >
+            <template v-slot:[`item.actions`]="{ item }">
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+          </v-data-table>
         </v-card>
 
       </v-col>
@@ -35,11 +55,12 @@ export default {
   components: {DashboardCard},
   data() {
     return {
+      search: '',
       companies: [],
       nbCompanies: 0,
       headers: [
-        {text: "Id", align: "start", value: "idEntity", sortable: true},
-        {text: "Nom", value: "name", sortable: true},
+        {text: "Nom", align: "start", value: "name", sortable: true},
+        {text: '', value: 'actions', sortable: false },
       ],
     }
   },
@@ -47,7 +68,7 @@ export default {
     getAllCompanies() {
       CompanyDataService.getAll()
           .then(response => {
-            this.companies = response.data.response;
+            this.companies = response.data;
           })
           .catch(e => {
             console.error(e);

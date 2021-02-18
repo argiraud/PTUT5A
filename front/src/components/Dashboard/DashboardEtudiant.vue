@@ -2,10 +2,10 @@
   <v-container>
     <v-row>
       <v-col>
-        <DashboardCard color="blue" icon="mdi-account" title="Etudiants" text="28"></DashboardCard>
+        <DashboardCard color="blue" icon="mdi-account" title="Etudiants" v-bind:text="nbStudents"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="orange" icon="mdi-account" title="Etudiants sans offres" text="28"></DashboardCard>
+        <DashboardCard color="orange" icon="mdi-account" title="Etudiants sans offres" text="test"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -13,13 +13,33 @@
         <v-card
             elevation="10"
         >
-          <v-card-title class="display-1"> Liste des étudiants</v-card-title>
+          <v-card-title> Liste des étudiants
+            <v-spacer></v-spacer>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+            ></v-text-field>
+          </v-card-title>
           <v-data-table
               :headers="headers"
-              :items="etudiants"
+              :items="students"
               :items-per-page="10"
               class="elevation-1"
-          ></v-data-table>
+              :search="search"
+          >
+            <template v-slot:[`item.actions`]="{ item }">
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+          </v-data-table>
         </v-card>
       </v-col>
     </v-row>
@@ -36,11 +56,14 @@ export default {
   components: {DashboardCard},
   data() {
     return {
+      search: '',
       students: [],
       nbStudents: 0,
       headers: [
-        {text: "Id", align: "start", value: "idEntity", sortable: true},
-        {text: "Nom", value: "name", sortable: true},
+        {text: "Nom", align: "start", value: "name", sortable: true},
+        {text: "Prénom", value: "firstName", sortable: true},
+        {text: "Email", value: "email", sortable: true},
+        {text: '', value: 'actions', sortable: false },
       ],
     }
   },
@@ -57,7 +80,7 @@ export default {
     countStudents() {
       StudentDataService.count()
           .then(response => {
-            this.nbStudents = response.data;
+            this.nbStudents = response.data.response;
           })
           .catch(e => {
             console.error(e);

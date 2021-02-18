@@ -2,11 +2,15 @@ import {axiosAPI} from "@/http-common";
 
 class OfferDataService {
     getAll() {
-        return axiosAPI.get("/companies");
+        return axiosAPI.get("/company/offers");
     }
 
     count(){
-        return axiosAPI.get("/kpi/companies");
+        return axiosAPI.get("/kpi/companies/offers");
+    }
+
+    countPendingOffers(){
+        return axiosAPI.get("/kpi/companies/offer/pending");
     }
 
      get(id) {

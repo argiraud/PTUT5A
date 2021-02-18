@@ -27,10 +27,6 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-import interceptorsSetup from '@/interceptor'
-
-interceptorsSetup()
-
 new Vue({
     el: '#app',
     router,
