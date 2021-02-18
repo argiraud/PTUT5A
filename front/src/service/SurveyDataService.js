@@ -1,48 +1,13 @@
 import {axiosAPI} from "@/http-common";
 
 class SurveyDataService {
-    getAll() {
-        return axiosAPI.get("/students");
+    addAnswer(question) {
+        return axiosAPI.post("/user/question", question);
     }
 
-    count(){
-        return axiosAPI.get("/kpi/users");
+    getAnswer(questionId){
+        return axiosAPI.post(`/user/question/${questionId}`)
     }
-
-     getUserDetails(userId) {
-         return axiosAPI.get(`/user/details/${userId}`);
-     }
-
-     getConnectedUser() {
-         return axiosAPI.get(`/user/details`);
-     }
-
-    setNewUserPassword(password) {
-        return axiosAPI.patch(`/user/password?password=${password}`);
-    }
-
-    updateUserInfos(user){ //On envoie un utilisateur au format JSON
-        return axiosAPI.patch(`/user`,user);
-    }
-    // create(data) {
-    //     return http.post("/tutorials", data);
-    // }
-    //
-    // update(id, data) {
-    //     return http.put(`/tutorials/${id}`, data);
-    // }
-    //
-    // delete(id) {
-    //     return http.delete(`/tutorials/${id}`);
-    // }
-    //
-    // deleteAll() {
-    //     return http.delete(`/tutorials`);
-    // }
-    //
-    // findByTitle(title) {
-    //     return http.get(`/tutorials?title=${title}`);
-    // }
 }
 
 export default new SurveyDataService();

@@ -6,7 +6,7 @@
     >
       <p>{{ 'La communication sur l\'événement a été :' }}</p>
       <v-radio-group
-          v-model="question1"
+          v-model="answers[0]"
           mandatory
           class="radio-group"
       >
@@ -29,7 +29,7 @@
       </v-radio-group>
       <p>{{ 'Les informations délivrées sur l\'événement ont été :' }}</p>
       <v-radio-group
-          v-model="question2"
+          v-model="answers[1]"
           mandatory
           class="radio-group"
       >
@@ -52,7 +52,7 @@
       </v-radio-group>
       <p>{{ 'Globalement, est-ce que le Forum virtuel a correspondu à vos attentes ?' }}</p>
       <v-radio-group
-          v-model="question3"
+          v-model="answers[2]"
           mandatory
           class="radio-group"
       >
@@ -77,7 +77,7 @@
           'Avez-vous trouvé des profils de candidats (entreprise) et des offres d\'entreprise intéressantes (candidat)?'
         }}</p>
       <v-radio-group
-          v-model="question4"
+          v-model="answers[3]"
           mandatory
           class="radio-group"
       >
@@ -100,7 +100,7 @@
       </v-radio-group>
       <p>{{ 'Avez-vous trouvé l\'application simple d\'utilisation ?' }}</p>
       <v-radio-group
-          v-model="question5"
+          v-model="answers[5]"
           mandatory
           class="radio-group"
       >
@@ -123,7 +123,7 @@
       </v-radio-group>
       <p>{{ 'Avez-vous trouvé l\'application simple d\'utilisation ?' }}</p>
       <v-textarea
-          v-model="question6"
+          v-model="answers[6]"
           :rules="questionRule"
           required
           name="input-7-1"
@@ -187,7 +187,7 @@
       ></v-textarea>
       <p>{{ 'Avez-vous d\'autres retours/suggestions à partager concernant le Forum virtuel ?' }}</p>
       <v-textarea
-          v-model="question11"
+          v-model="answers[11]"
           :rules="questionRule"
           required
           name="input-7-1"
@@ -210,10 +210,14 @@
 </template>
 
 <script>
+import SurveyDataService from "@/service/SurveyDataService";
+import {mapState} from "vuex";
+
 export default {
   name: "Survey",
   data: () => ({
     valid: false,
+    answers: [],
     question1: '',
     question2: '',
     question3: '',
@@ -229,11 +233,27 @@ export default {
       v => !!v || 'Une réponse est requise'
     ],
   }),
-
   methods: {
     validate() {
-
+      for (let i = 0; i < this.answers.length; i++) {
+        const data = {
+          noQuestion: i,
+          answer: this.answers[i],
+          user: this.currentUser
+        };
+        SurveyDataService.addAnswer(data);
+      }
+      // for (let i = 0; i < this.answers.length; i++) {
+      //   SurveyDataService.getAnswer(i).then(response => {
+      //     console.log(response.data);
+      //   })
+      // }
     }
+  },
+  computed: {
+    ...mapState({
+      currentUser: 'currentUser'
+    }),
   }
 }
 </script>
