@@ -9,7 +9,11 @@ class StudentDataService {
         return axiosAPI.get("/kpi/users");
     }
 
-     getConnectedUser(userId) {
+     getConnectedUser() {
+         return axiosAPI.get(`/user/details`);
+     }
+
+     getUserById(userId){
          return axiosAPI.get(`/user/details/${userId}`);
      }
 
@@ -23,6 +27,10 @@ class StudentDataService {
 
     updateUserInfos(user){ //On envoie un utilisateur au format JSON
         return axiosAPI.patch(`/user`,user);
+    }
+
+    CompaniesWhoWantedMe(userId) {//Retourne la liste des entreprises qui m'ont mis dans leurs voeux
+        return axiosAPI.get(`/user/${userId}/cpompanyWhowanted`);
     }
     // create(data) {
     //     return http.post("/tutorials", data);

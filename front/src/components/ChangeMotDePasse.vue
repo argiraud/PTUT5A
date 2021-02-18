@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-btn
-                :disabled="$route.params.id != null && $route.params.id != currentUser.Id && !currentUser.IsAdmin"
+                :disabled="isDisabled"
                 rounded outlined color="teal accent-3"
                 @click="ShowPopUp"
                 v-if="!isPopUpShown"
@@ -58,6 +58,7 @@
 
 <script>
     import StudentDataService from "@/service/StudentDataService";
+    import {mapState} from 'vuex';
 
     export default {
         name: "ChangeMotDePasse",
@@ -110,6 +111,26 @@
             },
             mdpConfirmationRule2(value){
                 return value == this.mdp || "Les deux mots de passe ne sont pas identiques";
+            }
+        },
+        computed: {
+            ...mapState({
+                isConnected: 'isConnected',
+                currentUser: 'currentUser',
+                profileUserInfos : 'profileUserInfos'
+            }),
+            isDisabled(){
+                if(this.currentUser.IsAdmin){
+                    return false;
+                }else
+                {
+                    if (this.currentUser.Id !== this.profileUserInfos.Id)
+                    {
+                        return true
+                    } else {
+                        return false;
+                    }
+                }
             }
         }
     }
