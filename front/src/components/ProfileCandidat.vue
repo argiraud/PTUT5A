@@ -7,10 +7,19 @@
         <v-snackbar v-model="snackbarSuccess" multi-line top color="success">
             {{Message}}
         </v-snackbar>
+        <p>
+            currentuser
+            {{currentUser.Id}}
+        </p>
+        <p>
+            profileUserInfos
+            {{profileUserInfos.Id}}
+            {{ isDisabled}}
+        </p>
         <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
-                    v-model="currentUser.Name"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Name"
                     :rules="nameRules"
                     id="name"
                     label="Nom"
@@ -21,8 +30,8 @@
             ></v-text-field>
 
             <v-text-field
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
-                    v-model="currentUser.Firstname"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Firstname"
                     :rules="nameRules"
                     id="firstname"
                     label="Prénom"
@@ -32,8 +41,8 @@
                     required
             ></v-text-field>
             <v-text-field
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
-                    v-model="currentUser.StudentNumber"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.StudentNumber"
                     id="studentNumber"
                     :counter="8"
                     :rules="studentNumberRules"
@@ -43,7 +52,7 @@
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
             <v-menu
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    :disabled="isDisabled"
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
@@ -57,8 +66,9 @@
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
+                            :disabled="isDisabled"
                             id="birthDate"
-                            v-model="currentUser.BirthDate"
+                            v-model="profileUserInfos.BirthDate"
                             label="Date de naissance"
                             readonly
                             v-on="on"
@@ -67,7 +77,7 @@
                 </template>
                 <v-date-picker
                         ref="picker"
-                        v-model="currentUser.BirthDate"
+                        v-model="profileUserInfos.BirthDate"
                         hint="MM/DD/YYYY format"
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
@@ -77,8 +87,8 @@
             </v-menu>
 
             <v-text-field
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
-                    v-model="currentUser.Email"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Email"
                     id="emailInscription"
                     :rules="emailRules"
                     prepend-inner-icon="email"
@@ -87,11 +97,11 @@
                     required
             ></v-text-field>
             <v-select
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    :disabled="isDisabled"
                     id="comboStatus"
                     label="Renseignez votre status actuel"
                     small-chips
-                    v-model="currentUser.Status"
+                    v-model="profileUserInfos.Status"
                     :items="items"
             >
                 <template v-slot:selection="{ item, selected }">
@@ -118,15 +128,17 @@
                 </template>
             </v-select>
             <v-textarea
-                    :disabled="$route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin"
+                    :disabled="isDisabled"
                     name="presentation"
-                    v-model="currentUser.Presentation"
+                    v-model="profileUserInfos.Presentation"
                     id="presentation"
                     prepend-inner-icon="create"
                     type="text"
                     label="Présentation"
             ></v-textarea>
-            <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
+            <div :hidden="isDisabled">
+                <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
+            </div>
 
             <div class="text-center mt-n5">
                 <v-btn
@@ -134,20 +146,22 @@
                         rounded outlined
                         color="teal accent-3"
                         @click="save"
-                        :disabled="!valid || ($route.params.id != null && $route.params.id !== currentUser.Id && !currentUser.IsAdmin)">Enregistrer</v-btn>
+                        :disabled="!valid || isDisabled">Enregistrer</v-btn>
             </div>
         </v-form>
         <p></p>
-        <v-card
-                elevation="10"
-        >
-            <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
-            <v-data-table
-                    :headers="headers"
-                    :items="companies"
-                    :items-per-page="5"
-            ></v-data-table>
-        </v-card>
+        <div :hidden="isDisabled">
+            <v-card
+                    elevation="10"
+            >
+                <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+                <v-data-table
+                        :headers="headers"
+                        :items="companies"
+                        :items-per-page="5"
+                ></v-data-table>
+            </v-card>
+        </div>
     </v-container>
 </template>
 
@@ -176,10 +190,19 @@
                         color: 'red',
                         value: 'finished'
                     }],
-            companies: [],//A remplir
+            companies: [],
             headers: [
-                {text: "Id", align: "start", value: "idEntity", sortable: true},
-                {text: "Nom", value: "name", sortable: true},
+                {
+                    text: "Id",
+                    align: "start",
+                    value: "idEntity",
+                    sortable: true
+                },
+                {
+                    text: "Nom",
+                    value: "name",
+                    sortable: true
+                },
             ],
             snackbarSuccess : false,
             snackbarError : false,
@@ -212,19 +235,19 @@
         },
         methods:{
             save(){
-                let currentuser = this.currentUser;
+                let userToModify = this.profileUserInfos;
                 let user = {
-                    "id" : currentuser.Id,
-                    "name" : currentuser.Name,
-                    "email" : currentuser.Email,
-                    "presentation" : currentuser.Presentation,
+                    "id" : userToModify.Id,
+                    "name" : userToModify.Name,
+                    "email" : userToModify.Email,
+                    "presentation" : userToModify.Presentation,
                     "roles" : [],
                     "files" : [],
                     "enable" : "",
-                    "firstName" : currentuser.Firstname,
-                    "etudiantNumber" : currentuser.StudentNumber,
-                    "birthDate" : currentuser.BirthDate,
-                    "status" : currentuser.Status,
+                    "firstName" : userToModify.Firstname,
+                    "etudiantNumber" : userToModify.StudentNumber,
+                    "birthDate" : userToModify.BirthDate,
+                    "status" : userToModify.Status,
                 };
                 StudentDataService.updateUserInfos(user).then(response => {
                     console.log("response : ")
@@ -275,14 +298,33 @@
                this.getAllVoeux();
             },
             getAllVoeux(){
-                //Je remplie mon tableau de company m'ayant mis dans leurs voeux.
+                let userId = this.currentUser.Id;
+                StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
+                    console.log("getAllVoeux : ");
+                    console.log(response.data);
+                    this.companies = response.data;
+                })
             }
             },
         computed: {
             ...mapState({
                 isConnected: 'isConnected',
-                currentUser: 'currentUser'
+                currentUser: 'currentUser',
+                profileUserInfos : 'profileUserInfos'
             }),
+            isDisabled(){
+                if(this.currentUser.IsAdmin){
+                    return false;
+                }else
+                {
+                    if (this.currentUser.Id !== this.profileUserInfos.Id)
+                    {
+                        return true
+                    } else {
+                        return false;
+                    }
+                }
+            }
         }
     }
 </script>
