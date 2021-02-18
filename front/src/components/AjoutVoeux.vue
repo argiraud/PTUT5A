@@ -31,7 +31,6 @@
 
 <script>
 import StudentDataService from "@/service/StudentDataService";
-//import CompanyDataService from "@/service/CompanyDataService";
 import WishDataService from "@/service/WishDataService";
 
 export default {
@@ -94,6 +93,7 @@ name: "AjoutVoeux",
         switch (response.status) {
           case 200 :
             alert("Ajout du voeux effectuée");
+            this.$emit("add-wish", "true")
             break;
         }
       })

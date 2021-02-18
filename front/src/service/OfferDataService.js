@@ -17,6 +17,10 @@ class OfferDataService {
         return axiosAPI.get(`/company/offers`);
     }
 
+    getOfferById(idOffer) {
+        return axiosAPI.get(`/company/${idOffer}`);
+    }
+
     create(data) {
         return axiosAPI.post("/company/offer", data);
     }
@@ -25,12 +29,20 @@ class OfferDataService {
         return axiosAPI.delete(`/company/offer?idOffer=${id}`);
     }
 
-    uploadFile(formData, idOffer) {
-        return axiosAPI.post("company/offer/uploadFile", formData, {
+    update(offer){
+        return axiosAPI.patch(`/company/offer`, offer);
+    }
+
+    uploadFile(file, idOffer) {
+        let formData = new FormData();
+
+        formData.append("file", file);
+
+        return axiosAPI.post(`company/${idOffer}/uploadFile`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }, idOffer)
+        })
     }
     //
     // update(id, data) {

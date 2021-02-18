@@ -47,7 +47,6 @@
 
       <v-card-actions>
         <v-btn color="primary" @click="AddOffer">Ajouter</v-btn>
-        <v-btn color="primary" @click="this.APIAddDocument">Ajouter File</v-btn>
         <v-btn color="red" @click.stop="show=false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
@@ -64,6 +63,7 @@ name: "AjoutOffre",
     filesObj:{},
     valid: true,
     title: '',
+    fileData:'',
     titleRules: [
       v => !!v || 'le titre est requis'
     ],
@@ -92,10 +92,8 @@ name: "AjoutOffre",
 
 
     APIAddDocument(){
-      let formData = new FormData();
-      formData.append('file', this.filesObj);
-      console.log(window.sessionStorage.getItem("idOffer"));
-      OfferDataService.uploadFile(formData, window.sessionStorage.getItem("idOffer")).then(response => {
+      let idOffer = window.sessionStorage.getItem("idOffer")
+      OfferDataService.uploadFile(this.filesObj, idOffer).then(response => {
         console.log(response);
         switch (response.status) {
           case 201 :
@@ -119,8 +117,8 @@ name: "AjoutOffre",
     },
 
     onFileChange(event){
-      let fileData =  event.target.files[0];
-      this.filesObj = fileData;
+      this.fileData =  event.target.files[0];
+      this.filesObj = this.fileData;
       console.log('file Object:==>',this.filesObj);
 
     },
@@ -136,10 +134,18 @@ name: "AjoutOffre",
       CompanyDataService.create(offer).then(response => {
         switch (response.status) {
           case 201 :
+            this.description = '';
+            this.keyWord = '';
+            this.title = '';
             window.sessionStorage.setItem("idOffer", response.data.idOffer);
             window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
-            alert("Ajout du document effectuée");
-            console.log(response.data)
+
+            if (this.fileData != ''){
+              this.APIAddDocument();
+
+            }
+            alert("Ajout de l'offre effectuée");
+            this.$emit("add-doc", "true")
             break;
         }
       })

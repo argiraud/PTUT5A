@@ -123,7 +123,7 @@ export default {
         this.$store.commit('CONNEXION_MANAGEMENT', false);
       }else{
         this.$store.commit('CONNEXION_MANAGEMENT', true);
-        StudentDataService.getConnectedUser().then(response => {
+        StudentDataService.getConnectedUserDetails().then(response => {
           switch (response.status) {
             case 200 :
               this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);

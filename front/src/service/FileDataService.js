@@ -17,6 +17,16 @@ class FileDataService {
     getFiles() {
         return axiosAPI.get("/files");
     }
+
+    deleteFile(id) {
+        return axiosAPI.delete(`/utils/file?idFile=${id}`);
+    }
+
+    getFileById(id){
+        return axiosAPI.get(`/utils/file/${id}`, {
+            responseType: 'arraybuffer'
+        });
+    }
 }
 
 export default new FileDataService();
