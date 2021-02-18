@@ -218,17 +218,6 @@ export default {
   data: () => ({
     valid: false,
     answers: [],
-    question1: '',
-    question2: '',
-    question3: '',
-    question4: '',
-    question5: '',
-    question6: '',
-    question7: '',
-    question8: '',
-    question9: '',
-    question10: '',
-    question11: '',
     questionRule: [
       v => !!v || 'Une réponse est requise'
     ],
@@ -243,11 +232,6 @@ export default {
         };
         SurveyDataService.addAnswer(data);
       }
-      // for (let i = 0; i < this.answers.length; i++) {
-      //   SurveyDataService.getAnswer(i).then(response => {
-      //     console.log(response.data);
-      //   })
-      // }
     }
   },
   computed: {
