@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
     public Offer__ findById(String idOffer) {
         return offerRepository.findByIdOffer(idOffer)
                 .orElseThrow(() -> {throw new ResponseStatusException(
@@ -64,6 +66,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
     public List<Offer__> getOffers() {
         return offerRepository.findAllByIdOfferNotNull();
     }

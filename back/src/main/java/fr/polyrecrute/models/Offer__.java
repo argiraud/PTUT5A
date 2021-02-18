@@ -4,6 +4,7 @@ import fr.polyrecrute.responceType.Offer;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
