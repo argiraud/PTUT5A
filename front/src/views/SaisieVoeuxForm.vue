@@ -4,7 +4,7 @@
     <br>
 
     <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
-    <AjoutVoeux v-model="showScheduleForm" />
+    <AjoutVoeux v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
     <br>
@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       expanded: [],
-      singleExpand: false,
+      singleExpand: true,
       showScheduleForm: false,
       selected: [],
       headers: [
@@ -95,10 +95,13 @@ export default {
 
     },
 
+    refresh(){
+      this.APIGetVoeux();
+    },
+
 
     deleteItemById (id) {
       if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
-        if (this.$store.state.currentUser.RoleId == 2){
           const index = this.wish.findIndex(wish => wish.id === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post
@@ -113,28 +116,11 @@ export default {
           }).catch(e => {
             console.error(e);
           })
-        } else {
-          const index = this.wish.findIndex(wish => wish.id === id); // find the post index
-          if (~index) // if the post exists in array
-            this.wish.splice(index, 1) //delete the post
-
-          WishDataService.deleteVoeuxEtudiant(id).then(response => {
-            switch (response.status) {
-              case 201 :
-                alert("Suppression effectuée");
-
-                break;
-            }
-          }).catch(e => {
-            console.error(e);
-          })
-        }
 
       }
     },
 
     APIGetVoeux(){
-      if(this.$store.state.currentUser.RoleId == 2) {
         let idEntity = this.$store.state.currentUser.Id;
         WishDataService.getVoeuxEntreprise(idEntity).then(response => {
           this.wish = response.data;
@@ -142,16 +128,6 @@ export default {
             .catch(e => {
               console.error(e);
             })
-      } else {
-        let idEntity = this.$store.state.currentUser.Id;
-        WishDataService.getVoeuxEtudiant(idEntity).then(response => {
-          this.wish = response.data;
-        })
-            .catch(e => {
-              console.error(e);
-            })
-      }
-
 
     }
 

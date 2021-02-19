@@ -13,6 +13,10 @@ class StudentDataService {
          return axiosAPI.get(`/user/details/${userId}`);
      }
 
+    getConnectedUserDetails() {
+        return axiosAPI.get(`/user/details/`);
+    }
+
     setNewUserPassword(password) {
         return axiosAPI.patch(`/user/password?password=${password}`);
     }

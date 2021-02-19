@@ -11,7 +11,7 @@
           :headers="headers"
           :items="profiles"
           :single-expand="singleExpand"
-          item-key="name"
+          item-key="title"
           :items-per-page="5"
           class="elevation-1"
           show-expand
@@ -37,7 +37,7 @@ export default {
   name: "AjoutVoeuxEtudiant",
   data () {
     return{
-      singleExpand: false,
+      singleExpand: true,
       selected: [],
       profiles: [
       ],
@@ -46,11 +46,7 @@ export default {
           text: 'Nom entreprise',
           align: 'start',
           sortable: false,
-          value: 'name',
-        },
-        {
-          text: 'Id',
-          value: 'idOffer',
+          value: 'company.name',
         },
         {
           text: 'Titre',
@@ -89,6 +85,7 @@ export default {
       CompanyDataService.getAllOffers()
           .then(response => {
             this.profiles = response.data;
+            console.log(response.data);
           })
           .catch(e => {
             console.error(e);
@@ -98,9 +95,11 @@ export default {
 
     addWish (idOffer) {
       WishDataService.createVoeuxEtudiant(idOffer).then(response => {
+        console.log(response)
         switch (response.status) {
-          case 201 :
+          case 200 :
             alert("Ajout du voeux effectuée");
+            this.$emit("add-wish", "true")
             break;
         }
       })
