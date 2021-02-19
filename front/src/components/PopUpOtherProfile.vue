@@ -146,26 +146,51 @@
             </v-form>
             <br/>
             <div :hidden="!currentUser.IsAdmin">
+            <v-card
+                    elevation="10"
+            >
+                <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+                <v-data-table
+                        :headers="headers"
+                        :items="companies"
+                        :items-per-page="5"
+                >
+                </v-data-table>
+            </v-card>
+            <br />
+            <br />
+            </div>
+            <div v-if="popUpUser.RoleId == 1">
                 <v-card
                         elevation="10"
                 >
-                    <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+                    <v-card-title>Mes documents déposés</v-card-title>
                     <v-data-table
-                            :headers="headers"
-                            :items="companies"
+                            :headers="headers2"
+                            :items="candidatures"
+                            item-key="name"
+                            show-expand
                             :items-per-page="5"
+                            class="elevation-1"
                     >
+                        <template v-slot:[`item.actions`]="{ item }">
+                            <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+                        </template>
                     </v-data-table>
                 </v-card>
             </div>
+
         </v-card>
     </v-dialog>
 </template>
 
 <script>
 import StudentDataService from "@/service/StudentDataService";
+import FileDataService from "@/service/FileDataService";
 import {mapState} from "vuex";
+import ChangeMotDePasse from "@/components/ChangeMotDePasse"
 export default {
+    components: {ChangeMotDePasse},
     name: "PopUpOtherProfile",
     props: ['idUserToDisplay'],
     data: () => ({
@@ -196,6 +221,20 @@ export default {
                 text: "Nom",
                 value: "name",
                 sortable: true
+            }
+        ],
+        candidatures: [],
+        headers2: [
+            {
+                text: 'Nom du fichier',
+                align: 'start',
+                sortable: false,
+                value: 'name',
+            },
+            {
+                text: '',
+                value: 'actions',
+                sortable: false
             }
         ],
         items: [
@@ -244,6 +283,7 @@ export default {
                     console.log(response.data)
                     this.setpopUpUser(response.data);
                     this.getAllVoeux();
+                    this.APIGetCandidature();
                     break;
             }
         }).catch(err => {
@@ -266,6 +306,75 @@ export default {
                 this.popUpUser.RoleId = '';
             }
         },
+        openItemById (idFile, title) {
+            FileDataService.getFileById(idFile).then(response => {
+                console.log(title)
+                const url = window.URL.createObjectURL(new Blob([response.data]))
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', title)
+                document.body.appendChild(link)
+                link.click()
+            }).catch(e => {
+                console.error(e);
+            })
+        },
+        APIGetCandidature(){
+            StudentDataService.getUserById(this.popUpUser.Id).then(response => {
+                console.log(response.data.files);
+                this.candidatures = response.data.files;
+            })
+                    .catch(e => {
+                        console.error(e);
+                    })
+        },
+        save(){
+            let userToModify = this.popUpUser;
+            let user = {
+                "id" : userToModify.Id,
+                "name" : userToModify.Name,
+                "email" : userToModify.Email,
+                "presentation" : userToModify.Presentation,
+                "roles" : [],
+                "files" : [],
+                "enable" : "",
+                "firstName" : userToModify.Firstname,
+                "etudiantNumber" : userToModify.StudentNumber,
+                "birthDate" : userToModify.BirthDate,
+                "status" : userToModify.Status,
+            };
+            StudentDataService.updateUserInfos(user).then(response => {
+                console.log("response : ")
+                console.log(response)
+                var payload;
+                switch(response.status){
+                    case 200:
+                        payload = {
+                            "message" : "Modifications enregistrées. - Redirection dans 2 secondes..."
+                        }
+                        this.setSnackbarSuccess(payload)
+                        var store = this.$store
+                        var router = this.$router
+                        setTimeout(function(){
+                            window.sessionStorage.clear();
+                            store.commit('CONNEXION_MANAGEMENT', false);
+                            router.push("/Connexion");
+                        }, 2000)
+                        break;
+                    case 401:
+                        payload = {
+                            "message" : "Vous devez être authentifié pour modifier votre profil"
+                        }
+                        this.setSnackbarError(payload)
+                        break;
+                    case 400:payload = {
+                        "message" : "Votre token de session est compromis ou périmé, veuillez vous reconnecter."
+                    }
+                        this.setSnackbarError(payload)
+                        break;
+                }
+            })
+        },
         setSnackbarError(payload){
             this.snackbarError = true;
             this.Erreur = payload.message;
@@ -275,7 +384,8 @@ export default {
             this.Message = payload.message;
         },
         getAllVoeux(){
-            let userId = this.currentUser.Id;
+            //Gérer si on est une entreprise ou un etudiant
+            let userId = this.popUpUser.Id;
             StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
                 this.companies = response.data;
             })
