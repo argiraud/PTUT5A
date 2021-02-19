@@ -149,18 +149,66 @@
                     </template>
                 </v-data-table>
             </v-card>
+        <br />
+        <br />
+        <v-card
+                v-if="currentUser.RoleId == 1"
+                elevation="10"
+        >
+            <v-card-title>Mes documents</v-card-title>
+            <v-data-table
+                    :headers="headers2"
+                    :items="candidatures"
+                    item-key="name"
+                    :items-per-page="5"
+                    class="elevation-1"
+            >
+                <template v-slot:[`item.actions`]="{ item }">
+                    <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+                </template>
+            </v-data-table>
+        </v-card>
+        <v-card
+                elevation="10"
+                v-if="currentUser.RoleId == 2"
+        >
+        <v-card-title>Mes offres</v-card-title>
+        <v-data-table
+                :headers="headers3"
+                :items="offers"
+                item-key="title"
+                show-expand
+                :items-per-page="5"
+                :single-expand="singleExpand"
+                class="elevation-1"
+        >
+            <template v-slot:[`item.state`]="{ item }">
+                {{item.state}}
+            </template>
+            <template v-slot:expanded-item="{item}">
+                <tr>
+                    <td>
+                        <v-btn color="primary" class="ma-2" :disabled="item.idFile == null" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+                    </td>
+                </tr>
+            </template>
+        </v-data-table>
+        </v-card>
     </v-container>
 </template>
 
 <script>
     import ChangeMotDePasse from "@/components/ChangeMotDePasse";
     import StudentDataService from "@/service/StudentDataService";
+    import FileDataService from "@/service/FileDataService";
     import {mapState} from "vuex";
     import PopUpOtherProfile from "@/components/PopUpOtherProfile";
+    import CompanyDataService from "@/service/CompanyDataService";
     export default {
         name: "Profil",
         components: {PopUpOtherProfile, ChangeMotDePasse},
         data: () => ({
+            singleExpand: true,
             items: [
                 {
                     text: 'Disponible',
@@ -194,6 +242,46 @@
                     text: '',
                     value: 'actions',
                     sortable: false }
+            ],
+            candidatures: [],
+            headers2: [
+                {
+                    text: 'Nom du fichier',
+                    align: 'start',
+                    sortable: false,
+                    value: 'name',
+                },
+                {
+                    text: '',
+                    value: 'actions',
+                    sortable: false
+                }
+            ],
+            offers: [
+            ],
+            headers3: [
+                {
+                    text: 'Nom offre',
+                    align: 'start',
+                    sortable: true,
+                    value: 'title',
+                },
+                {
+                    text: 'Mots clés',
+                    sortable: true,
+                    value: 'keyWord',
+                },
+                {
+                    text: 'Description',
+                    sortable: true,
+                    value: 'description',
+                },
+                {
+                    text: 'Statut',
+                    sortable: true,
+                    value: 'state',
+                    color: "blue",
+                },
             ],
             snackbarSuccess : false,
             snackbarError : false,
@@ -231,18 +319,26 @@
         },
         beforeCreate() {
             //On récupère l'utilisateur connecté.
-            StudentDataService.getConnectedUser().then(response => {
+            StudentDataService.getConnectedUserDetails().then(response => {
                 switch (response.status) {
                     case 200 :
                         console.log("case 200")
                         console.log(response.data)
                         this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
+                        if(this.currentUser.RoleId == 1)
+                            this.APIGetCandidature();
+                        else if(this.currentUser.RoleId == 2)
+                            this.APIGetOffer();
+                        this.getAllVoeux();
                         break;
                 }
             }).catch(err => {
                 console.log("erreur : " + err);
             });
+        },
+        refresh(){
+            this.APIGetOffer();
         },
         methods:{
             save(){
@@ -292,6 +388,57 @@
                     }
                 })
             },
+            openItemById (idFile, title) {
+                FileDataService.getFileById(idFile).then(response => {
+                    console.log(title)
+                    const url = window.URL.createObjectURL(new Blob([response.data]))
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.setAttribute('download', title)
+                    document.body.appendChild(link)
+                    link.click()
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            APIGetCandidature(){
+                StudentDataService.getConnectedUserDetails().then(response => {
+                    console.log(response.data.files);
+                    this.candidatures = response.data.files;
+                })
+                        .catch(e => {
+                            console.error(e);
+                        })
+            },
+            APIGetOffer(){
+                let idEntity = this.$store.state.currentUser.Id;
+                console.log("idEntity : " + idEntity)
+                CompanyDataService.get(idEntity).then(response => {
+
+                    for(let i= 0; i < response.data.length; i++)
+                    {
+                        switch (response.data[i].state)
+                        {
+                            case "available":
+                                response.data[i].state = "Disponible"
+                                break
+                            case "inprogress":
+                                response.data[i].state = "En cours"
+                                break
+                            case "finished":
+                                response.data[i].state = "Terminé"
+                                break
+                        }
+                    }
+
+                    this.offers = response.data;
+
+
+                })
+                        .catch(e => {
+                            console.error(e);
+                        })
+            },
             setSnackbarError(payload){
                 this.snackbarError = true;
                 this.Erreur = payload.message;
@@ -307,11 +454,16 @@
             },
             getAllVoeux(){
                 let userId = this.currentUser.Id;
-                StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
-                    console.log("getAllVoeux : ");
-                    console.log(response.data);
-                    this.companies = response.data;
-                })
+                if(this.currentUser.RoleId == 1){
+                    StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
+                        this.companies = response.data;
+                    })
+                }else if (this.currentUser.RoleId == 2){
+                    CompanyDataService.UsersWhoWantedMe(userId).then(response => {
+                        this.companies = response.data;
+                    })
+                }
+
             }
         }
     }

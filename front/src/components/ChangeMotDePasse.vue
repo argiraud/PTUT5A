@@ -82,9 +82,6 @@
             ],
         }),
         methods: {
-            ShowPopUp(){
-                this.isPopUpShown = true;
-            },
             HidePopUp(){
                 this.isPopUpShown = false;
             },

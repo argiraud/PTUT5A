@@ -9,10 +9,6 @@ class StudentDataService {
         return axiosAPI.get("/kpi/users");
     }
 
-     getConnectedUser(userId) {
-         return axiosAPI.get(`/user/details/${userId}`);
-     }
-
      getUserById(userId){
          return axiosAPI.get(`/user/details/${userId}`);
      }
