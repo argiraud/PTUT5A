@@ -1,7 +1,7 @@
 <template>
     <v-dialog
             v-model="dialog"
-            width="500">
+            width="80%">
 
         <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -160,11 +160,11 @@
             <br />
             <br />
             </div>
-            <div v-if="popUpUser.RoleId == 1">
                 <v-card
                         elevation="10"
+                        v-if="popUpUser.RoleId == 1"
                 >
-                    <v-card-title>Mes documents déposés</v-card-title>
+                    <v-card-title>Mes documents</v-card-title>
                     <v-data-table
                             :headers="headers2"
                             :items="candidatures"
@@ -178,7 +178,32 @@
                         </template>
                     </v-data-table>
                 </v-card>
-            </div>
+            <v-card
+                    elevation="10"
+                    v-if="currentUser.RoleId == 2"
+            >
+                <v-card-title>Mes offres</v-card-title>
+                <v-data-table
+                        :headers="headers3"
+                        :items="offers"
+                        item-key="title"
+                        show-expand
+                        :items-per-page="5"
+                        :single-expand="singleExpand"
+                        class="elevation-1"
+                >
+                    <template v-slot:[`item.state`]="{ item }">
+                        {{item.state}}
+                    </template>
+                    <template v-slot:expanded-item="{item}">
+                        <tr>
+                            <td>
+                                <v-btn color="primary" class="ma-2" :disabled="item.idFile == null" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+                            </td>
+                        </tr>
+                    </template>
+                </v-data-table>
+            </v-card>
 
         </v-card>
     </v-dialog>
@@ -189,6 +214,7 @@ import StudentDataService from "@/service/StudentDataService";
 import FileDataService from "@/service/FileDataService";
 import {mapState} from "vuex";
 import ChangeMotDePasse from "@/components/ChangeMotDePasse"
+import CompanyDataService from "@/service/CompanyDataService";
 export default {
     components: {ChangeMotDePasse},
     name: "PopUpOtherProfile",
@@ -237,6 +263,32 @@ export default {
                 sortable: false
             }
         ],
+        offers: [
+        ],
+        headers3: [
+            {
+                text: 'Nom offre',
+                align: 'start',
+                sortable: true,
+                value: 'title',
+            },
+            {
+                text: 'Mots clés',
+                sortable: true,
+                value: 'keyWord',
+            },
+            {
+                text: 'Description',
+                sortable: true,
+                value: 'description',
+            },
+            {
+                text: 'Statut',
+                sortable: true,
+                value: 'state',
+                color: "blue",
+            },
+        ],
         items: [
             {
                 text: 'Disponible',
@@ -283,7 +335,10 @@ export default {
                     console.log(response.data)
                     this.setpopUpUser(response.data);
                     this.getAllVoeux();
-                    this.APIGetCandidature();
+                    if(this.popUpUser.RoleId == 1)
+                        this.APIGetCandidature();
+                    else if (this.popUpUser.RoleId == 2)
+                        this.APIGetOffer();
                     break;
             }
         }).catch(err => {
@@ -323,6 +378,35 @@ export default {
             StudentDataService.getUserById(this.popUpUser.Id).then(response => {
                 console.log(response.data.files);
                 this.candidatures = response.data.files;
+            })
+                    .catch(e => {
+                        console.error(e);
+                    })
+        },
+        APIGetOffer(){
+            let idEntity = this.popUpUser.Id;
+            console.log("idEntity : " + idEntity)
+            CompanyDataService.get(idEntity).then(response => {
+
+                for(let i= 0; i < response.data.length; i++)
+                {
+                    switch (response.data[i].state)
+                    {
+                        case "available":
+                            response.data[i].state = "Disponible"
+                            break
+                        case "inprogress":
+                            response.data[i].state = "En cours"
+                            break
+                        case "finished":
+                            response.data[i].state = "Terminé"
+                            break
+                    }
+                }
+
+                this.offers = response.data;
+
+
             })
                     .catch(e => {
                         console.error(e);
@@ -386,9 +470,15 @@ export default {
         getAllVoeux(){
             //Gérer si on est une entreprise ou un etudiant
             let userId = this.popUpUser.Id;
-            StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
-                this.companies = response.data;
-            })
+            if(this.popUpUser.RoleId == 1){
+                StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
+                    this.companies = response.data;
+                })
+            }else if (this.popUpUser.RoleId == 2){
+                CompanyDataService.UsersWhoWantedMe(userId).then(response => {
+                    this.companies = response.data;
+                })
+            }
         }
     },
     computed: {

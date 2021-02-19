@@ -4,6 +4,13 @@
     <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="PopUp pour le Profile OK - Composant Profile repensé">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/service/CompanyDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/CompanyDataService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/service/StudentDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/StudentDataService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/DepotCandidatureForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotCandidatureForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +42,11 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="945e5ceb7fd2df11a0305cc5d5433dcc4512c28a" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -281,7 +293,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613674374199</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents">
+      <created>1613757540967</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1613757540967</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -367,7 +386,8 @@
     <MESSAGE value="Change mdp et changement du profile sauvegardé en base." />
     <MESSAGE value="Visionnage d'un autre profil que le sien OK" />
     <MESSAGE value="PopUp pour le Profile OK - Composant Profile repensé" />
-    <option name="LAST_COMMIT_MESSAGE" value="PopUp pour le Profile OK - Composant Profile repensé" />
+    <MESSAGE value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front/src/components/Stepper.vue">

@@ -20,7 +20,9 @@ class CompanyDataService {
     create(data) {
          return axiosAPI.post("/company/offer", data);
      }
-
+    UsersWhoWantedMe(userId){
+        return axiosAPI.get(`/company/${userId}/userWhoWanted`)
+    }
 
     //
     // update(id, data) {

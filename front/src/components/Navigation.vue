@@ -48,7 +48,7 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Dépôt de candidature
+            <v-list-item-title style="white-space: normal">Gestion de mes documents
             </v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="saisieVoeux">
@@ -62,12 +62,6 @@
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
-          </v-list-item>
-          <v-list-item v-if="isConnected" to="home4">
-            <v-list-item-icon>
-              <v-icon>mdi-calendar-month</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Planification d'entretiens</v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isConnected" to="dashboard">
             <v-list-item-icon>
