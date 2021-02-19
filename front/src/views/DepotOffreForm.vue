@@ -39,7 +39,7 @@
             <EditOffre v-model="showEditForm" v-bind:id-offer-send=item.idOffer @edit-finish="refresh"/>
           </td>
           <td>
-            <v-btn color="primary" class="ma-2" :disabled="item.idFile == null" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+            <v-btn color="primary" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
           </td>
         </tr>
       </template>
@@ -102,6 +102,11 @@ name: "DepotOffreForm",
           sortable: true,
           value: 'state',
           color: "blue",
+        },
+        {
+          text: 'Nom du document',
+          sortable: true,
+          value: 'files[0].name',
         },
       ],
 
@@ -171,7 +176,7 @@ name: "DepotOffreForm",
             case "available":
               response.data[i].state = "Disponible"
               break
-            case "in progress":
+            case "inprogress":
               response.data[i].state = "En cours"
               break
             case "finished":

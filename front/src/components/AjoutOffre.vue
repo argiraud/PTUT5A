@@ -98,6 +98,7 @@ name: "AjoutOffre",
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
+            this.$emit("add-doc", "true")
             break;
           case 400 :
             alert("Titre, mots-clés ou description trop long");
