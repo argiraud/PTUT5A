@@ -39,7 +39,7 @@
             <EditOffre v-model="showEditForm" v-bind:id-offer-send=item.idOffer @edit-finish="refresh"/>
           </td>
           <td>
-            <v-btn color="primary" class="ma-2" :disabled="item.files.idFile == null" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
+            <v-btn color="primary" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
           </td>
         </tr>
       </template>

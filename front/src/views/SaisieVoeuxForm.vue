@@ -91,7 +91,6 @@ export default {
   methods: {
     validate() {
       this.$emit("step3-finish", "true")
-      this.$refs.form.validate();
 
     },
 
