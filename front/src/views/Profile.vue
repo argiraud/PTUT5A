@@ -9,8 +9,7 @@
         </v-snackbar>
         <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
-                    :disabled="isDisabled"
-                    v-model="profileUserInfos.Name"
+                    v-model="currentUser.Name"
                     :rules="nameRules"
                     id="name"
                     label="Nom"
@@ -21,8 +20,8 @@
             ></v-text-field>
 
             <v-text-field
-                    :disabled="isDisabled"
-                    v-model="profileUserInfos.Firstname"
+                    v-if="currentUser.RoleId == 1"
+                    v-model="currentUser.Firstname"
                     :rules="nameRules"
                     id="firstname"
                     label="Prénom"
@@ -32,8 +31,8 @@
                     required
             ></v-text-field>
             <v-text-field
-                    :disabled="isDisabled"
-                    v-model="profileUserInfos.StudentNumber"
+                    v-if="currentUser.RoleId == 1"
+                    v-model="currentUser.StudentNumber"
                     id="studentNumber"
                     :counter="8"
                     :rules="studentNumberRules"
@@ -43,7 +42,7 @@
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
             <v-menu
-                    :disabled="isDisabled"
+                    v-if="currentUser.RoleId == 1"
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
@@ -57,9 +56,9 @@
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
-                            :disabled="isDisabled"
+                            v-if="currentUser.RoleId == 1"
                             id="birthDate"
-                            v-model="profileUserInfos.BirthDate"
+                            v-model="currentUser.BirthDate"
                             label="Date de naissance"
                             readonly
                             v-on="on"
@@ -68,7 +67,7 @@
                 </template>
                 <v-date-picker
                         ref="picker"
-                        v-model="profileUserInfos.BirthDate"
+                        v-model="currentUser.BirthDate"
                         hint="MM/DD/YYYY format"
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
@@ -78,8 +77,7 @@
             </v-menu>
 
             <v-text-field
-                    :disabled="isDisabled"
-                    v-model="profileUserInfos.Email"
+                    v-model="currentUser.Email"
                     id="emailInscription"
                     :rules="emailRules"
                     prepend-inner-icon="email"
@@ -88,11 +86,10 @@
                     required
             ></v-text-field>
             <v-select
-                    :disabled="isDisabled"
                     id="comboStatus"
                     label="Renseignez votre status actuel"
                     small-chips
-                    v-model="profileUserInfos.Status"
+                    v-model="currentUser.Status"
                     :items="items"
             >
                 <template v-slot:selection="{ item, selected }">
@@ -119,17 +116,14 @@
                 </template>
             </v-select>
             <v-textarea
-                    :disabled="isDisabled"
                     name="presentation"
-                    v-model="profileUserInfos.Presentation"
+                    v-model="currentUser.Presentation"
                     id="presentation"
                     prepend-inner-icon="create"
                     type="text"
                     label="Présentation"
             ></v-textarea>
-            <div :hidden="isDisabled">
-                <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
-            </div>
+            <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
 
             <div class="text-center mt-n5">
                 <v-btn
@@ -137,11 +131,10 @@
                         rounded outlined
                         color="teal accent-3"
                         @click="save"
-                        :disabled="!valid || isDisabled">Enregistrer</v-btn>
+                        :disabled="!valid">Enregistrer</v-btn>
             </div>
         </v-form>
         <p></p>
-        <div :hidden="isDisabled">
             <v-card
                     elevation="10"
             >
@@ -156,7 +149,6 @@
                     </template>
                 </v-data-table>
             </v-card>
-        </div>
     </v-container>
 </template>
 
@@ -235,24 +227,10 @@
         computed: {
             ...mapState({
                 currentUser: 'currentUser',
-                profileUserInfos: 'profileUserInfos'
             }),
-            isDisabled(){
-                if(this.currentUser.IsAdmin){
-                    return false;
-                }else
-                {
-                    if (this.currentUser.Id !== this.profileUserInfos.Id)
-                    {
-                        return true
-                    } else {
-                        return false;
-                    }
-                }
-            }
         },
         beforeCreate() {
-            //On récupère l'utilisateur connecté dans tous les cas.
+            //On récupère l'utilisateur connecté.
             StudentDataService.getConnectedUser().then(response => {
                 switch (response.status) {
                     case 200 :
@@ -262,46 +240,13 @@
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
                         break;
                 }
-                //On récupère les informations utilisateurs qu'on veut afficher dans le profil.
-                if(typeof(this.$route.params.id ) != "undefined" && this.$route.params.id != null){
-                    let userId = this.$route.params.id;
-                    StudentDataService.getUserById(userId).then(response => {
-                        switch (response.status) {
-                            case 200 :
-                                console.log("case 200")
-                                console.log("data profile : ")
-                                console.log(response.data)
-                                this.$store.commit('SET_PROFILEUSERINFOS_FROM_JSON', response.data);
-                                break;
-                        }
-                    }).catch(err => {
-                        console.log("erreur : " + err);
-                    });
-                }else{
-                    //On récupère les données du currentUser pour les afficher.
-                    let formatedUser = {
-                        "id" : this.currentUser.Id,
-                        "name" : this.currentUser.Name,
-                        "email" : this.currentUser.Email,
-                        "presentation" : this.currentUser.Presentation,
-                        "roles" : [],
-                        "files" : [],
-                        "enable" : "",
-                        "firstName" : this.currentUser.Firstname,
-                        "etudiantNumber" : this.currentUser.StudentNumber,
-                        "birthDate" : this.currentUser.BirthDate,
-                        "status" : this.currentUser.Status,
-                    };
-                    this.$store.commit('SET_PROFILEUSERINFOS_FROM_JSON', formatedUser);
-                    this.getAllVoeux();
-                }
             }).catch(err => {
                 console.log("erreur : " + err);
             });
         },
         methods:{
             save(){
-                let userToModify = this.profileUserInfos;
+                let userToModify = this.currentUser;
                 let user = {
                     "id" : userToModify.Id,
                     "name" : userToModify.Name,
@@ -367,9 +312,6 @@
                     console.log(response.data);
                     this.companies = response.data;
                 })
-            },
-            toProfile(){
-                this.dialog = true;
             }
         }
     }

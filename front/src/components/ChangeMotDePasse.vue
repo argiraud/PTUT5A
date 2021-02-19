@@ -6,7 +6,6 @@
 
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                        :disabled="isDisabled"
                         rounded outlined color="teal accent-3"
                         v-bind="attrs"
                         v-on="on"
@@ -125,21 +124,7 @@
             ...mapState({
                 isConnected: 'isConnected',
                 currentUser: 'currentUser',
-                profileUserInfos : 'profileUserInfos'
-            }),
-            isDisabled(){
-                if(this.currentUser.IsAdmin){
-                    return false;
-                }else
-                {
-                    if (this.currentUser.Id !== this.profileUserInfos.Id)
-                    {
-                        return true
-                    } else {
-                        return false;
-                    }
-                }
-            }
+            })
         }
     }
 </script>
