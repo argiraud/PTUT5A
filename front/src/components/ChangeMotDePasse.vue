@@ -1,58 +1,66 @@
 <template>
-    <div>
-        <v-btn
-                :disabled="isDisabled"
-                rounded outlined color="teal accent-3"
-                @click="ShowPopUp"
-                v-if="!isPopUpShown"
-        >Modifier le mot de passe</v-btn>
+    <div class="text-center">
+        <v-dialog
+            v-model="isPopUpShown"
+            width="500">
 
-        <v-card class="elevation-12" v-if="isPopUpShown" style="padding: 2%">
-            <v-window>
-                <v-window-item>
-                    <v-row>
-                        <v-col cols="12" md="12">
-                            <v-btn
-                                    rounded outlined color="red"
-                                    style="float: right !important;"
-                                    @click="HidePopUp"
-                            >X</v-btn>
-                            <v-form ref="form"
-                                    v-model="valid"
-                                    lazy-validation>
-                                <v-text-field
-                                        style="margin-top: 5%"
-                                        v-model="mdp"
-                                        id="mdp"
-                                        label="Nouveau mot de passe"
-                                        prepend-inner-icon="lock"
-                                        type="password"
-                                        color="teal accent-3"
-                                        required
-                                        :rules="mdpRules"/>
-                                <v-text-field
-                                        v-model="mdpIdentique"
-                                        id="mdpIdentique"
-                                        label="Confirmation"
-                                        prepend-inner-icon="lock"
-                                        type="password"
-                                        color="teal accent-3"
-                                        required
-                                        :rules="mdpConfirmationRule1.concat(mdpConfirmationRule2)"/>
-                            </v-form>
-                            <p></p>
-                            <div class="text-center mt-n5" style="margin-top: 2%">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                        :disabled="isDisabled"
+                        rounded outlined color="teal accent-3"
+                        v-bind="attrs"
+                        v-on="on"
+                >
+                    Modifier le mot de passe
+                </v-btn>
+            </template>
+            <v-card class="elevation-12" v-if="isPopUpShown" style="padding: 2%">
+                <v-window>
+                    <v-window-item>
+                        <v-row>
+                            <v-col cols="12" md="12">
                                 <v-btn
-                                        :disabled="!valid"
-                                        rounded outlined color="teal accent-3"
-                                        @click="SaveUser"
-                                >Valider</v-btn>
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-window-item>
-            </v-window>
-        </v-card>
+                                        rounded outlined color="red"
+                                        style="float: right !important;"
+                                        @click="HidePopUp"
+                                >X</v-btn>
+                                <v-form ref="form"
+                                        v-model="valid"
+                                        lazy-validation>
+                                    <v-text-field
+                                            style="margin-top: 5%"
+                                            v-model="mdp"
+                                            id="mdp"
+                                            label="Nouveau mot de passe"
+                                            prepend-inner-icon="lock"
+                                            type="password"
+                                            color="teal accent-3"
+                                            required
+                                            :rules="mdpRules"/>
+                                    <v-text-field
+                                            v-model="mdpIdentique"
+                                            id="mdpIdentique"
+                                            label="Confirmation"
+                                            prepend-inner-icon="lock"
+                                            type="password"
+                                            color="teal accent-3"
+                                            required
+                                            :rules="mdpConfirmationRule1.concat(mdpConfirmationRule2)"/>
+                                </v-form>
+                                <p></p>
+                                <div class="text-center mt-n5" style="margin-top: 2%">
+                                    <v-btn
+                                            :disabled="!valid"
+                                            rounded outlined color="teal accent-3"
+                                            @click="SaveUser"
+                                    >Valider</v-btn>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-window-item>
+                </v-window>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
