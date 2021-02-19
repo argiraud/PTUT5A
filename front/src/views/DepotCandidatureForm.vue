@@ -18,12 +18,12 @@
     <br>
 
     <v-data-table
-        v-model="candidatures"
         :headers="headers"
         :items="candidatures"
         item-key="name"
         show-expand
         :items-per-page="5"
+        :single-expand="singleExpand"
         class="elevation-1"
     >
       <template v-slot:top>
@@ -35,7 +35,10 @@
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" @click="deleteItemById()">{{ item }}</v-btn>
+            <v-btn color="primary" @click="deleteItemById(item.idFile)">Supprimer</v-btn>
+          </td>
+          <td>
+            <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
           </td>
         </tr>
       </template>
@@ -63,8 +66,8 @@ name: "DepotCandidatureForm",
 
   data () {
     return {
+      singleExpand: true,
       file: '',
-      showScheduleForm: false,
       candidatures: [
       ],
       headers: [
@@ -72,7 +75,7 @@ name: "DepotCandidatureForm",
           text: 'Nom du fichier',
           align: 'start',
           sortable: false,
-          value: 'idFile',
+          value: 'name',
         }
       ],
 
@@ -83,21 +86,48 @@ name: "DepotCandidatureForm",
 
     validate() {
       this.$emit("step2-finish", "true")
-      this.$refs.form.validate();
     },
 
-    deleteItemById () {
+    deleteItemById (idFile) {
       if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
-        //TODO Delete candidature
+        FileDataService.deleteFile(idFile).then(response => {
+          const index = this.candidatures.findIndex(candidatures => candidatures.idFile === idFile); // find the post index
+          if (~index) // if the post exists in array
+            this.candidatures.splice(index, 1) //delete the post
+
+          switch (response.status) {
+            case 201 :
+              alert("Suppression effectuée");
+              break;
+          }
+        }).catch(e => {
+          console.error(e);
+        })
 
       }
     },
+
+    openItemById (idFile, title) {
+      FileDataService.getFileById(idFile).then(response => {
+        console.log(title)
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', title)
+        document.body.appendChild(link)
+        link.click()
+      }).catch(e => {
+        console.error(e);
+      })
+    },
+
     add: function(item) {
       this.candidatures.push(item);
     },
     APIGetCandidature(){
-      StudentDataService.getConnectedUser().then(response => {
-        this.offers = response.data;
+      StudentDataService.getConnectedUserDetails().then(response => {
+        console.log(response.data.files);
+        this.candidatures = response.data.files;
       })
           .catch(e => {
             console.error(e);
@@ -114,6 +144,7 @@ name: "DepotCandidatureForm",
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
+            this.APIGetCandidature();
             break;
           case 400 :
             alert("Titre, mots-clés ou description trop long");

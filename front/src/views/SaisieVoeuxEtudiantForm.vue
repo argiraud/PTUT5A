@@ -3,8 +3,8 @@
 
     <br>
 
-    <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
-    <AjoutVoeuxEtudiant v-model="showScheduleForm" />
+    <v-btn large @click="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <AjoutVoeuxEtudiant v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
     <br>
@@ -28,7 +28,7 @@
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" @click="deleteItemById(item.id)">Supprimer</v-btn>
+            <v-btn color="primary" @click="deleteItemById(item.idOffer)">Supprimer</v-btn>
           </td>
         </tr>
       </template>
@@ -65,12 +65,6 @@ name: "SaisieVoeuxEtudiantForm",
       selected: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'idOffer',
-        },
-        {
           text: 'Titre',
           align: 'start',
           sortable: false,
@@ -104,7 +98,7 @@ name: "SaisieVoeuxEtudiantForm",
 
     deleteItemById (id) {
       if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
-          const index = this.wish.findIndex(wish => wish.id === id); // find the post index
+          const index = this.wish.findIndex(wish => wish.idOffer === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post
 
@@ -121,6 +115,10 @@ name: "SaisieVoeuxEtudiantForm",
         }
 
       },
+
+    refresh(){
+      this.APIGetVoeux();
+    },
 
     APIGetVoeux(){
         let idEntity = this.$store.state.currentUser.Id;
