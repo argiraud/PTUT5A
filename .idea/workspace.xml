@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
+    <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="PopUp pour le Profile OK - Composant Profile repensé">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
     </list>
-    <list id="aeb45250-c996-42de-9839-7ecad2c947b3" name="Changes by argiraud" comment="" />
-    <list id="4632cf94-934d-47ce-bde8-67f9757a81b8" name="Changes by Maxou" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
