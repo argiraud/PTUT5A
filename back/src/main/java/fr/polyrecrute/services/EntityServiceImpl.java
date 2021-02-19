@@ -81,7 +81,7 @@ public class EntityServiceImpl implements EntityService {
         Entity__ entityCreated = new Entity__(entitySignup.getName(),
                 entitySignup.getEmail(),
                 encoder.encode(entitySignup.getPassword()),
-                "", true);
+                "", "", true);
 
         return entityCreated;
     }
@@ -112,13 +112,13 @@ public class EntityServiceImpl implements EntityService {
         if (entity.getCompany() != null){
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
                     entity.getPresentation(),entity.getRoles(),entity.getFiles(),entity.isEnabled(),
-                    "","",null,"");
+                    "","",null,entity.getStatus());
         }
         else{
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
                     entity.getPresentation(),entity.getRoles(),entity.getFiles(), entity.isEnabled(),
                     entity.getUser().getFirstName(),entity.getUser().getEtudiantNumber(),
-                    entity.getUser().getBirthDate(),entity.getUser().getStatus());
+                    entity.getUser().getBirthDate(),entity.getStatus());
         }
         return entityDetails;
     }
@@ -161,12 +161,12 @@ public class EntityServiceImpl implements EntityService {
         entity.setName(entityUpdate.getName());
         entity.setEmail(entityUpdate.getEmail());
         entity.setPresentation(entityUpdate.getPresentation());
+        entity.setStatus(entityUpdate.getStatus());
 
         if (entity.getUser() != null){
             entity.getUser().setFirstName(entityUpdate.getFirstName());
             entity.getUser().setEtudiantNumber(entityUpdate.getEtudiantNumber());
             entity.getUser().setBirthDate(entityUpdate.getBirthDate());
-            entity.getUser().setStatus(entityUpdate.getStatus());
         }
 
         entityRepository.save(entity);

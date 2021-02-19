@@ -31,9 +31,6 @@ public class User__ {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @Column(length = 10)
-    private String status;
-
     @OneToMany(targetEntity= Offer__.class, fetch = FetchType.LAZY)
     private Set<Offer__> wantedOffer = new HashSet<>();
 
@@ -41,11 +38,10 @@ public class User__ {
     public User__() {
     }
 
-    public User__(String firstName, String etudiantNumber, Date birthDate, String status) {
+    public User__(String firstName, String etudiantNumber, Date birthDate) {
         this.firstName = firstName;
         this.etudiantNumber = etudiantNumber;
         this.birthDate = birthDate;
-        this.status = status;
     }
 
     public String getIdUser() {
@@ -68,9 +64,6 @@ public class User__ {
         return birthDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
     public void setEntity(Entity__ entity){
         this.entity = entity;
@@ -86,10 +79,6 @@ public class User__ {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public User getTransactionalObject() {

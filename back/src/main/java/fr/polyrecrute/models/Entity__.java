@@ -36,6 +36,9 @@ public class Entity__ implements UserDetails {
 	@Column(length = 500)
 	private String presentation;
 
+	@Column(length = 10)
+	private String status;
+
 	private boolean enable;
 
 	@OneToOne(targetEntity= User__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -59,11 +62,12 @@ public class Entity__ implements UserDetails {
 	public Entity__() {
 	}
 
-	public Entity__(String name, String email, String password, String presentation, boolean enable) {
+	public Entity__(String name, String email, String password, String presentation, String status, boolean enable) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.presentation = presentation;
+		this.status = status;
 		this.enable = enable;
 	}
 
@@ -178,6 +182,14 @@ public class Entity__ implements UserDetails {
 
 	public void deleteFile(File__ file){
 		files.remove(file);
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

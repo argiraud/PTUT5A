@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
         if (userSignup.getBirthDate().compareTo(new Date()) > 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Birth date is wrong");
 
-        User__ userCreated = new User__(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate(), "OK");
+        User__ userCreated = new User__(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate());
         Entity__ entityCreated = entityService.registerEntity(userSignup, userCreated);
         entityCreated.addRole(roleService.findByName(ERole.USER));
         userCreated.setEntity(entityCreated);
