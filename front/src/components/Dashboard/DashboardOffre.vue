@@ -22,7 +22,7 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Rechercher"
                 single-line
                 hide-details
             ></v-text-field>
@@ -32,6 +32,9 @@
               :items="offers"
               :items-per-page="10"
               :search="search"
+              :footer-props="{
+                'items-per-page-text':'Offres par page'
+              }"
           >
             <template v-slot:[`item.state`]="{ item }">
               <v-chip

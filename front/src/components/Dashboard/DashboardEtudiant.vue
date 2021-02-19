@@ -18,7 +18,7 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Rechercher"
                 single-line
                 hide-details
             ></v-text-field>
@@ -29,6 +29,9 @@
               :items-per-page="10"
               class="elevation-1"
               :search="search"
+              :footer-props="{
+                'items-per-page-text':'Etudiants par page'
+              }"
           >
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon
