@@ -96,7 +96,7 @@ export default {
       {
         text: 'En cours',
         color: 'orange',
-        value: 'in progress'
+        value: 'inprogress'
       },
       {
         text: 'Terminé',
