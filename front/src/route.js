@@ -18,11 +18,6 @@ export const routes = [
         component: Home
     },
     {
-        path: '/Profil/:id',
-        name: 'otherProfile',
-        component: Profile
-    },
-    {
         path: '/Profil',
         name: 'Profile',
         component: Profile

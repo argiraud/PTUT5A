@@ -1,15 +1,16 @@
 <template>
   <div>
-    <h1> Depot de candidature </h1>
+    <h1> Gestion des documents </h1>
 
     <br>
 
     <div>
       <div>
-        <h3>Charger documents
-          <br>
+        <h4>Chargez vos documents, ils seront visibles sur votre profil.
+          <br />
+          <br />
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-        </h3>
+        </h4>
         <br>
         <v-btn color="primary" v-on:click="submitFile()">Envoyer</v-btn>
       </div>
@@ -21,9 +22,7 @@
         :headers="headers"
         :items="candidatures"
         item-key="name"
-        show-expand
         :items-per-page="5"
-        :single-expand="singleExpand"
         class="elevation-1"
     >
       <template v-slot:top>
@@ -32,16 +31,12 @@
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
-      <template v-slot:expanded-item="{item}">
-        <tr>
-          <td>
-            <v-btn color="primary" @click="deleteItemById(item.idFile)">Supprimer</v-btn>
-          </td>
-          <td>
+        <template v-slot:[`item.actions`]="{ item }">
             <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
-          </td>
-        </tr>
-      </template>
+        </template>
+        <template v-slot:[`item.actions2`]="{ item }">
+            <v-btn color="red" style="color: white" @click="deleteItemById(item.idFile, item.name)">Supprimer</v-btn>
+        </template>
     </v-data-table>
 
     <br>
@@ -66,19 +61,27 @@ name: "DepotCandidatureForm",
 
   data () {
     return {
-      singleExpand: true,
       file: '',
       candidatures: [
       ],
       headers: [
         {
-          text: 'Nom du fichier',
-          align: 'start',
-          sortable: false,
-          value: 'name',
+            text: 'Nom du fichier',
+            align: 'start',
+            sortable: false,
+            value: 'name',
+        },
+        {
+            text: '',
+            value: 'actions',
+            sortable: false
+        },
+        {
+            text: '',
+            value: 'actions2',
+            sortable: false
         }
       ],
-
     }
   },
 

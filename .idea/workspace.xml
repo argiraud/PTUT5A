@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="">
+    <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ProfileCandidat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/service/StudentDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/StudentDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/store/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" afterDir="false" />
     </list>
-    <list id="aeb45250-c996-42de-9839-7ecad2c947b3" name="Changes by argiraud" comment="" />
-    <list id="4632cf94-934d-47ce-bde8-67f9757a81b8" name="Changes by Maxou" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +38,20 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="945e5ceb7fd2df11a0305cc5d5433dcc4512c28a" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -219,7 +227,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="" />
+      <changelist id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="" />
       <created>1604158473904</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -242,6 +250,10 @@
       <workItem from="1612520988825" duration="1365000" />
       <workItem from="1612605402716" duration="10523000" />
       <workItem from="1613318145048" duration="3518000" />
+      <workItem from="1613659726143" duration="14553000" />
+      <workItem from="1613675883775" duration="878000" />
+      <workItem from="1613736155880" duration="1200000" />
+      <workItem from="1613813032106" duration="5801000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -264,7 +276,35 @@
       <option name="project" value="LOCAL" />
       <updated>1612363815761</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Visionnage d'un autre profil que le sien OK">
+      <created>1613666532694</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1613666532694</updated>
+    </task>
+    <task id="LOCAL-00005" summary="PopUp pour le Profile OK - Composant Profile repensé">
+      <created>1613674374199</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1613674374199</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents">
+      <created>1613757540967</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1613757540967</updated>
+    </task>
+    <task id="LOCAL-00007" summary="debut gestion student/company sur le profil">
+      <created>1613759227787</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1613759227787</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -348,14 +388,18 @@
     <MESSAGE value="Nettoyage de la session, amélioration du data store vuex" />
     <MESSAGE value="PopUp ChangeMotDePasse sans sauvegarde &amp; Inscription que pour Admin" />
     <MESSAGE value="Change mdp et changement du profile sauvegardé en base." />
-    <option name="LAST_COMMIT_MESSAGE" value="Change mdp et changement du profile sauvegardé en base." />
+    <MESSAGE value="Visionnage d'un autre profil que le sien OK" />
+    <MESSAGE value="PopUp pour le Profile OK - Composant Profile repensé" />
+    <MESSAGE value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
+    <MESSAGE value="debut gestion student/company sur le profil" />
+    <option name="LAST_COMMIT_MESSAGE" value="debut gestion student/company sur le profil" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/front/src/views/Profile.vue</url>
-          <line>29</line>
+          <url>file://$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue</url>
+          <line>129</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
@@ -379,6 +423,16 @@
           <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/src/store/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -433,8 +487,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/front/node_modules/@types/node/url.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="100" column="8" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
+        <state relative-caret-position="3179">
+          <caret line="187" column="5" selection-start-line="187" selection-start-column="5" selection-end-line="187" selection-end-column="5" />
         </state>
       </provider>
     </entry>
