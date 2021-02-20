@@ -129,6 +129,7 @@ name: "SaisieVoeuxEtudiantForm",
 
     APIGetVoeux(){
         let idEntity = this.$store.state.currentUser.Id;
+        console.log(idEntity)
         WishDataService.getVoeuxEtudiant(idEntity).then(response => {
           this.wish = response.data;
         })
