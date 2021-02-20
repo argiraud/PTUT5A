@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="PopUp pour le Profile OK - Composant Profile repensé">
+    <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/ChangeMotDePasse.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Navigation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/service/CompanyDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/CompanyDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/service/StudentDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/service/StudentDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/DepotCandidatureForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotCandidatureForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +227,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f3b44d07-7f11-4579-9319-6a7e65a6f8cf" name="Default Changelist" comment="" />
+      <changelist id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="" />
       <created>1604158473904</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -257,6 +253,7 @@
       <workItem from="1613659726143" duration="14553000" />
       <workItem from="1613675883775" duration="878000" />
       <workItem from="1613736155880" duration="1200000" />
+      <workItem from="1613813032106" duration="5801000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -300,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613757540967</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="debut gestion student/company sur le profil">
+      <created>1613759227787</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1613759227787</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -387,7 +391,20 @@
     <MESSAGE value="Visionnage d'un autre profil que le sien OK" />
     <MESSAGE value="PopUp pour le Profile OK - Composant Profile repensé" />
     <MESSAGE value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
+    <MESSAGE value="debut gestion student/company sur le profil" />
+    <option name="LAST_COMMIT_MESSAGE" value="debut gestion student/company sur le profil" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue</url>
+          <line>129</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front/src/components/Stepper.vue">

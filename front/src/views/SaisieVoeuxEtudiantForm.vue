@@ -64,10 +64,16 @@ name: "SaisieVoeuxEtudiantForm",
       showScheduleForm: false,
       selected: [],
       headers: [
+          {
+              text: 'Entreprise',
+              align: 'start',
+              sortable: true,
+              value: `company.name`,
+          },
         {
           text: 'Titre',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'title',
         },
         {
@@ -122,6 +128,7 @@ name: "SaisieVoeuxEtudiantForm",
 
     APIGetVoeux(){
         let idEntity = this.$store.state.currentUser.Id;
+        console.log(idEntity)
         WishDataService.getVoeuxEtudiant(idEntity).then(response => {
           this.wish = response.data;
         })
