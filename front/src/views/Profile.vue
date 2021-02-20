@@ -138,7 +138,7 @@
             <v-card
                     elevation="10"
             >
-                <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+                <v-card-title>Entités me comptant dans leurs voeux</v-card-title>
                 <v-data-table
                         :headers="headers"
                         :items="companies"
@@ -188,7 +188,7 @@
             <template v-slot:expanded-item="{item}">
                 <tr>
                     <td>
-                        <v-btn color="primary" class="ma-2" :disabled="item.idFile == null" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+                        <v-btn color="primary" class="ma-2" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
                     </td>
                 </tr>
             </template>

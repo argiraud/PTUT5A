@@ -27,6 +27,7 @@
                 ></v-text-field>
 
                 <v-text-field
+                        v-if="popUpUser.RoleId == 1"
                         :disabled="!currentUser.IsAdmin"
                         v-model="popUpUser.Firstname"
                         :rules="nameRules"
@@ -38,6 +39,7 @@
                         required
                 ></v-text-field>
                 <v-text-field
+                        v-if="popUpUser.RoleId == 1"
                         :disabled="!currentUser.IsAdmin"
                         v-model="popUpUser.StudentNumber"
                         id="studentNumber"
@@ -49,6 +51,7 @@
                         prepend-inner-icon="confirmation_number"
                 ></v-text-field>
                 <v-menu
+                        v-if="popUpUser.RoleId == 1"
                         :disabled="!currentUser.IsAdmin"
                         ref="menu"
                         :close-on-content-click="false"
@@ -180,7 +183,7 @@
                 </v-card>
             <v-card
                     elevation="10"
-                    v-if="currentUser.RoleId == 2"
+                    v-if="popUpUser.RoleId == 2"
             >
                 <v-card-title>Mes offres</v-card-title>
                 <v-data-table
@@ -198,7 +201,7 @@
                     <template v-slot:expanded-item="{item}">
                         <tr>
                             <td>
-                                <v-btn color="primary" class="ma-2" :disabled="item.idFile == null" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+                                <v-btn color="primary" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
                             </td>
                         </tr>
                     </template>
@@ -220,6 +223,7 @@ export default {
     name: "PopUpOtherProfile",
     props: ['idUserToDisplay'],
     data: () => ({
+        singleExpand: true,
         dialog : false,
         popUpUser: {
             "Id" : "",
@@ -263,8 +267,7 @@ export default {
                 sortable: false
             }
         ],
-        offers: [
-        ],
+        offers: [],
         headers3: [
             {
                 text: 'Nom offre',
@@ -288,6 +291,11 @@ export default {
                 value: 'state',
                 color: "blue",
             },
+            {
+                text: 'Nom du document',
+                sortable: true,
+                value: 'files[0].name',
+            }
         ],
         items: [
             {
@@ -335,10 +343,7 @@ export default {
                     console.log(response.data)
                     this.setpopUpUser(response.data);
                     this.getAllVoeux();
-                    if(this.popUpUser.RoleId == 1)
-                        this.APIGetCandidature();
-                    else if (this.popUpUser.RoleId == 2)
-                        this.APIGetOffer();
+                    this.setGridOfferOrCandidature();
                     break;
             }
         }).catch(err => {
@@ -403,10 +408,7 @@ export default {
                             break
                     }
                 }
-
                 this.offers = response.data;
-
-
             })
                     .catch(e => {
                         console.error(e);
@@ -479,6 +481,12 @@ export default {
                     this.companies = response.data;
                 })
             }
+        },
+        setGridOfferOrCandidature(){
+            if(this.popUpUser.RoleId == 1)
+                this.APIGetCandidature();
+            else if (this.popUpUser.RoleId == 2)
+                this.APIGetOffer();
         }
     },
     computed: {
