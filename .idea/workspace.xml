@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,9 +253,7 @@
       <workItem from="1613659726143" duration="14553000" />
       <workItem from="1613675883775" duration="878000" />
       <workItem from="1613736155880" duration="1200000" />
-      <workItem from="1613813032106" duration="6054000" />
-      <workItem from="1613854479841" duration="497000" />
-      <workItem from="1613919205104" duration="1863000" />
+      <workItem from="1613813032106" duration="5801000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -304,14 +304,7 @@
       <option name="project" value="LOCAL" />
       <updated>1613759227787</updated>
     </task>
-    <task id="LOCAL-00008" summary="grilles Mes Documents, Mes offres et GetAllvoeux OK, PopUp OK">
-      <created>1613818957492</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1613818957492</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -399,8 +392,7 @@
     <MESSAGE value="PopUp pour le Profile OK - Composant Profile repensé" />
     <MESSAGE value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
     <MESSAGE value="debut gestion student/company sur le profil" />
-    <MESSAGE value="grilles Mes Documents, Mes offres et GetAllvoeux OK, PopUp OK" />
-    <option name="LAST_COMMIT_MESSAGE" value="grilles Mes Documents, Mes offres et GetAllvoeux OK, PopUp OK" />
+    <option name="LAST_COMMIT_MESSAGE" value="debut gestion student/company sur le profil" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -408,6 +400,7 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue</url>
           <line>129</line>
+          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
