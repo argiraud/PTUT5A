@@ -118,7 +118,6 @@ name: "DepotOffreForm",
 
     validate() {
       this.$emit("step2-finish", "true")
-      this.$refs.form.validate();
     },
 
 

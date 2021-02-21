@@ -145,7 +145,7 @@
                         :items-per-page="5"
                 >
                     <template v-slot:[`item.actions`]="{ item }">
-                        <PopUpOtherProfile :id-user-to-display="item.idEntity"></PopUpOtherProfile>
+                        <PopUpOtherProfile :id-user-to-display="item.id"></PopUpOtherProfile>
                     </template>
                 </v-data-table>
             </v-card>
@@ -230,7 +230,7 @@
                 {
                     text: "Id",
                     align: "start",
-                    value: "idEntity",
+                    value: "id",
                     sortable: true
                 },
                 {
