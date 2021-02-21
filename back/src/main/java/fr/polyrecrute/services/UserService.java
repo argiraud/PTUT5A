@@ -15,6 +15,6 @@ public interface UserService {
     List<User> getTransactionalObjectList(List<User__> users);
     void deleteWantedOffer(User__ user, Offer__ offer);
     void addWantedOffer(User__ user, Offer__ offer);
-    List<User__> findUserWhoWantedOffer(Set<Offer__> offers);
+    List<User__> findUserWhoWantedOffer(Company__ company);
     public long countUserWithoutOffer();
 }

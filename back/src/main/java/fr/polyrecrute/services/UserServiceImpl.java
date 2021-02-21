@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -68,7 +69,9 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
-    public List<User__> findUserWhoWantedOffer(Set<Offer__> offers) {
-        return userRepository.findDistinctByWantedOfferIn(offers);
+    @Override
+    @Transactional
+    public List<User__> findUserWhoWantedOffer(Company__ company) {
+        return userRepository.findDistinctByWantedOfferIn(company.getOffers());
     }
 }

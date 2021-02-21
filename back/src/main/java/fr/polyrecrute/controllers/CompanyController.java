@@ -230,7 +230,7 @@ public class CompanyController {
         Entity__ entity = entityService.findByUserId(idCompany);
         if(entity.getCompany() == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
-        List<User__> users = userService.findUserWhoWantedOffer(entity.getCompany().getOffers());
+        List<User__> users = userService.findUserWhoWantedOffer(entity.getCompany());
 
         return new ResponseEntity<>(userService.getTransactionalObjectList(users), HttpStatus.OK);
     }
