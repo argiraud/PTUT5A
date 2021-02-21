@@ -33,13 +33,7 @@
               }"
           >
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
+              <PopUpOtherProfile :id-user-to-display="item.id"></PopUpOtherProfile>
             </template>
           </v-data-table>
         </v-card>
@@ -52,10 +46,11 @@
 <script>
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import CompanyDataService from "@/service/CompanyDataService";
+import PopUpOtherProfile from "@/components/PopUpOtherProfile";
 
 export default {
   name: "DashboardEntreprise",
-  components: {DashboardCard},
+  components: {DashboardCard, PopUpOtherProfile},
   data() {
     return {
       search: '',
@@ -63,7 +58,7 @@ export default {
       nbCompanies: 0,
       headers: [
         {text: "Nom", align: "start", value: "name", sortable: true},
-        {text: '', value: 'actions', sortable: false },
+        {text: '', align: "start", value: 'actions', sortable: false },
       ],
     }
   },
@@ -95,5 +90,7 @@ export default {
 </script>
 
 <style scoped>
-
+td {
+  text-align: center !important;
+}
 </style>

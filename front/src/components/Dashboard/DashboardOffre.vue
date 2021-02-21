@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-account" title="Offres" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="test"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
       <v-col>
         <DashboardCard color="orange" icon="mdi-account" title="Offres à valider"
@@ -50,15 +50,6 @@
                   disabled
               ></v-simple-checkbox>
             </template>
-            <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
-            </template>
           </v-data-table>
         </v-card>
 
@@ -80,12 +71,24 @@ export default {
       offers: [],
       nbOffers: 0,
       nbPendingOffers: 0,
+      nbOffersInProgress:0,
       headers: [
         {text: "TITRE", align: "start", value: "title", sortable: true},
-        {text: "ENTREPRISE", value: "company.name", sortable: true},
-        {text: "VALIDEE", value: "validate", sortable: true},
-        {text: "ETAT", value: "state", sortable: true},
-        {text: '', value: 'actions', sortable: false },
+        {text: "ENTREPRISE", align: "start", value: "company.name", sortable: true},
+        {
+          text: 'MOTS-CLES',
+          align: 'start',
+          sortable: false,
+          value: 'keyWord',
+        },
+        {
+          text: 'DESCRIPTION',
+          align: 'start',
+          sortable: false,
+          value: 'description',
+        },
+        {text: "VALIDEE", align: "start", value: "validate", sortable: true},
+        {text: "ETAT", align: "start", value: "state", sortable: true},
       ],
     }
   },
@@ -117,6 +120,15 @@ export default {
             console.error(e);
           })
     },
+    countOffersInProgress() {
+      OfferDataService.countOffersInProgress()
+          .then(response => {
+            this.nbOffersInProgress = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
     getColor (state) {
       if (state === 'available') return 'green'
       else if (state === 'pending') return 'orange'
@@ -127,6 +139,7 @@ export default {
     this.getAllOffers();
     this.countOffers();
     this.countPendingOffers();
+    this.countOffersInProgress();
   }
 }
 </script>

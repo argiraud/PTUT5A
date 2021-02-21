@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-account" title="Etudiants" v-bind:text="nbStudents"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="orange" icon="mdi-account" title="Etudiants sans offres" text="test"></DashboardCard>
+        <DashboardCard color="orange" icon="mdi-account" title="Etudiants sans offres" v-bind:text="nbStudentsWithoutOffers"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -34,13 +34,7 @@
               }"
           >
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
+              <PopUpOtherProfile :id-user-to-display="item.id"></PopUpOtherProfile>
             </template>
           </v-data-table>
         </v-card>
@@ -53,20 +47,23 @@
 
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import StudentDataService from "@/service/StudentDataService";
+import PopUpOtherProfile from "@/components/PopUpOtherProfile";
+import OfferDataService from "@/service/OfferDataService";
 
 export default {
   name: "DashboardEtudiant",
-  components: {DashboardCard},
+  components: {DashboardCard, PopUpOtherProfile},
   data() {
     return {
       search: '',
       students: [],
       nbStudents: 0,
+      nbStudentsWithoutOffers:0,
       headers: [
         {text: "Nom", align: "start", value: "name", sortable: true},
-        {text: "Prénom", value: "firstName", sortable: true},
-        {text: "Email", value: "email", sortable: true},
-        {text: '', value: 'actions', sortable: false },
+        {text: "Prénom", align: "start", value: "firstName", sortable: true},
+        {text: "Email", align: "start", value: "email", sortable: true},
+        {text: '', align: "start", value: 'actions', sortable: false},
       ],
     }
   },
@@ -88,11 +85,21 @@ export default {
           .catch(e => {
             console.error(e);
           })
-    }
+    },
+    countStudentWithoutOffers() {
+      OfferDataService.countStudentWithoutOffers()
+          .then(response => {
+            this.nbStudentsWithoutOffers = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
   },
   mounted() {
     this.getAllStudents();
     this.countStudents();
+    this.countStudentWithoutOffers();
   }
 }
 </script>

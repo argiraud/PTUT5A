@@ -8,7 +8,7 @@
         <DashboardCard color="red" icon="mdi-account" title="Etudiants" v-bind:text="nbStudents"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="orange" icon="mdi-account" title="CV déposé" text="test"></DashboardCard>
+        <DashboardCard color="orange" icon="mdi-account" title="Offres terminées" v-bind:text="nbOffersFinished"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -16,10 +16,10 @@
         <DashboardCard color="grey" icon="mdi-offer" title="Offres Entreprises" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="red" icon="mdi-offer" title="Offres libres" text="test"></DashboardCard>
+        <DashboardCard color="red" icon="mdi-offer" title="Offres libres" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="purple" icon="mdi-account" title="Etudiants sans offres" text="test"></DashboardCard>
+        <DashboardCard color="purple" icon="mdi-account" title="Etudiants sans offres" v-bind:text="nbStudentsWithoutOffers"></DashboardCard>
       </v-col>
     </v-row>
   </v-container>
@@ -37,6 +37,9 @@ export default {
     nbCompanies: 0,
     nbStudents: 0,
     nbOffers: 0,
+    nbStudentsWithoutOffers: 0,
+    nbOffersInProgress:0,
+    nbOffersFinished:0,
   }),
   methods: {
     countCompanies() {
@@ -66,11 +69,41 @@ export default {
             console.error(e);
           })
     },
+    countStudentWithoutOffers() {
+      OfferDataService.countStudentWithoutOffers()
+          .then(response => {
+            this.nbStudentsWithoutOffers = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
+    countOffersInProgress() {
+      OfferDataService.countOffersInProgress()
+          .then(response => {
+            this.nbOffersInProgress = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
+    countOffersFinished() {
+      OfferDataService.countOffersFinished()
+          .then(response => {
+            this.nbOffersFinished = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
   },
   mounted() {
     this.countCompanies();
     this.countStudents();
     this.countOffers();
+    this.countStudentWithoutOffers();
+    this.countOffersInProgress();
+    this.countOffersFinished();
   }
 }
 </script>
