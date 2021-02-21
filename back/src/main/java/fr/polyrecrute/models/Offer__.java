@@ -4,6 +4,7 @@ import fr.polyrecrute.responceType.Offer;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,17 +36,21 @@ public class Offer__ {
     @Column(length = 500)
     private String description;
 
+    @Column(length = 10)
+    private String state;
+
     private boolean validate;
 
     public Offer__() {
     }
 
-    public Offer__(Company__ company, String title, String keyWord, String description) {
+    public Offer__(Company__ company, String title, String keyWord, String description, String state) {
         this.company = company;
         this.title = title;
         this.keyWord = keyWord;
         this.description = description;
         this.validate = false;
+        this.state = state;
     }
 
     public String getIdOffer() {
@@ -81,6 +86,30 @@ public class Offer__ {
     }
 
     public Offer getTransactionalObject() {
-        return new Offer(idOffer, company, files, title, keyWord, description, validate);
+        return new Offer(idOffer, company, files, title, keyWord, description, state, validate);
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setValidate(boolean validate) {
+        this.validate = validate;
     }
 }

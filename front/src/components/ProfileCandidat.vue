@@ -1,8 +1,25 @@
 <template>
     <v-container>
-        <v-form>
+        <v-snackbar v-model="snackbarError" multi-line top color="red">
+            {{Erreur}}
+        </v-snackbar>
+
+        <v-snackbar v-model="snackbarSuccess" multi-line top color="success">
+            {{Message}}
+        </v-snackbar>
+        <p>
+            currentuser
+            {{currentUser.Id}}
+        </p>
+        <p>
+            profileUserInfos
+            {{profileUserInfos.Id}}
+            {{ isDisabled}}
+        </p>
+        <v-form v-model="valid" lazy-validation ref="form">
             <v-text-field
-                    v-model="name"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Name"
                     :rules="nameRules"
                     id="name"
                     label="Nom"
@@ -13,7 +30,8 @@
             ></v-text-field>
 
             <v-text-field
-                    v-model="firstname"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Firstname"
                     :rules="nameRules"
                     id="firstname"
                     label="Prénom"
@@ -23,7 +41,8 @@
                     required
             ></v-text-field>
             <v-text-field
-                    v-model="studentNumber"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.StudentNumber"
                     id="studentNumber"
                     :counter="8"
                     :rules="studentNumberRules"
@@ -33,6 +52,7 @@
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
             <v-menu
+                    :disabled="isDisabled"
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
@@ -46,8 +66,9 @@
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
+                            :disabled="isDisabled"
                             id="birthDate"
-                            v-model="date"
+                            v-model="profileUserInfos.BirthDate"
                             label="Date de naissance"
                             readonly
                             v-on="on"
@@ -56,7 +77,7 @@
                 </template>
                 <v-date-picker
                         ref="picker"
-                        v-model="date"
+                        v-model="profileUserInfos.BirthDate"
                         hint="MM/DD/YYYY format"
                         persistent-hint
                         :max="new Date().toISOString().substr(0, 10)"
@@ -66,7 +87,8 @@
             </v-menu>
 
             <v-text-field
-                    v-model="email"
+                    :disabled="isDisabled"
+                    v-model="profileUserInfos.Email"
                     id="emailInscription"
                     :rules="emailRules"
                     prepend-inner-icon="email"
@@ -74,41 +96,127 @@
                     label="E-mail"
                     required
             ></v-text-field>
-
-            <v-text-field
-                    id="mdpInscription"
-                    v-model="mdp"
-                    label="Mot de passe"
-                    prepend-inner-icon="lock"
-                    type="password"
-                    required
-                    :rules="mdpRules"
-                    color="teal accent-3"/>
+            <v-select
+                    :disabled="isDisabled"
+                    id="comboStatus"
+                    label="Renseignez votre status actuel"
+                    small-chips
+                    v-model="profileUserInfos.Status"
+                    :items="items"
+            >
+                <template v-slot:selection="{ item, selected }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            :input-value="selected"
+                            label
+                            small
+                    >
+                      <span class="pr-2">
+                        {{ item.text }}
+                      </span>
+                    </v-chip>
+                </template>
+                <template v-slot:item="{ item }">
+                    <v-chip
+                            :color="`${item.color} lighten-3`"
+                            dark
+                            label
+                            small
+                    >
+                        {{ item.text }}
+                    </v-chip>
+                </template>
+            </v-select>
+            <v-textarea
+                    :disabled="isDisabled"
+                    name="presentation"
+                    v-model="profileUserInfos.Presentation"
+                    id="presentation"
+                    prepend-inner-icon="create"
+                    type="text"
+                    label="Présentation"
+            ></v-textarea>
+            <div :hidden="isDisabled">
+                <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
+            </div>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="Save" dark :disabled="!valid">Enregistrer</v-btn>
+                <v-btn
+                        style="margin-top: 5%"
+                        rounded outlined
+                        color="teal accent-3"
+                        @click="save"
+                        :disabled="!valid || isDisabled">Enregistrer</v-btn>
             </div>
         </v-form>
+        <p></p>
+        <div :hidden="isDisabled">
+            <v-card
+                    elevation="10"
+            >
+                <v-card-title>Entreprises me comptant dans leurs voeux</v-card-title>
+                <v-data-table
+                        :headers="headers"
+                        :items="companies"
+                        :items-per-page="5"
+                ></v-data-table>
+            </v-card>
+        </div>
     </v-container>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+    import ChangeMotDePasse from "@/components/ChangeMotDePasse";
+    import StudentDataService from "@/service/StudentDataService";
+
     export default {
         name: "ProfileCandidat",
+        components: {ChangeMotDePasse},
         data: () => ({
+            items: [
+                    {
+                        text: 'Disponible',
+                        color: 'green',
+                        value: 'available'
+                    },
+                    {
+                        text: 'En cours',
+                        color: 'orange',
+                        value: 'in progress'
+                    },
+                    {
+                        text: 'Terminé',
+                        color: 'red',
+                        value: 'finished'
+                    }],
+            companies: [],
+            headers: [
+                {
+                    text: "Id",
+                    align: "start",
+                    value: "idEntity",
+                    sortable: true
+                },
+                {
+                    text: "Nom",
+                    value: "name",
+                    sortable: true
+                },
+            ],
+            snackbarSuccess : false,
+            snackbarError : false,
+            Erreur: '',
+            Message: '',
             valid: true,
-            name: '',
             nameRules: [
                 v => !!v || 'Le nom et le prénom sont requis',
                 v => (v && v.length <= 20) || 'Le nom ou le prénom doivent faire moins de 20 charactères',
             ],
-            firstname: '',
-            studentNumber : '',
             studentNumberRules: [
                 //v => /.+@.+\..+/.test(v) || 'Le numéro étudiant doit être composé uniquement de chiffres',
                 v => (v.length == 8 || v.length == 0) || 'Le numéro étudiant est composé de 8 chiffres'
             ],
-            email: '',
             emailRules: [
                 v => !!v || 'L\'addresse mail est requise',
                 v => /.+@.+\..+/.test(v) || 'L\'addresse mail doit être valide',
@@ -119,7 +227,6 @@
             ],
             picker: new Date().toISOString().substr(0, 10),
             menu: false,
-            date: null
         }),
         watch: {
             menu (val) {
@@ -128,63 +235,97 @@
         },
         methods:{
             save(){
-                console.log("Je sauvegarde les données en base");
-            },
-            beforeCreate(){
-                let url = "https://api.polyrecrute.tk/auth/userdetails?";
-                fetch(url,{
-                    method: "GET",
-                    headers:{
-                        "accept": "application/json"
-                    }
-                }).then(response => {
+                let userToModify = this.profileUserInfos;
+                let user = {
+                    "id" : userToModify.Id,
+                    "name" : userToModify.Name,
+                    "email" : userToModify.Email,
+                    "presentation" : userToModify.Presentation,
+                    "roles" : [],
+                    "files" : [],
+                    "enable" : "",
+                    "firstName" : userToModify.Firstname,
+                    "etudiantNumber" : userToModify.StudentNumber,
+                    "birthDate" : userToModify.BirthDate,
+                    "status" : userToModify.Status,
+                };
+                StudentDataService.updateUserInfos(user).then(response => {
                     console.log("response : ")
                     console.log(response)
-                    switch (response.status) {
-                        case 200 :
-                            console.log("case 200")
-                            response.json().then(respjson => {
-                                console.log("data : ")
-                                console.log(respjson)
-
-                                this.$store.commit('SET_SESSION_FROM_JSON', respjson);
-                                this.$store.commit('CONNEXION_MANAGEMENT', true);
-
-                                if(respjson.presentation == null || respjson.presentation == ""){
-                                    this.$router.push("/creationCompte");
-                                }else{
-                                    this.$router.push("/home");
-                                }
-                            })
+                    var payload;
+                    switch(response.status){
+                        case 200:
+                            payload = {
+                                "message" : "Modifications enregistrées. - Redirection dans 2 secondes..."
+                            }
+                            this.setSnackbarSuccess(payload)
+                                var store = this.$store
+                                var router = this.$router
+                            setTimeout(function(){
+                                window.sessionStorage.clear();
+                                store.commit('CONNEXION_MANAGEMENT', false);
+                                router.push("/Connexion");
+                            }, 2000)
                             break;
-                        case 404 :
-                            this.Erreur = 'Email ou mot de passe incorrecte !';
-                            this.snackbarError = true;
+                        case 401:
+                            payload = {
+                                "message" : "Vous devez être authentifié pour modifier votre profil"
+                            }
+                            this.setSnackbarError(payload)
                             break;
-                        case 401 :
-                            this.Erreur = 'Email ou mot de passe incorrecte !';
-                            this.snackbarError = true;
+                        case 400:payload = {
+                            "message" : "Votre token de session est compromis ou périmé, veuillez vous reconnecter."
+                            }
+                            this.setSnackbarError(payload)
                             break;
-                        case 500 :
-                            this.Erreur = 'Problème du serveur : erreur 500';
-                            this.snackbarError = true;
-                            break;
-
                     }
-                }).catch(err => {
-                    console.log("erreur : " + err);
-                });
+                })
             },
-            data: () => ({
-                userInfos: {
-                    name: '',
-                    email: '',
-                    birthDate: '',
-                    presentation: ''
+            setSnackbarError(payload){
+                this.snackbarError = true;
+                this.Erreur = payload.message;
+            },
+            setSnackbarSuccess(payload){
+                this.snackbarSuccess = true;
+                this.Message = payload.message;
+            },
+            LogOut(){
+                window.sessionStorage.clear();
+                this.$store.commit('CONNEXION_MANAGEMENT', false);
+                this.$router.push("/Connexion");
+            },
+            mounted(){
+               this.getAllVoeux();
+            },
+            getAllVoeux(){
+                let userId = this.currentUser.Id;
+                StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
+                    console.log("getAllVoeux : ");
+                    console.log(response.data);
+                    this.companies = response.data;
+                })
+            }
+            },
+        computed: {
+            ...mapState({
+                isConnected: 'isConnected',
+                currentUser: 'currentUser',
+                profileUserInfos : 'profileUserInfos'
+            }),
+            isDisabled(){
+                if(this.currentUser.IsAdmin){
+                    return false;
+                }else
+                {
+                    if (this.currentUser.Id !== this.profileUserInfos.Id)
+                    {
+                        return true
+                    } else {
+                        return false;
+                    }
                 }
-            })
-        },
-
+            }
+        }
     }
 </script>
 

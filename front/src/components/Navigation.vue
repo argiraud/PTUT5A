@@ -11,8 +11,8 @@
       <router-link to="/Connexion">
         <v-btn v-if="!isConnected">Se connecter</v-btn>
       </router-link>
-      <router-link to="/Profile">
-        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUserName}}</v-btn>
+      <router-link to="/Profil">
+        <v-btn v-if="isConnected" style="margin-right: 5px">{{currentUser.Name}}</v-btn>
       </router-link>
       <router-link to="/Connexion">
         <v-btn title="Se déconnecter" style="background: red" v-if="isConnected" @click="LogOut">
@@ -37,25 +37,31 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home2">
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="depotOffre">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Dépôt d'offre d'apprentissage
-              / de candidature
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home3">
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="depotCandidature">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="white-space: normal">Gestion de mes documents
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="saisieVoeux">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="home4">
+          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="saisieVoeuxEtudiant">
             <v-list-item-icon>
-              <v-icon>mdi-calendar-month</v-icon>
+              <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Planification d'entretiens</v-list-item-title>
+            <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isConnected" to="dashboard">
             <v-list-item-icon>
@@ -76,12 +82,18 @@
           </v-list-item-icon>
           <v-list-item-title>Connexion</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="isConnected" to="Profile">
+        <v-list-item v-if="isConnected" to="/Profil">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Profile</v-list-item-title>
+          <v-list-item-title>Mon Profil</v-list-item-title>
         </v-list-item>
+          <v-list-item v-if="isConnected && currentUser.IsAdmin" to="Connexion">
+              <v-list-item-icon>
+                  <v-icon>mdi-smart-card</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Effectuer une inscription</v-list-item-title>
+          </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>
@@ -89,6 +101,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import StudentDataService from "@/service/StudentDataService";
 
 export default {
   name: 'home',
@@ -104,9 +117,16 @@ export default {
         this.$store.commit('CONNEXION_MANAGEMENT', false);
       }else{
         this.$store.commit('CONNEXION_MANAGEMENT', true);
+        StudentDataService.getConnectedUserDetails().then(response => {
+          switch (response.status) {
+            case 200 :
+              this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
+              break;
+          }
+        }).catch(err => {
+          console.log("erreur : " + err);
+        });
       }
-      console.log("created : " + window.sessionStorage.getItem("UserName"));
-      this.$store.commit('SET_CURRENTUSERNAME',window.sessionStorage.getItem("UserName"));
   },
   methods: {
     LogOut(){
@@ -117,7 +137,7 @@ export default {
   computed: {
     ...mapState({
       isConnected: 'isConnected',
-      currentUserName : 'currentUserName'
+      currentUser: 'currentUser'
     }),
   }
 }

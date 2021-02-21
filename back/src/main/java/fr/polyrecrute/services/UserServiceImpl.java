@@ -1,16 +1,17 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.User__;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.UserRepository;
+import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.User;
 import fr.polyrecrute.responceType.UserSignup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService{
         if (userSignup.getBirthDate().compareTo(new Date()) > 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Birth date is wrong");
 
-        User__ userCreated = new User__(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate(), "OK");
+        User__ userCreated = new User__(userSignup.getFirstName(), userSignup.getEtudiantNumber(), userSignup.getBirthDate());
         Entity__ entityCreated = entityService.registerEntity(userSignup, userCreated);
         entityCreated.addRole(roleService.findByName(ERole.USER));
         userCreated.setEntity(entityCreated);
@@ -43,7 +44,34 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public long countAll() {
-        return userRepository.count();
+    public List<User> getTransactionalObjectList(List<User__> pUsers) {
+        List<User> users = new ArrayList<>();
+        for (User__ user : pUsers){
+            users.add(user.getTransactionalObject());
+        }
+        return users;
+    }
+
+    @Override
+    public long countUserWithoutOffer(){
+        return  userRepository.countAllByWantedOfferIsNull() - (userRepository.count() - entityService.countAllStudents());
+    }
+
+    @Override
+    public void deleteWantedOffer(User__ user, Offer__ offer) {
+        user.deleteWantedOffer(offer);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addWantedOffer(User__ user, Offer__ offer) {
+        user.addWantedOffer(offer);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public List<User__> findUserWhoWantedOffer(Company__ company) {
+        return userRepository.findDistinctByWantedOfferIn(company.getOffers());
     }
 }

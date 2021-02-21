@@ -4,6 +4,7 @@ import fr.polyrecrute.responceType.File;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @javax.persistence.Entity(name = "File")
 @Table(name = "file")

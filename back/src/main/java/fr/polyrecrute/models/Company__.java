@@ -1,9 +1,11 @@
 package fr.polyrecrute.models;
 
 
+import fr.polyrecrute.responceType.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 import fr.polyrecrute.responceType.Company;
@@ -21,8 +23,11 @@ public class Company__ {
     @OneToOne(targetEntity = Entity__.class, mappedBy = "company", fetch = FetchType.LAZY)
     private Entity__ entity;
 
-    @OneToMany(targetEntity= Offer__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY	)
+    @OneToMany(targetEntity= Offer__.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Offer__> offers = new HashSet<>();
+
+    @OneToMany(targetEntity= User__.class, fetch = FetchType.LAZY)
+    private Set<User__> wantedUser = new HashSet<>();
 
     public Company__() {
     }
@@ -48,10 +53,26 @@ public class Company__ {
     }
 
     public Company getTransactionalObject() {
-        return new Company(idCompany, entity.getName());
+        return new Company(entity.getIdEntity(), entity.getName(), wantedUser);
+    }
+
+    public Set<User__> getWantedUser() {
+        return wantedUser;
     }
 
     public void addOffer(Offer__ offer){
         offers.add(offer);
+    }
+
+    public void addWantedUser(User__ user){
+        wantedUser.add(user);
+    }
+
+    public void deleteOffer(Offer__ offer){
+        offers.remove(offer);
+    }
+
+    public void deleteWantedUser(User__ user){
+        wantedUser.remove(user);
     }
 }

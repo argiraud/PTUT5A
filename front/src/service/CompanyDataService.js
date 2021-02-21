@@ -1,21 +1,29 @@
-import http from "../http-common";
+import {axiosAPI} from "@/http-common";
 
 class CompanyDataService {
     getAll() {
-        return http.get("/companies");
+        return axiosAPI.get("/companies");
+    }
+
+    getAllOffers(){
+        return axiosAPI.get("/company/offers");
     }
 
     count(){
-        return http.get("/kpi/companies");
+        return axiosAPI.get("/kpi/companies");
     }
 
-    // get(id) {
-    //     return http.get(`/tutorials/${id}`);
-    // }
-    //
-    // create(data) {
-    //     return http.post("/tutorials", data);
-    // }
+     get(id) {
+         return axiosAPI.get(`/company/${id}/offers`);
+    }
+
+    create(data) {
+         return axiosAPI.post("/company/offer", data);
+     }
+    UsersWhoWantedMe(userId){
+        return axiosAPI.get(`/company/${userId}/userWhoWanted`)
+    }
+
     //
     // update(id, data) {
     //     return http.put(`/tutorials/${id}`, data);
@@ -27,10 +35,6 @@ class CompanyDataService {
     //
     // deleteAll() {
     //     return http.delete(`/tutorials`);
-    // }
-    //
-    // findByTitle(title) {
-    //     return http.get(`/tutorials?title=${title}`);
     // }
 }
 

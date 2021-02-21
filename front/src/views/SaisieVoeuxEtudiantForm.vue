@@ -3,8 +3,8 @@
 
     <br>
 
-    <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
-    <AjoutVoeux v-model="showScheduleForm" @add-wish="refresh"/>
+    <v-btn large @click="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <AjoutVoeuxEtudiant v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
     <br>
@@ -28,7 +28,7 @@
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" @click="deleteItemById(item.id)">Supprimer</v-btn>
+            <v-btn color="primary" @click="deleteItemById(item.idOffer)">Supprimer</v-btn>
           </td>
         </tr>
       </template>
@@ -37,50 +37,56 @@
 
     <br>
 
-  <v-btn
-      color="Valider"
-      class="mr-4"
-      @click="validate"
-      to="home"
-  >
-    Valider
-  </v-btn>
+    <v-btn
+        color="Valider"
+        class="mr-4"
+        @click="validate"
+        to="home"
+    >
+      Valider
+    </v-btn>
   </div>
 </template>
 
 <script>
-import AjoutVoeux from "@/components/AjoutVoeux";
+import AjoutVoeuxEtudiant from "@/components/AjoutVoeuxEtudiant";
 import WishDataService from "@/service/WishDataService";
 
 export default {
-  name: "SaisieVoeuxForm",
+name: "SaisieVoeuxEtudiantForm",
   components:{
-    AjoutVoeux
+    AjoutVoeuxEtudiant,
   },
   data () {
     return {
       expanded: [],
-      singleExpand: true,
+      singleExpand: false,
       showScheduleForm: false,
       selected: [],
       headers: [
+          {
+              text: 'Entreprise',
+              align: 'start',
+              sortable: true,
+              value: `company.name`,
+          },
         {
-          text: 'ID',
+          text: 'Titre',
           align: 'start',
-          sortable: false,
-          value: 'id',
+          sortable: true,
+          value: 'title',
         },
         {
-          text: 'Nom',
+          text: 'Mots-clés',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'keyWord',
         },
         {
-          text: 'Prénom',
+          text: 'Description',
           align: 'start',
           sortable: false,
-          value: 'firstName',
+          value: 'description',
         },
       ],
       wish: [
@@ -91,21 +97,18 @@ export default {
   methods: {
     validate() {
       this.$emit("step3-finish", "true")
+      this.$refs.form.validate();
 
-    },
-
-    refresh(){
-      this.APIGetVoeux();
     },
 
 
     deleteItemById (id) {
       if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
-          const index = this.wish.findIndex(wish => wish.id === id); // find the post index
+          const index = this.wish.findIndex(wish => wish.idOffer === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post
 
-          WishDataService.deleteVoeuxEntreprise(id).then(response => {
+          WishDataService.deleteVoeuxEtudiant(id).then(response => {
             switch (response.status) {
               case 201 :
                 alert("Suppression effectuée");
@@ -115,20 +118,24 @@ export default {
           }).catch(e => {
             console.error(e);
           })
+        }
 
-      }
+      },
+
+    refresh(){
+      this.APIGetVoeux();
     },
 
     APIGetVoeux(){
         let idEntity = this.$store.state.currentUser.Id;
-        WishDataService.getVoeuxEntreprise(idEntity).then(response => {
+        console.log(idEntity)
+        WishDataService.getVoeuxEtudiant(idEntity).then(response => {
           this.wish = response.data;
         })
             .catch(e => {
               console.error(e);
             })
-
-    }
+      }
 
   },
 

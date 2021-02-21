@@ -47,4 +47,9 @@ public class FileServiceImpl implements FileService {
         return fileRepository.findByIdFile(fileId)
                 .orElseThrow(() -> {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");});
     }
+
+    @Override
+    public void deleteFile(File__ file){
+        fileRepository.delete(file);
+    }
 }

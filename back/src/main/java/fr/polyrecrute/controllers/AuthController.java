@@ -71,4 +71,6 @@ public class AuthController {
 		userService.registerEntity(userSignup);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
+
+
 }

@@ -5,6 +5,7 @@ import fr.polyrecrute.repository.EntityRepository;
 import fr.polyrecrute.responceType.EntityDetails;
 import fr.polyrecrute.responceType.EntitySignin;
 import fr.polyrecrute.responceType.EntitySignup;
+import fr.polyrecrute.responceType.Question;
 import fr.polyrecrute.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EntityServiceImpl implements EntityService {
@@ -29,21 +31,27 @@ public class EntityServiceImpl implements EntityService {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
     private final FileService fileService;
+    private final RoleService roleService;
+    private final QuestionService questionService;
 
     @Autowired
-    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService) {
+    public EntityServiceImpl(AuthenticationManager authenticationManager, EntityRepository entityRepository, PasswordEncoder encoder, JwtUtils jwtUtils, FileService fileService, RoleService roleService, QuestionService questionService) {
         this.authenticationManager = authenticationManager;
         this.entityRepository = entityRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.fileService = fileService;
+        this.roleService = roleService;
+        this.questionService = questionService;
     }
 
     @Override
     public Entity__ findByUserId(Long id) {
-        Optional<Entity__> registeredUser = entityRepository.findById(id);
-        return registeredUser.orElse(null);
+        return entityRepository.findById(id)
+                .orElseThrow(() -> {throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found");});
     }
+
 
     @Override
     public Entity__ registerEntity(EntitySignup entitySignup, User__ user) {
@@ -73,7 +81,7 @@ public class EntityServiceImpl implements EntityService {
         Entity__ entityCreated = new Entity__(entitySignup.getName(),
                 entitySignup.getEmail(),
                 encoder.encode(entitySignup.getPassword()),
-                "", true);
+                "", "", true);
 
         return entityCreated;
     }
@@ -104,13 +112,13 @@ public class EntityServiceImpl implements EntityService {
         if (entity.getCompany() != null){
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
                     entity.getPresentation(),entity.getRoles(),entity.getFiles(),entity.isEnabled(),
-                    "","",null,"");
+                    "","",null,entity.getStatus());
         }
         else{
             entityDetails = new EntityDetails(entity.getIdEntity(),entity.getName(),entity.getEmail(),
                     entity.getPresentation(),entity.getRoles(),entity.getFiles(), entity.isEnabled(),
                     entity.getUser().getFirstName(),entity.getUser().getEtudiantNumber(),
-                    entity.getUser().getBirthDate(),entity.getUser().getStatus());
+                    entity.getUser().getBirthDate(),entity.getStatus());
         }
         return entityDetails;
     }
@@ -128,6 +136,64 @@ public class EntityServiceImpl implements EntityService {
     public void storeFile(MultipartFile pFile, Entity__ entity) {
         File__ file = fileService.storeFile(pFile, entity);
         entity.addFile(file);
+        entityRepository.save(entity);
+    }
+
+    @Override
+    public long countAllStudents() {
+        return entityRepository.countAllByUserIsNotNullAndRolesNotContains(roleService.findByName(ERole.ADMIN));
+    }
+
+    @Override
+    public List<User__> getAllStudents() {
+
+        List<Entity__> entities = entityRepository.findAllByUserIsNotNullAndRolesNotContains(roleService.findByName(ERole.ADMIN));
+        List<User__> users = new ArrayList<User__>();
+        for (Entity__ entity : entities){
+            users.add(entity.getUser());
+        }
+        return users;
+    }
+
+    @Override
+    public Entity__ updateEntity(Entity__ entity, EntityDetails entityUpdate) {
+
+        entity.setName(entityUpdate.getName());
+        entity.setEmail(entityUpdate.getEmail());
+        entity.setPresentation(entityUpdate.getPresentation());
+        entity.setStatus(entityUpdate.getStatus());
+
+        if (entity.getUser() != null){
+            entity.getUser().setFirstName(entityUpdate.getFirstName());
+            entity.getUser().setEtudiantNumber(entityUpdate.getEtudiantNumber());
+            entity.getUser().setBirthDate(entityUpdate.getBirthDate());
+        }
+
+        entityRepository.save(entity);
+        return entity;
+    }
+
+    @Override
+    public void updatePassword(Entity__ entity, String password) {
+        entity.setPassword(encoder.encode(password));
+        entityRepository.save(entity);
+    }
+
+    @Override
+    public void deleteFile(Entity__ entity, File__ file){
+        if (!entity.getFiles().contains(file)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No sufficient right");
+        }
+        entity.deleteFile(file);
+        entityRepository.save(entity);
+        fileService.deleteFile(file);
+    }
+
+    @Override
+    public void addQuestion(Entity__ entity, Question question) {
+        Question__ q = new Question__(question.getNoQuestion(), question.getAnswer(), entity);
+        questionService.create(q);
+        entity.addQuestion(q);
         entityRepository.save(entity);
     }
 
