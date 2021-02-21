@@ -1,9 +1,13 @@
 package fr.polyrecrute.models;
 
+import fr.polyrecrute.responceType.Offer;
+import fr.polyrecrute.responceType.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @javax.persistence.Entity(name = "User")
 @Table(name = "\"user\"")
@@ -27,18 +31,17 @@ public class User__ {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @Column(length = 10)
-    private String status;
+    @OneToMany(targetEntity= Offer__.class, fetch = FetchType.LAZY)
+    private Set<Offer__> wantedOffer = new HashSet<>();
 
 
     public User__() {
     }
 
-    public User__(String firstName, String etudiantNumber, Date birthDate, String status) {
+    public User__(String firstName, String etudiantNumber, Date birthDate) {
         this.firstName = firstName;
         this.etudiantNumber = etudiantNumber;
         this.birthDate = birthDate;
-        this.status = status;
     }
 
     public String getIdUser() {
@@ -61,11 +64,36 @@ public class User__ {
         return birthDate;
     }
 
-    public String getStatus() {
-        return status;
+
+    public void setEntity(Entity__ entity){
+        this.entity = entity;
     }
 
-    public void setEntity(Entity__ entity) {
-        this.entity = entity;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setEtudiantNumber(String etudiantNumber) {
+        this.etudiantNumber = etudiantNumber;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public User getTransactionalObject() {
+        return new User(entity.getIdEntity(), entity.getName(), entity.getEmail(), entity.getPresentation(), firstName);
+    }
+
+    public void addWantedOffer(Offer__ offer){
+        wantedOffer.add(offer);
+    }
+
+    public void deleteWantedOffer(Offer__ offer){
+        wantedOffer.remove(offer);
+    }
+
+    public Set<Offer__> getWantedOffer() {
+        return wantedOffer;
     }
 }

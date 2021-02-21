@@ -2,6 +2,7 @@ package fr.polyrecrute.controllers;
 
 import fr.polyrecrute.responceType.LongResponse;
 import fr.polyrecrute.services.CompanyService;
+import fr.polyrecrute.services.EntityService;
 import fr.polyrecrute.services.OfferService;
 import fr.polyrecrute.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,12 +30,14 @@ public class KPIController {
     private final OfferService offerService;
     private final CompanyService companyService;
     private final UserService userService;
+    private final EntityService entityService;
 
     @Autowired
-    public KPIController(OfferService offerService, CompanyService companyService, UserService userService) {
+    public KPIController(OfferService offerService, CompanyService companyService, UserService userService, EntityService entityService) {
         this.offerService = offerService;
         this.companyService = companyService;
         this.userService = userService;
+        this.entityService = entityService;
     }
 
 
@@ -42,19 +45,49 @@ public class KPIController {
             responses= {
                     @ApiResponse(responseCode = "200", description = "Count of companies", content = @Content(schema = @Schema(implementation = LongResponse.class))),
                     @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content) })
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LongResponse> getCountUsers() {
-        return new ResponseEntity<>(new LongResponse(userService.countAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new LongResponse(entityService.countAllStudents()), HttpStatus.OK);
     }
 
-    @Operation(summary = "Count of companies", description = "",
+    @Operation(summary = "Count of students", description = "",
             responses= {
-                    @ApiResponse(responseCode = "200", description = "Count of companies", content = @Content(schema = @Schema(implementation = LongResponse.class))),
+                    @ApiResponse(responseCode = "200", description = "Count of students", content = @Content(schema = @Schema(implementation = LongResponse.class))),
                     @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
                     @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
     @GetMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LongResponse> getCountCompany() {
         return new ResponseEntity<>(new LongResponse(companyService.countAll()), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Count of offers finished", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Count of offers finished", content = @Content(schema = @Schema(implementation = LongResponse.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/companies/offersFinished", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LongResponse> getCountOffersByStateDone() {
+        return new ResponseEntity<>(new LongResponse(offerService.countAllByState("finished")), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Count of user without offer", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Count of user without offer", content = @Content(schema = @Schema(implementation = LongResponse.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/user/withoutOffer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LongResponse> getCountUserWithoutOffer() {
+        return new ResponseEntity<>(new LongResponse(userService.countUserWithoutOffer()), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Count of offers in progress", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Count of offers in progress", content = @Content(schema = @Schema(implementation = LongResponse.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/companies/offersInProgress", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LongResponse> getCountOffersByStateInProgress() {
+        return new ResponseEntity<>(new LongResponse(offerService.countAllByState("inprogress")), HttpStatus.OK);
     }
 
     @Operation(summary = "Count of offers", description = "",

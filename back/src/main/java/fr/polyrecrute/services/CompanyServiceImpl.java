@@ -1,17 +1,16 @@
 package fr.polyrecrute.services;
 
-import fr.polyrecrute.models.Company__;
-import fr.polyrecrute.models.ERole;
-import fr.polyrecrute.models.Entity__;
-import fr.polyrecrute.models.Offer__;
+import fr.polyrecrute.models.*;
 import fr.polyrecrute.repository.CompanyRepository;
 import fr.polyrecrute.responceType.CompanySignup;
 import fr.polyrecrute.responceType.Company;
+import fr.polyrecrute.responceType.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +19,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
     private final RoleService roleService;
+    private final OfferService offerService;
     private final EntityService entityService;
 
     @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository, RoleService roleService, EntityService entityService) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, RoleService roleService, OfferService offerService, EntityService entityService) {
         this.companyRepository = companyRepository;
         this.roleService = roleService;
+        this.offerService = offerService;
         this.entityService = entityService;
     }
 
@@ -66,9 +67,38 @@ public class CompanyServiceImpl implements CompanyService {
         return companies;
     }
 
+
     @Override
-    public void addOffer(Company__ company, Offer__ offer) {
+    public void deleteOffer(Company__ company, String offerId) {
+        Offer__ offer = offerService.findById(offerId);
+        company.deleteOffer(offer);
+        companyRepository.save(company);
+        offerService.delete(offer);
+    }
+
+    @Override
+    @Transactional
+    public Offer__ createOffer(Company__ company, Offer pOffer) {
+        Offer__ offer = offerService.create(company, pOffer);
         company.addOffer(offer);
         companyRepository.save(company);
+        return offer;
+    }
+
+    @Override
+    public void deleteWantedUser(Company__ company, User__ user) {
+        company.deleteWantedUser(user);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public void addWantedUser(Company__ company, User__ user) {
+        company.addWantedUser(user);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public List<Company__> FindCompanyWhoWantedUser(User__ user) {
+        return companyRepository.findAllByWantedUserContains(user);
     }
 }

@@ -7,4 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileService {
     File__ storeFile(MultipartFile file, Entity__ entity);
     File__ findById(String fileId);
+    void deleteFile(File__ file);
 }
