@@ -12,7 +12,7 @@
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </h4>
         <br>
-        <v-btn color="primary" v-on:click="submitFile()" :disabled="EmptyList()">Envoyer</v-btn>
+        <v-btn color="primary" v-on:click="submitFile()" :disabled="emptyList()">Envoyer</v-btn>
       </div>
     </div>
 
@@ -91,8 +91,11 @@ name: "DepotCandidatureForm",
       this.$emit("step2-finish", "true")
     },
 
-    EmptyList() {
-      console.log(this.candidatures.length)
+    reset() {
+      this.$refs.file.value=null;
+    },
+
+    emptyList() {
       if (this.candidatures.length == 0){
         return false
       } else {
@@ -135,6 +138,7 @@ name: "DepotCandidatureForm",
     add: function(item) {
       this.candidatures.push(item);
     },
+
     APIGetCandidature(){
       StudentDataService.getConnectedUserDetails().then(response => {
         this.candidatures = response.data.files;
@@ -154,6 +158,7 @@ name: "DepotCandidatureForm",
           case 201 :
             alert("Ajout du document effectuée");
             this.APIGetCandidature();
+            this.reset();
             break;
           case 400 :
             alert("Titre, mots-clés ou description trop long");
