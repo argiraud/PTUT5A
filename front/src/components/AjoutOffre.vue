@@ -86,7 +86,6 @@ name: "AjoutOffre",
   methods: {
     AddOffer(){
         this.APIAddOffer();
-        //this.APIAddDocument();
         this.show = false;
     },
 
@@ -120,7 +119,6 @@ name: "AjoutOffre",
     onFileChange(event){
       this.fileData =  event.target.files[0];
       this.filesObj = this.fileData;
-      console.log('file Object:==>',this.filesObj);
 
     },
 

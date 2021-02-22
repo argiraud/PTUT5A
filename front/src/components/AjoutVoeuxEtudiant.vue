@@ -1,11 +1,6 @@
 <template>
   <v-dialog v-model="show" max-width="500px">
 
-    <div>
-      <h1> Liste Offres</h1>
-
-      <br>
-
       <v-data-table
           v-model="selected"
           :headers="headers"
@@ -16,6 +11,12 @@
           class="elevation-1"
           show-expand
       >
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-toolbar-title>Liste Offres</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+        </template>
         <template v-slot:expanded-item="{item}">
           <tr>
             <td>
@@ -25,7 +26,6 @@
         </template>
       </v-data-table>
 
-    </div>
   </v-dialog>
 </template>
 
@@ -85,7 +85,6 @@ export default {
       CompanyDataService.getAllOffers()
           .then(response => {
             this.profiles = response.data;
-            console.log(response.data);
           })
           .catch(e => {
             console.error(e);
@@ -95,7 +94,6 @@ export default {
 
     addWish (idOffer) {
       WishDataService.createVoeuxEtudiant(idOffer).then(response => {
-        console.log(response)
         switch (response.status) {
           case 200 :
             alert("Ajout du voeux effectuée");

@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="ml-5 mr-5">
+
+    <h1 class="text-center"> Saisie des voeux </h1>
 
     <br>
 
@@ -97,7 +99,6 @@ name: "SaisieVoeuxEtudiantForm",
   methods: {
     validate() {
       this.$emit("step3-finish", "true")
-      this.$refs.form.validate();
 
     },
 
@@ -128,7 +129,6 @@ name: "SaisieVoeuxEtudiantForm",
 
     APIGetVoeux(){
         let idEntity = this.$store.state.currentUser.Id;
-        console.log(idEntity)
         WishDataService.getVoeuxEtudiant(idEntity).then(response => {
           this.wish = response.data;
         })

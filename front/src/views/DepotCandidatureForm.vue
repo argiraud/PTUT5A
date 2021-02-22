@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1> Gestion des documents </h1>
+  <div class="ml-5 mr-5">
+    <h1 class="text-center"> Gestion des documents </h1>
 
     <br>
 
@@ -12,7 +12,7 @@
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </h4>
         <br>
-        <v-btn color="primary" v-on:click="submitFile()">Envoyer</v-btn>
+        <v-btn color="primary" v-on:click="submitFile()" :disabled="EmptyList()">Envoyer</v-btn>
       </div>
     </div>
 
@@ -91,6 +91,15 @@ name: "DepotCandidatureForm",
       this.$emit("step2-finish", "true")
     },
 
+    EmptyList() {
+      console.log(this.candidatures.length)
+      if (this.candidatures.length == 0){
+        return false
+      } else {
+        return true
+      }
+    },
+
     deleteItemById (idFile) {
       if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
         FileDataService.deleteFile(idFile).then(response => {
@@ -112,7 +121,6 @@ name: "DepotCandidatureForm",
 
     openItemById (idFile, title) {
       FileDataService.getFileById(idFile).then(response => {
-        console.log(title)
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
@@ -129,7 +137,6 @@ name: "DepotCandidatureForm",
     },
     APIGetCandidature(){
       StudentDataService.getConnectedUserDetails().then(response => {
-        console.log(response.data.files);
         this.candidatures = response.data.files;
       })
           .catch(e => {
@@ -143,7 +150,6 @@ name: "DepotCandidatureForm",
 
     submitFile(){
       FileDataService.uploadUserFile(this.file, 1).then(response => {
-        console.log(response);
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");

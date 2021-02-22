@@ -59,11 +59,9 @@ name: "Presentation",
         };
 
         StudentDataService.updateUserInfos(user).then(response => {
-          console.log("response : ")
-          console.log(response)
           switch(response.status){
             case 200:
-              console.log("update présentation réussie");
+              alert("Mise à jour de la présentation réussie");
               break;
             case 400:
               console.log("Error Token");
@@ -84,11 +82,9 @@ name: "Presentation",
         };
 
         StudentDataService.updateUserInfos(company).then(response => {
-          console.log("response : ")
-          console.log(response)
           switch(response.status){
             case 200:
-              console.log("update présentation réussie");
+              alert("Mise à jour de la présentation réussie");
               break;
             case 400:
               console.log("Error Token");
