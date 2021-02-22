@@ -1,11 +1,6 @@
 <template>
   <v-dialog v-model="show" max-width="500px">
 
-  <div>
-    <h1> Liste Etudiant </h1>
-
-    <br>
-
     <v-data-table
         v-model="selected"
         :headers="headers"
@@ -16,6 +11,12 @@
         class="elevation-1"
         show-expand
     >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Liste Etudiants</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+      </template>
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
@@ -24,8 +25,6 @@
         </tr>
       </template>
     </v-data-table>
-
-  </div>
   </v-dialog>
 </template>
 
@@ -79,7 +78,6 @@ name: "AjoutVoeux",
 
     APIGetStudents(){
       StudentDataService.getAll().then(response => {
-        alert(response.data)
         this.profiles = response.data;
       })
           .catch(e => {

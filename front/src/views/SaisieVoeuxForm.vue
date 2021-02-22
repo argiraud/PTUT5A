@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="ml-5 mr-5">
+
+    <h1 class="text-center"> Saisie des voeux </h1>
 
     <br>
 

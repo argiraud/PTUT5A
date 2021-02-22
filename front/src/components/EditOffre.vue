@@ -135,8 +135,6 @@ export default {
         "state": this.statusOffer
       };
       OfferDataService.update(offer).then(response => {
-        console.log("response : ")
-        console.log(response)
         switch(response.status){
           case 200:
             console.log("mise à jour terminée")

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1> Depot offre d'apprentissage</h1>
+  <div class="ml-5 mr-5">
+    <h1 class="text-center"> Depot offre d'apprentissage</h1>
 
     <br>
 
@@ -142,7 +142,6 @@ name: "DepotOffreForm",
 
     openItemById (idFile, title) {
       FileDataService.getFileById(idFile).then(response => {
-        console.log(title)
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
@@ -165,7 +164,6 @@ name: "DepotOffreForm",
 
     APIGetOffer(){
       let idEntity = this.$store.state.currentUser.Id;
-      console.log("idEntity : " + idEntity)
       CompanyDataService.get(idEntity).then(response => {
 
         for(let i= 0; i < response.data.length; i++)
