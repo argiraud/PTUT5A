@@ -2,13 +2,13 @@
   <v-container>
     <v-row>
       <v-col>
-        <DashboardCard color="blue" icon="mdi-account" title="Offres" v-bind:text="nbOffers"></DashboardCard>
+        <DashboardCard color="blue" icon="mdi-offer" title="Offres" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="orange" icon="mdi-account" title="Offres à valider"
+        <DashboardCard color="orange" icon="mdi-offer" title="Offres à valider"
                        v-bind:text="nbPendingOffers"></DashboardCard>
       </v-col>
     </v-row>

@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-account" title="Entreprises" v-bind:text="nbCompanies"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-account" title="Offres disponibles" text="test"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -47,6 +47,7 @@
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import CompanyDataService from "@/service/CompanyDataService";
 import PopUpOtherProfile from "@/components/PopUpOtherProfile";
+import OfferDataService from "@/service/OfferDataService";
 
 export default {
   name: "DashboardEntreprise",
@@ -56,6 +57,7 @@ export default {
       search: '',
       companies: [],
       nbCompanies: 0,
+      nbOffersInProgress: 0,
       headers: [
         {text: "Nom", align: "start", value: "name", sortable: true},
         {text: '', align: "start", value: 'actions', sortable: false },
@@ -80,11 +82,21 @@ export default {
           .catch(e => {
             console.error(e);
           })
-    }
+    },
+    countOffersInProgress() {
+      OfferDataService.countOffersInProgress()
+          .then(response => {
+            this.nbOffersInProgress = response.data.response;
+          })
+          .catch(e => {
+            console.error(e);
+          })
+    },
   },
   mounted() {
     this.getAllCompanies();
     this.countCompanies();
+    this.countOffersInProgress();
   }
 }
 </script>

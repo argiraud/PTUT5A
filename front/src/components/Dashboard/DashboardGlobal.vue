@@ -8,7 +8,7 @@
         <DashboardCard color="red" icon="mdi-account" title="Etudiants" v-bind:text="nbStudents"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="orange" icon="mdi-account" title="Offres terminées" v-bind:text="nbOffersFinished"></DashboardCard>
+        <DashboardCard color="purple" icon="mdi-account" title="Etudiants sans offres" v-bind:text="nbStudentsWithoutOffers"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -16,10 +16,10 @@
         <DashboardCard color="grey" icon="mdi-offer" title="Offres Entreprises" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="red" icon="mdi-offer" title="Offres libres" v-bind:text="nbOffersInProgress"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-offer" title="Offres libres" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="purple" icon="mdi-account" title="Etudiants sans offres" v-bind:text="nbStudentsWithoutOffers"></DashboardCard>
+        <DashboardCard color="orange" icon="mdi-offer" title="Offres terminées" v-bind:text="nbOffersFinished"></DashboardCard>
       </v-col>
     </v-row>
   </v-container>
