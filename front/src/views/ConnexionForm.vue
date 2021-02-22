@@ -147,7 +147,6 @@ export default {
             Authentification.signin(email, mdp).then(response => {
                 console.log("response : ")
                 console.log(response)
-                var payload
                 switch (response.status) {
                     case 200 :
                         console.log("case 200")
@@ -164,6 +163,11 @@ export default {
                             this.$router.push("/home");
                         }
                         break;
+
+                }
+            }).catch(err => {
+                var payload
+                switch(err.response.status){
                     case 404 :
                         payload = {
                             "message" : 'Email ou mot de passe incorrecte !'
@@ -182,9 +186,7 @@ export default {
                         }
                         this.setSnackbarError(payload)
                         break;
-
                 }
-            }).catch(err => {
                 console.log("erreur : " + err);
             });
         },

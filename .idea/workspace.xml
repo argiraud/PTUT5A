@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/DepotOffreForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,7 +252,8 @@
       <workItem from="1613736155880" duration="1200000" />
       <workItem from="1613813032106" duration="6054000" />
       <workItem from="1613854479841" duration="497000" />
-      <workItem from="1613919205104" duration="1863000" />
+      <workItem from="1613919205104" duration="3068000" />
+      <workItem from="1613977404237" duration="1208000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -311,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613818957492</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="grilles Profil company user qui m'ont mis voeux OK">
+      <created>1613925304018</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1613925304018</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -400,7 +407,8 @@
     <MESSAGE value="Ajout des fichiers pour un étudiant - Changement du titre Dépot candidature --&gt; Gestion des documents" />
     <MESSAGE value="debut gestion student/company sur le profil" />
     <MESSAGE value="grilles Mes Documents, Mes offres et GetAllvoeux OK, PopUp OK" />
-    <option name="LAST_COMMIT_MESSAGE" value="grilles Mes Documents, Mes offres et GetAllvoeux OK, PopUp OK" />
+    <MESSAGE value="grilles Profil company user qui m'ont mis voeux OK" />
+    <option name="LAST_COMMIT_MESSAGE" value="grilles Profil company user qui m'ont mis voeux OK" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
