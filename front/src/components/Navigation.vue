@@ -1,12 +1,12 @@
 <template>
   <header class="overflow-hidden">
     <v-app-bar
-        color="primary lighten-1"
+        color="#009BDD"
         dark
         fixed
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title>Ptut</v-toolbar-title>
+      <v-toolbar-title>Polyrecrute</v-toolbar-title>
       <v-spacer></v-spacer>
       <router-link to="/Connexion">
         <v-btn v-if="!isConnected">Se connecter</v-btn>
@@ -63,19 +63,13 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected" to="dashboard">
+          <v-list-item v-if="isConnected && currentUser.IsAdmin" to="dashboard">
             <v-list-item-icon>
               <v-icon>mdi-desktop-mac-dashboard</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Tableau de bord</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
-        <v-list-item v-if="isConnected" to="creationCompte">
-          <v-list-item-icon>
-            <v-icon>mdi-database-cog</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Création du compte</v-list-item-title>
-        </v-list-item>
         <v-list-item v-if="!isConnected" to="Connexion">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
