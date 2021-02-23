@@ -19,7 +19,7 @@
         <template v-slot:expanded-item="{item}">
           <tr>
             <td>
-              <v-btn color="primary" @click="addWish(item.idOffer)">AJouter</v-btn>
+              <v-btn rounded outlined color="#009BDD" @click="addWish(item.idOffer)">Ajouter</v-btn>
             </td>
           </tr>
         </template>

@@ -15,7 +15,7 @@
                     label="Nom"
                     required
                     type="text"
-                    color="teal accent-3"
+                    color="#009BDD"
                     prepend-inner-icon="person"
             ></v-text-field>
 
@@ -27,7 +27,7 @@
                     label="Prénom"
                     prepend-inner-icon="person"
                     type="text"
-                    color="teal accent-3"
+                    color="#009BDD"
                     required
             ></v-text-field>
             <v-text-field
@@ -38,6 +38,7 @@
                     :rules="studentNumberRules"
                     type="number"
                     label="N° Etudiant"
+                    color="#009BDD"
                     required
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
@@ -58,6 +59,7 @@
                     <v-text-field
                             v-if="currentUser.RoleId == 1"
                             id="birthDate"
+                            color="#009BDD"
                             v-model="currentUser.BirthDate"
                             label="Date de naissance"
                             readonly
@@ -83,12 +85,15 @@
                     prepend-inner-icon="email"
                     type="text"
                     label="E-mail"
+                    color="#009BDD"
                     required
             ></v-text-field>
             <v-select
                     id="comboStatus"
                     label="Renseignez votre status actuel"
                     small-chips
+                    color="#009BDD"
+                    prepend-inner-icon="donut_large"
                     v-model="currentUser.Status"
                     :items="items"
             >
@@ -121,17 +126,18 @@
                     id="presentation"
                     prepend-inner-icon="create"
                     type="text"
+                    color="#009BDD"
                     label="Présentation"
             ></v-textarea>
             <ChangeMotDePasse @error-newpassword="setSnackbarError" @newpassword-ok="setSnackbarSuccess" ></ChangeMotDePasse>
 
             <div class="text-center mt-n5">
                 <v-btn
-                        style="margin-top: 5%"
-                        rounded outlined
-                        color="teal accent-3"
+                        style="margin-top: 5%; color: white"
+                        rounded
+                        color="#009BDD"
                         @click="save"
-                        :disabled="!valid">Enregistrer</v-btn>
+                        :disabled="!valid">ENREGISTRER</v-btn>
             </div>
         </v-form>
         <p></p>
@@ -155,7 +161,7 @@
                 v-if="currentUser.RoleId == 1"
                 elevation="10"
         >
-            <v-card-title>Mes documents</v-card-title>
+            <v-card-title>Mon document descriptif</v-card-title>
             <v-data-table
                     :headers="headers2"
                     :items="candidatures"
@@ -164,7 +170,7 @@
                     class="elevation-1"
             >
                 <template v-slot:[`item.actions`]="{ item }">
-                    <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+                    <v-btn rounded outlined color="#009BDD" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
                 </template>
             </v-data-table>
         </v-card>
@@ -188,7 +194,7 @@
             <template v-slot:expanded-item="{item}">
                 <tr>
                     <td>
-                        <v-btn color="primary" class="ma-2" @click="openItemById(item.idFile, item.files.name)">Ouvrir fichier</v-btn>
+                        <v-btn rounded outlined color="#009BDD" class="ma-2" @click="openItemById(item.idFile, item.files.name)">Télécharger</v-btn>
                     </td>
                 </tr>
             </template>

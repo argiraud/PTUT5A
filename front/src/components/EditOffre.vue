@@ -9,7 +9,7 @@
             label="Titre de l'offre"
             required
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -20,7 +20,7 @@
             id="keyWord"
             label="Mots clés"
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -31,7 +31,7 @@
             id="description"
             label="Description"
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -41,6 +41,7 @@
           id="comboStatus"
           label="Statut offre"
           small-chips
+          color="#009BDD"
           :items="items"
       >
         <template v-slot:selection="{ item, selected }">
@@ -68,8 +69,8 @@
       </v-select>
 
       <v-card-actions>
-        <v-btn color="primary" @click="save">Mise à jour</v-btn>
-        <v-btn color="red" @click.stop="show=false">Fermer</v-btn>
+        <v-btn rounded color="#009BDD" @click="save">Mise à jour</v-btn>
+        <v-btn rounded color="red" @click.stop="show=false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
 

@@ -3,7 +3,7 @@
 
     <br>
 
-    <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <v-btn rounded color="#009BDD" large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
     <AjoutVoeux v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
@@ -21,14 +21,14 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Liste Voeux</v-toolbar-title>
+          <v-toolbar-title class="display-1">Mes voeux</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" @click="deleteItemById(item.id)">Supprimer</v-btn>
+            <v-btn rounded color="red" style="color: white" @click="deleteItemById(item.id)">Supprimer</v-btn>
           </td>
         </tr>
       </template>
@@ -38,7 +38,8 @@
     <br>
 
   <v-btn
-      color="Valider"
+      color="#009BDD"
+      rounded
       class="mr-4"
       @click="validate"
       to="home"

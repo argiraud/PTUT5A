@@ -6,7 +6,7 @@
 
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                        rounded outlined color="teal accent-3"
+                        rounded outlined color="#009BDD"
                         v-bind="attrs"
                         v-on="on"
                 >
@@ -50,7 +50,7 @@
                                 <div class="text-center mt-n5" style="margin-top: 2%">
                                     <v-btn
                                             :disabled="!valid"
-                                            rounded outlined color="teal accent-3"
+                                            rounded outlined color="#009BDD"
                                             @click="SaveUser"
                                     >Valider</v-btn>
                                 </div>

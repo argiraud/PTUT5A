@@ -48,7 +48,7 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="white-space: normal">Gestion de mes documents
+            <v-list-item-title style="white-space: normal">Mon document descriptif
             </v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="saisieVoeux">

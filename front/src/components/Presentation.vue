@@ -13,6 +13,7 @@
               filled
               label="Présentation"
               auto-grow
+              color="#009BDD"
               placeholder="Présentez-vous"
               id="prez"
           ></v-textarea>
@@ -20,7 +21,8 @@
       </template>
     <br>
     <v-btn
-        color="Valider"
+            rounded
+        color="#009BDD"
         class="mr-4"
         @click="validate"
     >
