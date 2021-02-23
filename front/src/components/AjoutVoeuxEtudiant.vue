@@ -20,7 +20,7 @@
         <template v-slot:expanded-item="{item}">
           <tr>
             <td>
-              <v-btn color="primary" class="ma-2" @click="addWish(item.idOffer)">AJouter</v-btn>
+              <v-btn rounded outlined color="#009BDD" class="ma-2" @click="addWish(item.idOffer)">Ajouter</v-btn>
             </td>
             <td>
               <v-btn color="primary" class="ma-2" :disabled="checkItem(item.files)" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir Fichier</v-btn>
