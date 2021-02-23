@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
                 url = ""),
         info = @Info(
                 title="PolyRecrute API",
-                version = "1.0"),
+                version = "1.0.1"),
         servers = { @Server(url = "https://api.polyrecrute.tk", description = "Prod API server") }
 )
 @SecurityScheme(
