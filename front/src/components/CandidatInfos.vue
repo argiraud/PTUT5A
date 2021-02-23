@@ -11,7 +11,7 @@
                     label="Nom"
                     required
                     type="text"
-                    color="teal accent-3"
+                    color="#009BDD"
                     prepend-inner-icon="person"
             ></v-text-field>
 
@@ -22,7 +22,7 @@
                     label="Prénom"
                     prepend-inner-icon="person"
                     type="text"
-                    color="teal accent-3"
+                    color="#009BDD"
                     required
             ></v-text-field>
             <v-text-field
@@ -32,6 +32,7 @@
                     :rules="studentNumberRules"
                     type="number"
                     label="N° Etudiant"
+                    color="#009BDD"
                     required
                     prepend-inner-icon="confirmation_number"
             ></v-text-field>
@@ -44,11 +45,13 @@
                     transition="scale-transition"
                     offset-y
                     full-width
+                    color="#009BDD"
                     min-width="290px"
                     prepend-inner-icon="calendar_today"
             >
                 <template v-slot:activator="{ on }">
                     <v-text-field
+                            color="#009BDD"
                             id="birthDate"
                             v-model="date"
                             label="Date de naissance"
@@ -75,6 +78,7 @@
                     prepend-inner-icon="email"
                     type="text"
                     label="E-mail"
+                    color="#009BDD"
                     required
             ></v-text-field>
 
@@ -86,10 +90,10 @@
                     type="password"
                     required
                     :rules="mdpRules"
-                    color="teal accent-3"/>
+                    color="#009BDD"/>
 
             <div class="text-center mt-n5">
-                <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
+                <v-btn style="margin-top: 5%" rounded outlined color="#009BDD" @click="SignUp" dark :disabled="!valid">INSCRIPTION</v-btn>
             </div>
 
         </v-form>
