@@ -136,6 +136,7 @@ name: "AjoutOffre",
             this.description = '';
             this.keyWord = '';
             this.title = '';
+            this.$refs.file.value=null;
             window.sessionStorage.setItem("idOffer", response.data.idOffer);
             window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
 
