@@ -93,7 +93,6 @@ name: "AjoutOffre",
     APIAddDocument(){
       let idOffer = window.sessionStorage.getItem("idOffer")
       OfferDataService.uploadFile(this.filesObj, idOffer).then(response => {
-        console.log(response);
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
@@ -109,8 +108,7 @@ name: "AjoutOffre",
             console.log("No sufficient right");
             break;
         }
-      }).then(data => {
-        console.log(data);
+        this.$emit("add-loading", "true")
       }).catch(err => {
         console.log(err);
       });
@@ -140,10 +138,13 @@ name: "AjoutOffre",
             window.sessionStorage.setItem("idOffer", response.data.idOffer);
             window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
 
-            if (this.fileData != ''){
+            if (this.filesObj != null){
               this.APIAddDocument();
-
+              this.filesObj = null;
+            } else{
+              this.$emit("add-doc", "true")
             }
+
             alert("Ajout de l'offre effectuée");
             this.$emit("add-doc", "true")
             break;

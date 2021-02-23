@@ -20,7 +20,10 @@
         <template v-slot:expanded-item="{item}">
           <tr>
             <td>
-              <v-btn rounded outlined color="#009BDD" @click="addWish(item.idOffer)">Ajouter</v-btn>
+              <v-btn rounded outlined color="#009BDD" class="ma-2" @click="addWish(item.idOffer)">Ajouter</v-btn>
+            </td>
+            <td>
+              <v-btn color="primary" class="ma-2" :disabled="checkItem(item.files)" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir Fichier</v-btn>
             </td>
           </tr>
         </template>
@@ -32,6 +35,7 @@
 <script>
 import CompanyDataService from "@/service/CompanyDataService";
 import WishDataService from "@/service/WishDataService";
+import FileDataService from "@/service/FileDataService";
 
 export default {
   name: "AjoutVoeuxEtudiant",
@@ -104,6 +108,28 @@ export default {
           .catch(e => {
             console.error(e);
           })
+    },
+
+    checkItem(fileTab){
+      if (fileTab.length <= 0) {
+        return true
+      } else {
+        return false
+      }
+
+    },
+
+    openItemById (idFile, title) {
+      FileDataService.getFileById(idFile).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', title)
+        document.body.appendChild(link)
+        link.click()
+      }).catch(e => {
+        console.error(e);
+      })
     },
 
   },
