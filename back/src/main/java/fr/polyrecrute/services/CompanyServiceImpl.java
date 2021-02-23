@@ -69,6 +69,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
+    @Transactional
     public void deleteOffer(Company__ company, String offerId) {
         Offer__ offer = offerService.findById(offerId);
         company.deleteOffer(offer);
