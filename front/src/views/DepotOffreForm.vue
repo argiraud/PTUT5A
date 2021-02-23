@@ -1,5 +1,14 @@
 <template>
   <div class="ml-5 mr-5">
+
+    <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="blue accent-4"
+    ></v-progress-linear>
+
     <h1 class="text-center"> Depot offre d'apprentissage</h1>
 
     <br>
@@ -39,7 +48,7 @@
             <EditOffre v-model="showEditForm" v-bind:id-offer-send=item.idOffer @edit-finish="refresh"/>
           </td>
           <td>
-            <v-btn color="primary" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
+            <v-btn color="primary" class="ma-2" :disabled="checkItem(item.files)"  @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
           </td>
         </tr>
       </template>
@@ -74,6 +83,7 @@ name: "DepotOffreForm",
   },
   data () {
     return {
+      loading: false,
       singleExpand: true,
       fileName: '',
       showScheduleForm: false,
@@ -120,6 +130,14 @@ name: "DepotOffreForm",
       this.$emit("step2-finish", "true")
     },
 
+    checkItem(fileTab){
+      if (fileTab.length <= 0) {
+        return true
+      } else {
+        return false
+      }
+
+    },
 
     deleteItemById (idOffer) {
       if(confirm('Etes-vous sur de vouloir supprimer cette offre ?')){
@@ -159,6 +177,12 @@ name: "DepotOffreForm",
       },
 
   refresh(){
+    if(this.loading == true){
+      this.loading = false
+    } else {
+      this.loading = true
+    }
+
       this.APIGetOffer();
     },
 

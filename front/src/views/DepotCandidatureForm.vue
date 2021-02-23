@@ -1,12 +1,21 @@
 <template>
   <div class="ml-5 mr-5">
-    <h1 class="text-center"> Gestion des documents </h1>
+
+    <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="blue accent-4"
+    ></v-progress-linear>
+
+    <h1 class="text-center"> Gestion du document </h1>
 
     <br>
 
     <div>
       <div>
-        <h4>Chargez vos documents, ils seront visibles sur votre profil.
+        <h4>Chargez votre document descriptif, ils sera visible sur votre profil.
           <br />
           <br />
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
@@ -62,6 +71,7 @@ name: "DepotCandidatureForm",
   data () {
     return {
       file: '',
+      loading: false,
       candidatures: [
       ],
       headers: [
@@ -153,6 +163,7 @@ name: "DepotCandidatureForm",
     },
 
     submitFile(){
+      this.loading = true;
       FileDataService.uploadUserFile(this.file, 1).then(response => {
         switch (response.status) {
           case 201 :
@@ -170,6 +181,7 @@ name: "DepotCandidatureForm",
             console.log("No sufficient right");
             break;
         }
+        this.loading = false;
       }).then(data => {
         console.log(data);
       }).catch(err => {
