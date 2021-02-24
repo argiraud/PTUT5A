@@ -77,7 +77,6 @@
                     password: document.getElementById('mdpInscription').value.toString(),
                 };
                 Authentification.companySignUp(JSON.stringify(user)).then(response => {
-                    console.log(response);
                     switch (response.status) {
                         case 201 :
                             this.$router.push("/Connexion");
