@@ -5,7 +5,7 @@
 
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-                    rounded outlined color="teal accent-3"
+                    rounded outlined color="#009BDD"
                     v-bind="attrs"
                     v-on="on"
             >
@@ -172,7 +172,7 @@
                         elevation="10"
                         v-if="popUpUser.RoleId == 1"
                 >
-                    <v-card-title>Mes documents</v-card-title>
+                    <v-card-title>Mon document descriptif</v-card-title>
                     <v-data-table
                             :headers="headers2"
                             :items="candidatures"
@@ -224,7 +224,7 @@ import {mapState} from "vuex";
 import ChangeMotDePasse from "@/components/ChangeMotDePasse"
 import CompanyDataService from "@/service/CompanyDataService";
 export default {
-    components: {ChangeMotDePasse},
+    components: {ChangeMotDePasse, },
     name: "PopUpOtherProfile",
     props: ['idUserToDisplay'],
     data: () => ({
@@ -340,12 +340,10 @@ export default {
         valid: true,
     }),
     mounted() {
+        console.log("userToDisplay" + this.idUserToDisplay);
         StudentDataService.getUserById(this.idUserToDisplay).then(response => {
             switch (response.status) {
                 case 200 :
-                    console.log("case 200")
-                    console.log("data profile : ")
-                    console.log(response.data)
                     this.setpopUpUser(response.data);
                     this.getAllVoeux();
                     this.setGridOfferOrCandidature();

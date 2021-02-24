@@ -1,11 +1,11 @@
 <template>
   <div class="ml-5 mr-5">
 
-    <h1 class="text-center"> Saisie des voeux </h1>
+    <h1 class="text-center display-2"> Saisie des voeux </h1>
 
     <br>
 
-    <v-btn rounded color="#009BDD" large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <v-btn rounded outlined color="#009BDD" large @click.stop="showScheduleForm=true" >+ Ajouter un voeu </v-btn>
     <AjoutVoeux v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
@@ -30,7 +30,7 @@
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn rounded color="red" style="color: white" @click="deleteItemById(item.id)">Supprimer</v-btn>
+            <v-btn rounded outlined class="ma-2" color="red" @click="deleteItemById(item.id)">Supprimer</v-btn>
           </td>
         </tr>
       </template>
@@ -42,6 +42,7 @@
   <v-btn
       color="#009BDD"
       rounded
+      style="color: white"
       class="mr-4"
       @click="validate"
       to="home"

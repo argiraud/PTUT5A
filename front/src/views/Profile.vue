@@ -143,15 +143,31 @@
         <p></p>
             <v-card
                     elevation="10"
+                    v-if="currentUser.RoleId == 2"
             >
-                <v-card-title>Entités me comptant dans leurs voeux</v-card-title>
+                <v-card-title class="display-1">Etudiants me comptant dans leurs voeux</v-card-title>
                 <v-data-table
                         :headers="headers"
-                        :items="companies"
+                        :items="wish"
                         :items-per-page="5"
                 >
                     <template v-slot:[`item.actions`]="{ item }">
                         <PopUpOtherProfile :id-user-to-display="item.id"></PopUpOtherProfile>
+                    </template>
+                </v-data-table>
+            </v-card>
+            <v-card
+                    elevation="10"
+                    v-if="currentUser.RoleId == 1"
+            >
+                <v-card-title class="display-1">Entreprises me comptant dans leurs voeux</v-card-title>
+                <v-data-table
+                        :headers="headers4"
+                        :items="wish2"
+                        :items-per-page="5"
+                >
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <PopUpOtherProfile :id-user-to-display="item.idEntity"></PopUpOtherProfile>
                     </template>
                 </v-data-table>
             </v-card>
@@ -161,7 +177,7 @@
                 v-if="currentUser.RoleId == 1"
                 elevation="10"
         >
-            <v-card-title>Mon document descriptif</v-card-title>
+            <v-card-title class="display-1">Mon document descriptif</v-card-title>
             <v-data-table
                     :headers="headers2"
                     :items="candidatures"
@@ -178,7 +194,7 @@
                 elevation="10"
                 v-if="currentUser.RoleId == 2"
         >
-        <v-card-title>Mes offres</v-card-title>
+        <v-card-title class="display-1">Mes offres</v-card-title>
         <v-data-table
                 :headers="headers3"
                 :items="offers"
@@ -194,7 +210,7 @@
             <template v-slot:expanded-item="{item}">
                 <tr>
                     <td>
-                        <v-btn rounded outlined color="#009BDD" class="ma-2" @click="openItemById(item.idFile, item.files.name)">Télécharger</v-btn>
+                        <v-btn rounded outlined color="#009BDD" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Télécharger</v-btn>
                     </td>
                 </tr>
             </template>
@@ -231,12 +247,30 @@
                     color: 'red',
                     value: 'finished'
                 }],
-            companies: [],
+            wish: [],
             headers: [
                 {
                     text: "Id",
                     align: "start",
                     value: "id",
+                    sortable: true
+                },
+                {
+                    text: "Nom",
+                    value: "name",
+                    sortable: true
+                },
+                {
+                    text: '',
+                    value: 'actions',
+                    sortable: false }
+            ],
+            wish2: [],
+            headers4: [
+                {
+                    text: "Id",
+                    align: "start",
+                    value: "idEntity",
                     sortable: true
                 },
                 {
@@ -328,8 +362,6 @@
             StudentDataService.getConnectedUserDetails().then(response => {
                 switch (response.status) {
                     case 200 :
-                        console.log("case 200")
-                        console.log(response.data)
                         this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
                         if(this.currentUser.RoleId == 1)
@@ -395,8 +427,9 @@
                 })
             },
             openItemById (idFile, title) {
+                console.log("idFile : " + idFile);
+                console.log("title : " + title);
                 FileDataService.getFileById(idFile).then(response => {
-                    console.log(title)
                     const url = window.URL.createObjectURL(new Blob([response.data]))
                     const link = document.createElement('a')
                     link.href = url
@@ -420,7 +453,7 @@
                 let idEntity = this.$store.state.currentUser.Id;
                 console.log("idEntity : " + idEntity)
                 CompanyDataService.get(idEntity).then(response => {
-
+                    console.log("getOffer : " + response.data)
                     for(let i= 0; i < response.data.length; i++)
                     {
                         switch (response.data[i].state)
@@ -462,11 +495,11 @@
                 let userId = this.currentUser.Id;
                 if(this.currentUser.RoleId == 1){
                     StudentDataService.CompaniesWhoWantedMe(userId).then(response => {
-                        this.companies = response.data;
+                        this.wish2 = response.data;
                     })
                 }else if (this.currentUser.RoleId == 2){
                     CompanyDataService.UsersWhoWantedMe(userId).then(response => {
-                        this.companies = response.data;
+                        this.wish = response.data;
                     })
                 }
 

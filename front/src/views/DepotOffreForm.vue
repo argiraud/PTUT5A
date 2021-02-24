@@ -6,15 +6,15 @@
         :indeterminate="loading"
         absolute
         bottom
-        color="blue accent-4"
+        color="#009BDD"
     ></v-progress-linear>
 
-    <h1 class="text-center"> Depot offre d'apprentissage</h1>
+    <h1 class="text-center display-2"> Dépôt d'offre d'apprentissage</h1>
 
     <br>
 
 
-    <v-btn large @click.stop="showScheduleForm=true" > Nouvelle offre </v-btn>
+    <v-btn rounded outlined color="#009BDD" large @click.stop="showScheduleForm=true" > + Nouvelle offre </v-btn>
     <AjoutOffre v-model="showScheduleForm" @add-doc="refresh" />
 
     <br>
@@ -34,21 +34,21 @@
       </template>
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Liste des offres</v-toolbar-title>
+          <v-toolbar-title class="display-1">Mes offres</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" class="ma-2" @click="deleteItemById(item.idOffer)">Supprimer</v-btn>
+            <v-btn rounded outlined color="red" class="ma-2" @click="deleteItemById(item.idOffer)">Supprimer</v-btn>
           </td>
           <td>
-            <v-btn color="primary" class="ma-2" @click="showEditForm=true" > Modifier Offre </v-btn>
+            <v-btn rounded outlined color="#009BDD" class="ma-2" @click="showEditForm=true" > Modifier </v-btn>
             <EditOffre v-model="showEditForm" v-bind:id-offer-send=item.idOffer @edit-finish="refresh"/>
           </td>
           <td>
-            <v-btn color="primary" class="ma-2" :disabled="checkItem(item.files)"  @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
+            <v-btn rounded outlined color="#009BDD" class="ma-2" :disabled="checkItem(item.files)"  @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
           </td>
         </tr>
       </template>
@@ -57,7 +57,9 @@
     <br>
 
     <v-btn
-      color="Valider"
+      color="#009BDD"
+      rounded
+      style="color: white"
       class="mr-4"
       @click="validate"
     >
