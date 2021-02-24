@@ -17,7 +17,7 @@
         <v-card
             elevation="10"
         >
-          <v-card-title> Liste des offres</v-card-title>
+          <v-card-title class="display-1"> Liste des offres</v-card-title>
           <v-data-table
               :headers="headers"
               :items="desserts"

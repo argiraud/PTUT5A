@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <h1> Présentation </h1>
+    <h1 class="text-center display-2"> Présentation </h1>
     <br>
     <p style="white-space: pre-line;">{{ message }}</p>
     <br>
@@ -22,12 +22,15 @@
     <br>
     <v-btn
             rounded
+            style="color: white"
         color="#009BDD"
         class="mr-4"
         @click="validate"
     >
       Valider
     </v-btn>
+      <br/>
+      <br/>
   </div>
 
 </template>

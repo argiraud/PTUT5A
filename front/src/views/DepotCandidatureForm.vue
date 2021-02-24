@@ -6,10 +6,10 @@
         :indeterminate="loading"
         absolute
         bottom
-        color="blue accent-4"
+        color="#009BDD"
     ></v-progress-linear>
 
-    <h1 class="text-center"> Gestion du document </h1>
+    <h1 class="text-center display-2"> Gestion du document </h1>
 
     <br>
 
@@ -21,7 +21,7 @@
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </h4>
         <br>
-        <v-btn color="primary" v-on:click="submitFile()" :disabled="emptyList()">Envoyer</v-btn>
+        <v-btn color="#009BDD" rounded style="color: white" v-on:click="submitFile()" :disabled="emptyList()">Envoyer</v-btn>
       </div>
     </div>
 
@@ -36,28 +36,31 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Candidature</v-toolbar-title>
+          <v-toolbar-title class="display-1">Document</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
         <template v-slot:[`item.actions`]="{ item }">
-            <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+            <v-btn color="#009BDD" rounded outlined @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
         </template>
         <template v-slot:[`item.actions2`]="{ item }">
-            <v-btn color="red" style="color: white" @click="deleteItemById(item.idFile, item.name)">Supprimer</v-btn>
+            <v-btn color="red" rounded outlined @click="deleteItemById(item.idFile, item.name)">Supprimer</v-btn>
         </template>
     </v-data-table>
 
     <br>
 
     <v-btn
-        color="Valider"
+        color="#009BDD"
+        rounded
+        style="color: white"
         class="mr-4"
         @click="validate"
     >
       Valider
     </v-btn>
-    <br>
+    <br/>
+    <br/>
   </div>
 </template>
 

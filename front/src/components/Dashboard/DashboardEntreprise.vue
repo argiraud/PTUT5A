@@ -13,7 +13,7 @@
         <v-card
             elevation="10"
         >
-          <v-card-title> Liste des entreprises</v-card-title>
+          <v-card-title class="display-1"> Liste des entreprises</v-card-title>
           <v-data-table
               :headers="headers"
               :items="companies"
