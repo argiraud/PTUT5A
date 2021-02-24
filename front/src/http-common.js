@@ -32,7 +32,7 @@ axiosAPI.interceptors.response.use((response) => {
 
     if (error.response.status === 401) {
         console.log("connexion");
-        router.push('Connexion');
+        router.push('Connexion').catch(err=>err);
     return Promise.reject(error);
 }
 

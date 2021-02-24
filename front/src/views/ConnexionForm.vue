@@ -90,9 +90,6 @@ export default {
         CandidatInfos
     },
     methods: {
-        updateUser(payload){
-            this.isEntreprise = payload.UserType;
-        },
         changeUserType(){
             this.isEntreprise = !this.isEntreprise;
         },
@@ -105,14 +102,8 @@ export default {
             let email = document.getElementById('emailConnexion').value.toString();
             let mdp = document.getElementById('mdpConnexion').value.toString();
             Authentification.signin(email, mdp).then(response => {
-                console.log("response : ")
-                console.log(response)
                 switch (response.status) {
                     case 200 :
-                        console.log("case 200")
-                        console.log("data : ")
-                        console.log(response.data)
-
                         window.sessionStorage.setItem("UserToken", response.data.tokenType + ' ' + response.data.tokenJWT);
                         this.$store.commit('SET_CURRENTUSER_FROM_JSON', response.data);
                         this.$store.commit('CONNEXION_MANAGEMENT', true);
@@ -123,7 +114,6 @@ export default {
                             this.$router.push("/home");
                         }
                         break;
-
                 }
             }).catch(err => {
                 var payload
