@@ -106,7 +106,7 @@ name: "SaisieVoeuxEtudiantForm",
 
 
     deleteItemById (id) {
-      if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
+      if(confirm('Etes-vous sur de vouloir supprimer ce voeu ?')){
           const index = this.wish.findIndex(wish => wish.idOffer === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post
