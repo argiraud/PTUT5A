@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="500px">
+  <v-dialog v-model="show" max-width="900px">
 
     <v-data-table
         v-model="selected"
@@ -119,7 +119,7 @@ name: "AjoutVoeux",
       WishDataService.createVoeux(idUser).then(response => {
         switch (response.status) {
           case 200 :
-            alert("Ajout du voeux effectuée");
+            alert("Ajout du voeu effectué");
             this.$emit("add-wish", "true")
             break;
         }

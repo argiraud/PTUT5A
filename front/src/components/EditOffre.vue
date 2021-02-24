@@ -138,7 +138,8 @@ export default {
       OfferDataService.update(offer).then(response => {
         switch(response.status){
           case 200:
-            console.log("mise à jour terminée")
+            alert("Mise à jour terminée")
+            this.$emit("edit-finish", "true")
             this.$emit("edit-finish", "true")
             break;
           case 401:
