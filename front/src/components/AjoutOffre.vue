@@ -9,7 +9,7 @@
             label="Titre de l'offre"
             required
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -20,7 +20,7 @@
             id="keyWord"
             label="Mots clés"
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -31,7 +31,7 @@
             id="description"
             label="Description"
             type="text"
-            color="teal accent-3"
+            color="#009BDD"
             prepend-inner-icon="person"
         ></v-text-field>
       </v-card-actions>
@@ -46,8 +46,8 @@
       </v-card-actions>
 
       <v-card-actions>
-        <v-btn color="primary" @click="AddOffer">Ajouter</v-btn>
-        <v-btn color="red" @click.stop="show=false">Fermer</v-btn>
+        <v-btn rounded color="#009BDD" @click="AddOffer">Ajouter</v-btn>
+        <v-btn rounded color="red" @click.stop="show=false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -86,7 +86,6 @@ name: "AjoutOffre",
   methods: {
     AddOffer(){
         this.APIAddOffer();
-        //this.APIAddDocument();
         this.show = false;
     },
 
@@ -94,7 +93,6 @@ name: "AjoutOffre",
     APIAddDocument(){
       let idOffer = window.sessionStorage.getItem("idOffer")
       OfferDataService.uploadFile(this.filesObj, idOffer).then(response => {
-        console.log(response);
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
@@ -110,8 +108,7 @@ name: "AjoutOffre",
             console.log("No sufficient right");
             break;
         }
-      }).then(data => {
-        console.log(data);
+        this.$emit("add-loading", "true")
       }).catch(err => {
         console.log(err);
       });
@@ -120,7 +117,6 @@ name: "AjoutOffre",
     onFileChange(event){
       this.fileData =  event.target.files[0];
       this.filesObj = this.fileData;
-      console.log('file Object:==>',this.filesObj);
 
     },
 
@@ -138,13 +134,17 @@ name: "AjoutOffre",
             this.description = '';
             this.keyWord = '';
             this.title = '';
+            this.$refs.file.value=null;
             window.sessionStorage.setItem("idOffer", response.data.idOffer);
             window.sessionStorage.setItem("idEntity", response.data.company.idEntity);
 
-            if (this.fileData != ''){
+            if (this.filesObj != null){
               this.APIAddDocument();
-
+              this.filesObj = null;
+            } else{
+              this.$emit("add-doc", "true")
             }
+
             alert("Ajout de l'offre effectuée");
             this.$emit("add-doc", "true")
             break;

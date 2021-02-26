@@ -81,7 +81,7 @@ public class EntityServiceImpl implements EntityService {
         Entity__ entityCreated = new Entity__(entitySignup.getName(),
                 entitySignup.getEmail(),
                 encoder.encode(entitySignup.getPassword()),
-                "", "", true);
+                "", "available", true);
 
         return entityCreated;
     }

@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="ml-5 mr-5">
+
+    <h1 class="text-center display-2"> Saisie des voeux </h1>
 
     <br>
 
-    <v-btn large @click.stop="showScheduleForm=true" > Ajouter Voeux </v-btn>
+    <v-btn rounded outlined color="#009BDD" large @click.stop="showScheduleForm=true" >+ Ajouter un voeu </v-btn>
     <AjoutVoeux v-model="showScheduleForm" @add-wish="refresh"/>
 
     <br>
@@ -21,14 +23,14 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Liste Voeux</v-toolbar-title>
+          <v-toolbar-title class="display-1">Mes voeux</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
       <template v-slot:expanded-item="{item}">
         <tr>
           <td>
-            <v-btn color="primary" @click="deleteItemById(item.id)">Supprimer</v-btn>
+            <v-btn rounded outlined class="ma-2" color="red" @click="deleteItemById(item.id)">Supprimer</v-btn>
           </td>
         </tr>
       </template>
@@ -38,7 +40,9 @@
     <br>
 
   <v-btn
-      color="Valider"
+      color="#009BDD"
+      rounded
+      style="color: white"
       class="mr-4"
       @click="validate"
       to="home"
@@ -100,7 +104,7 @@ export default {
 
 
     deleteItemById (id) {
-      if(confirm('Etes-vous sur de vouloir supprimer ce voeux ?')){
+      if(confirm('Etes-vous sur de vouloir supprimer ce voeu ?')){
           const index = this.wish.findIndex(wish => wish.id === id); // find the post index
           if (~index) // if the post exists in array
             this.wish.splice(index, 1) //delete the post

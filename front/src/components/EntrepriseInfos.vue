@@ -11,7 +11,7 @@
                 label="Nom de l'entreprise"
                 required
                 type="text"
-                color="teal accent-3"
+                color="#009BDD"
                 prepend-inner-icon="person"
         ></v-text-field>
 
@@ -21,6 +21,7 @@
                 :rules="emailRules"
                 prepend-inner-icon="email"
                 label="E-mail"
+                color="#009BDD"
                 required
         ></v-text-field>
 
@@ -32,10 +33,10 @@
                 type="password"
                 required
                 :rules="mdpRules"
-                color="teal accent-3"/>
+                color="#009BDD"/>
 
         <div class="text-center mt-n5">
-            <v-btn style="margin-top: 5%" rounded outlined color="teal accent-3" @click="SignUp" dark :disabled="!valid">S'inscrire</v-btn>
+            <v-btn style="margin-top: 5%" rounded outlined color="#009BDD" @click="SignUp" dark :disabled="!valid">INSCRIPTION</v-btn>
         </div>
 
     </v-form>
@@ -76,7 +77,6 @@
                     password: document.getElementById('mdpInscription').value.toString(),
                 };
                 Authentification.companySignUp(JSON.stringify(user)).then(response => {
-                    console.log(response);
                     switch (response.status) {
                         case 201 :
                             this.$router.push("/Connexion");

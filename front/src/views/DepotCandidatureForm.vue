@@ -1,18 +1,27 @@
 <template>
-  <div>
-    <h1> Gestion des documents </h1>
+  <div class="ml-5 mr-5">
+
+    <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="#009BDD"
+    ></v-progress-linear>
+
+    <h1 class="text-center display-2"> Gestion du document </h1>
 
     <br>
 
     <div>
       <div>
-        <h4>Chargez vos documents, ils seront visibles sur votre profil.
+        <h4>Chargez votre document descriptif, ils sera visible sur votre profil.
           <br />
           <br />
           <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </h4>
         <br>
-        <v-btn color="primary" v-on:click="submitFile()">Envoyer</v-btn>
+        <v-btn color="#009BDD" rounded style="color: white" v-on:click="submitFile()" :disabled="emptyList()">Envoyer</v-btn>
       </div>
     </div>
 
@@ -27,28 +36,31 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Candidature</v-toolbar-title>
+          <v-toolbar-title class="display-1">Document</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
         <template v-slot:[`item.actions`]="{ item }">
-            <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+            <v-btn color="#009BDD" rounded outlined @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
         </template>
         <template v-slot:[`item.actions2`]="{ item }">
-            <v-btn color="red" style="color: white" @click="deleteItemById(item.idFile, item.name)">Supprimer</v-btn>
+            <v-btn color="red" rounded outlined @click="deleteItemById(item.idFile, item.name)">Supprimer</v-btn>
         </template>
     </v-data-table>
 
     <br>
 
     <v-btn
-        color="Valider"
+        color="#009BDD"
+        rounded
+        style="color: white"
         class="mr-4"
         @click="validate"
     >
       Valider
     </v-btn>
-    <br>
+    <br/>
+    <br/>
   </div>
 </template>
 
@@ -62,6 +74,7 @@ name: "DepotCandidatureForm",
   data () {
     return {
       file: '',
+      loading: false,
       candidatures: [
       ],
       headers: [
@@ -91,6 +104,18 @@ name: "DepotCandidatureForm",
       this.$emit("step2-finish", "true")
     },
 
+    reset() {
+      this.$refs.file.value=null;
+    },
+
+    emptyList() {
+      if (this.candidatures.length == 0){
+        return false
+      } else {
+        return true
+      }
+    },
+
     deleteItemById (idFile) {
       if(confirm('Etes-vous sur de vouloir supprimer ce document ?')){
         FileDataService.deleteFile(idFile).then(response => {
@@ -112,7 +137,6 @@ name: "DepotCandidatureForm",
 
     openItemById (idFile, title) {
       FileDataService.getFileById(idFile).then(response => {
-        console.log(title)
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
@@ -127,9 +151,9 @@ name: "DepotCandidatureForm",
     add: function(item) {
       this.candidatures.push(item);
     },
+
     APIGetCandidature(){
       StudentDataService.getConnectedUserDetails().then(response => {
-        console.log(response.data.files);
         this.candidatures = response.data.files;
       })
           .catch(e => {
@@ -142,12 +166,13 @@ name: "DepotCandidatureForm",
     },
 
     submitFile(){
+      this.loading = true;
       FileDataService.uploadUserFile(this.file, 1).then(response => {
-        console.log(response);
         switch (response.status) {
           case 201 :
             alert("Ajout du document effectuée");
             this.APIGetCandidature();
+            this.reset();
             break;
           case 400 :
             alert("Titre, mots-clés ou description trop long");
@@ -159,6 +184,7 @@ name: "DepotCandidatureForm",
             console.log("No sufficient right");
             break;
         }
+        this.loading = false;
       }).then(data => {
         console.log(data);
       }).catch(err => {

@@ -6,7 +6,7 @@ class StudentDataService {
     }
 
     count(){
-        return axiosAPI.get("/kpi/users");
+        return axiosAPI.get("/kpi/students");
     }
 
      getUserById(userId){

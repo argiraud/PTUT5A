@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 class="text-center" style="margin-bottom: 10px">Tableau de bord</h1>
+    <h1 class="text-center display-2" style="margin-bottom: 10px">Tableau de bord</h1>
     <v-tabs
         v-model="tabs"
         fixed-tabs
-        background-color="#4B7DEA"
+        background-color="#007db3"
         dark
     >
       <v-tabs-slider color="yellow"></v-tabs-slider>

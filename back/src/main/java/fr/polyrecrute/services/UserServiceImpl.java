@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void addWantedOffer(User__ user, Offer__ offer) {
         user.addWantedOffer(offer);
         userRepository.save(user);

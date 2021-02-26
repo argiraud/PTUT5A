@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <h1> Présentation </h1>
+    <h1 class="text-center display-2"> Présentation </h1>
     <br>
     <p style="white-space: pre-line;">{{ message }}</p>
     <br>
@@ -13,6 +13,7 @@
               filled
               label="Présentation"
               auto-grow
+              color="#009BDD"
               placeholder="Présentez-vous"
               id="prez"
           ></v-textarea>
@@ -20,12 +21,16 @@
       </template>
     <br>
     <v-btn
-        color="Valider"
+            rounded
+            style="color: white"
+        color="#009BDD"
         class="mr-4"
         @click="validate"
     >
       Valider
     </v-btn>
+      <br/>
+      <br/>
   </div>
 
 </template>
@@ -59,11 +64,9 @@ name: "Presentation",
         };
 
         StudentDataService.updateUserInfos(user).then(response => {
-          console.log("response : ")
-          console.log(response)
           switch(response.status){
             case 200:
-              console.log("update présentation réussie");
+              alert("Mise à jour de la présentation réussie");
               break;
             case 400:
               console.log("Error Token");
@@ -84,11 +87,9 @@ name: "Presentation",
         };
 
         StudentDataService.updateUserInfos(company).then(response => {
-          console.log("response : ")
-          console.log(response)
           switch(response.status){
             case 200:
-              console.log("update présentation réussie");
+              alert("Mise à jour de la présentation réussie");
               break;
             case 400:
               console.log("Error Token");

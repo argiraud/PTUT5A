@@ -5,7 +5,7 @@
 
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-                    rounded outlined color="teal accent-3"
+                    rounded outlined color="#009BDD"
                     v-bind="attrs"
                     v-on="on"
             >
@@ -22,7 +22,7 @@
                         label="Nom"
                         required
                         type="text"
-                        color="teal accent-3"
+                        color="#009BDD"
                         prepend-inner-icon="person"
                 ></v-text-field>
 
@@ -35,7 +35,7 @@
                         label="Prénom"
                         prepend-inner-icon="person"
                         type="text"
-                        color="teal accent-3"
+                        color="#009BDD"
                         required
                 ></v-text-field>
                 <v-text-field
@@ -47,6 +47,7 @@
                         :rules="studentNumberRules"
                         type="number"
                         label="N° Etudiant"
+                        color="#009BDD"
                         required
                         prepend-inner-icon="confirmation_number"
                 ></v-text-field>
@@ -70,6 +71,7 @@
                                 v-model="popUpUser.BirthDate"
                                 label="Date de naissance"
                                 readonly
+                                color="#009BDD"
                                 v-on="on"
                                 prepend-inner-icon="calendar_today"
                         ></v-text-field>
@@ -93,6 +95,7 @@
                         prepend-inner-icon="email"
                         type="text"
                         label="E-mail"
+                        color="#009BDD"
                         required
                 ></v-text-field>
                 <v-select
@@ -100,6 +103,7 @@
                         id="comboStatus"
                         label="Renseignez votre status actuel"
                         small-chips
+                        color="#009BDD"
                         v-model="popUpUser.Status"
                         :items="items"
                 >
@@ -132,6 +136,7 @@
                         v-model="popUpUser.Presentation"
                         id="presentation"
                         prepend-inner-icon="create"
+                        color="#009BDD"
                         type="text"
                         label="Présentation"
                 ></v-textarea>
@@ -142,7 +147,7 @@
                     <v-btn
                             style="margin-top: 5%"
                             rounded outlined
-                            color="teal accent-3"
+                            color="#009BDD"
                             @click="save"
                             :disabled="!valid || !currentUser.IsAdmin">Enregistrer</v-btn>
                 </div>
@@ -167,7 +172,7 @@
                         elevation="10"
                         v-if="popUpUser.RoleId == 1"
                 >
-                    <v-card-title>Mes documents</v-card-title>
+                    <v-card-title>Mon document descriptif</v-card-title>
                     <v-data-table
                             :headers="headers2"
                             :items="candidatures"
@@ -177,7 +182,7 @@
                             class="elevation-1"
                     >
                         <template v-slot:[`item.actions`]="{ item }">
-                            <v-btn color="primary" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
+                            <v-btn rounded outlined color="#009BDD" @click="openItemById(item.idFile, item.name)">Ouvrir</v-btn>
                         </template>
                     </v-data-table>
                 </v-card>
@@ -201,7 +206,7 @@
                     <template v-slot:expanded-item="{item}">
                         <tr>
                             <td>
-                                <v-btn color="primary" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Ouvrir fichier</v-btn>
+                                <v-btn rounded outlined color="#009BDD" class="ma-2" @click="openItemById(item.files[0].idFile, item.files[0].name)">Télécharger</v-btn>
                             </td>
                         </tr>
                     </template>
@@ -219,7 +224,7 @@ import {mapState} from "vuex";
 import ChangeMotDePasse from "@/components/ChangeMotDePasse"
 import CompanyDataService from "@/service/CompanyDataService";
 export default {
-    components: {ChangeMotDePasse},
+    components: {ChangeMotDePasse, },
     name: "PopUpOtherProfile",
     props: ['idUserToDisplay'],
     data: () => ({
@@ -335,12 +340,10 @@ export default {
         valid: true,
     }),
     mounted() {
+        console.log("userToDisplay" + this.idUserToDisplay);
         StudentDataService.getUserById(this.idUserToDisplay).then(response => {
             switch (response.status) {
                 case 200 :
-                    console.log("case 200")
-                    console.log("data profile : ")
-                    console.log(response.data)
                     this.setpopUpUser(response.data);
                     this.getAllVoeux();
                     this.setGridOfferOrCandidature();
