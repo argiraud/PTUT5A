@@ -88,6 +88,13 @@
               </v-list-item-icon>
               <v-list-item-title>Effectuer une inscription</v-list-item-title>
           </v-list-item>
+        <v-list-item v-if="isConnected && !currentUser.IsAdmin" to="survey">
+          <v-list-item-icon>
+            <v-icon>mdi-forum</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title style="white-space: normal">Questionnaire
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </header>

@@ -183,7 +183,6 @@
           filled
           label="Votre réponse"
           auto-grow
-          style="margin-right: 50px"
       ></v-textarea>
       <p>{{ 'Avez-vous d\'autres retours/suggestions à partager concernant le Forum virtuel ?' }}</p>
       <v-textarea
