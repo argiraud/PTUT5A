@@ -9,11 +9,6 @@ class OfferDataService {
         return axiosAPI.get("/kpi/companies/offers");
     }
 
-    countPendingOffers(){
-        return axiosAPI.get("/kpi/companies/offer/pending");
-    }
-
-
     countStudentWithoutOffers(){
         return axiosAPI.get("/kpi/user/withoutOffer");
     }

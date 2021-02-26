@@ -7,10 +7,6 @@
       <v-col>
         <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
       </v-col>
-      <v-col>
-        <DashboardCard color="orange" icon="mdi-offer" title="Offres à valider"
-                       v-bind:text="nbPendingOffers"></DashboardCard>
-      </v-col>
     </v-row>
     <v-row>
       <v-col>
@@ -70,7 +66,6 @@ export default {
       search: '',
       offers: [],
       nbOffers: 0,
-      nbPendingOffers: 0,
       nbOffersInProgress:0,
       headers: [
         {text: "TITRE", align: "start", value: "title", sortable: true},
@@ -87,7 +82,6 @@ export default {
           sortable: false,
           value: 'description',
         },
-        {text: "VALIDEE", align: "start", value: "validate", sortable: true},
         {text: "ETAT", align: "start", value: "state", sortable: true},
       ],
     }
@@ -111,15 +105,6 @@ export default {
             console.error(e);
           })
     },
-    countPendingOffers() {
-      OfferDataService.countPendingOffers()
-          .then(response => {
-            this.nbPendingOffers = response.data.response;
-          })
-          .catch(e => {
-            console.error(e);
-          })
-    },
     countOffersInProgress() {
       OfferDataService.countOffersInProgress()
           .then(response => {
@@ -138,7 +123,6 @@ export default {
   mounted() {
     this.getAllOffers();
     this.countOffers();
-    this.countPendingOffers();
     this.countOffersInProgress();
   }
 }
