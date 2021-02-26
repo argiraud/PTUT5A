@@ -4,6 +4,7 @@ import {router} from "./main"
 export const axiosAPI = axios.create({
     baseURL: "https://api.polyrecrute.tk",
     headers: {
+        "Access-Control-Allow-Origin": "*",
         "Content-type": "application/json",
         "Authorization": window.sessionStorage.getItem("UserToken")
     }
@@ -16,6 +17,7 @@ axiosAPI.interceptors.request.use(
         if (token) {
             config.headers['Authorization'] = token;
         }
+        config.headers['Access-Control-Allow-Origin'] = '*';
         config.headers['Content-Type'] = 'application/json';
         return config;
     },
