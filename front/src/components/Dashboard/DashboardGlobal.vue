@@ -16,7 +16,7 @@
         <DashboardCard color="grey" icon="mdi-offer" title="Offres Entreprises" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-offer" title="Offres libres" v-bind:text="nbOffersInProgress"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersAvailable"></DashboardCard>
       </v-col>
       <v-col>
         <DashboardCard color="orange" icon="mdi-offer" title="Offres terminées" v-bind:text="nbOffersFinished"></DashboardCard>
@@ -38,7 +38,7 @@ export default {
     nbStudents: 0,
     nbOffers: 0,
     nbStudentsWithoutOffers: 0,
-    nbOffersInProgress:0,
+    nbOffersAvailable:0,
     nbOffersFinished:0,
   }),
   methods: {
@@ -78,10 +78,10 @@ export default {
             console.error(e);
           })
     },
-    countOffersInProgress() {
-      OfferDataService.countOffersInProgress()
+    countOffersAvailable() {
+      OfferDataService.countOffersAvailable()
           .then(response => {
-            this.nbOffersInProgress = response.data.response;
+            this.nbOffersAvailable = response.data.response;
           })
           .catch(e => {
             console.error(e);
@@ -102,7 +102,7 @@ export default {
     this.countStudents();
     this.countOffers();
     this.countStudentWithoutOffers();
-    this.countOffersInProgress();
+    this.countOffersAvailable();
     this.countOffersFinished();
   }
 }
