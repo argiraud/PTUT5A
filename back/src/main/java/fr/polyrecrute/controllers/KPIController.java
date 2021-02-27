@@ -90,6 +90,16 @@ public class KPIController {
         return new ResponseEntity<>(new LongResponse(offerService.countAllByState("inprogress")), HttpStatus.OK);
     }
 
+    @Operation(summary = "Count of offers available", description = "",
+            responses= {
+                    @ApiResponse(responseCode = "200", description = "Count of offers in progress", content = @Content(schema = @Schema(implementation = LongResponse.class))),
+                    @ApiResponse(responseCode = "401", description = "Authentication error", content = @Content),
+                    @ApiResponse(responseCode = "403", description = "No sufficient right", content = @Content)})
+    @GetMapping(value = "/companies/offersAvailable", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LongResponse> getCountOffersByStateAvailable() {
+        return new ResponseEntity<>(new LongResponse(offerService.countAllByState("available")), HttpStatus.OK);
+    }
+
     @Operation(summary = "Count of offers", description = "",
             responses= {
                     @ApiResponse(responseCode = "200", description = "Count of offers", content = @Content(schema = @Schema(implementation = LongResponse.class))),
