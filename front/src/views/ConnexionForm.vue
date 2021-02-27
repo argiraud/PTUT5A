@@ -111,7 +111,7 @@ export default {
                         if(response.data.presentation == null || response.data.presentation === ""){
                             this.$router.push("/creationCompte");
                         }else{
-                            this.$router.push("/home");
+                            this.$router.push("/");
                         }
                         break;
                 }
