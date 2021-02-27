@@ -31,7 +31,7 @@
         <v-list-item-group
             v-model="group"
             active-class="lighten-1--text text--accent-4">
-          <v-list-item to="home">
+          <v-list-item to="/">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
@@ -105,7 +105,7 @@ import {mapState} from 'vuex';
 import StudentDataService from "@/service/StudentDataService";
 
 export default {
-  name: 'home',
+  name: '/',
   components: {
     // Slide
   },
