@@ -37,27 +37,27 @@
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Accueil</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="depotOffre">
+          <v-list-item v-if="isConnected && currentUser.RoleId === 2 && !currentUser.IsAdmin" to="depotOffre">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Dépôt d'offre d'apprentissage
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="depotCandidature">
+          <v-list-item v-if="isConnected && currentUser.RoleId === 1 && !currentUser.IsAdmin" to="depotCandidature">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Mon document descriptif
             </v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 2" to="saisieVoeux">
+          <v-list-item v-if="isConnected && currentUser.RoleId === 2 && !currentUser.IsAdmin" to="saisieVoeux">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
             <v-list-item-title style="white-space: normal">Saisie des voeux</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isConnected && this.$store.state.currentUser.RoleId == 1" to="saisieVoeuxEtudiant">
+          <v-list-item v-if="isConnected && currentUser.RoleId === 1 && !currentUser.IsAdmin" to="saisieVoeuxEtudiant">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-list</v-icon>
             </v-list-item-icon>
@@ -76,7 +76,7 @@
           </v-list-item-icon>
           <v-list-item-title>Connexion</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="isConnected" to="/Profil">
+        <v-list-item v-if="isConnected && !currentUser.IsAdmin" to="/Profil">
           <v-list-item-icon>
             <v-icon>mdi-database-cog</v-icon>
           </v-list-item-icon>
