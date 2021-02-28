@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4a161b31-d479-400c-968d-7343c03875c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/PopUpOtherProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/SaisieVoeuxEtudiantForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/ConnexionForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/Survey.vue" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/Survey.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="945e5ceb7fd2df11a0305cc5d5433dcc4512c28a" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -204,7 +203,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/back" />
@@ -238,6 +239,7 @@
       <workItem from="1604329685211" duration="7000" />
       <workItem from="1605630157206" duration="21000" />
       <workItem from="1605630189869" duration="184000" />
+      <workItem from="1614501640306" duration="1593000" />
     </task>
     <task id="LOCAL-00001" summary="Nettoyage de la session, amélioration du data store vuex">
       <created>1610987121667</created>
@@ -351,6 +353,15 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
