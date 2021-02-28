@@ -66,13 +66,12 @@ name: "Presentation",
         StudentDataService.updateUserInfos(user).then(response => {
           switch(response.status){
             case 200:
-              alert("Mise à jour de la présentation réussie");
               break;
             case 400:
               console.log("Error Token");
               break;
           }
-        })
+        }).catch(err => console.log("erreur : "+ err));
       } else if (currentUser.RoleId == 2) { //Entreprise
 
         let company = {

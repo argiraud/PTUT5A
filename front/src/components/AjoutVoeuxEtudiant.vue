@@ -13,7 +13,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Liste Offres</v-toolbar-title>
+            <v-toolbar-title>Liste des offres disponibles</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
         </template>

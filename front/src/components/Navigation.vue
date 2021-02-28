@@ -26,7 +26,7 @@
         v-model="drawer"
         absolute
         temporary>
-      <h1 class="text-center" style="margin-top: 10px">Ptut</h1>
+      <h1 class="text-center" style="margin-top: 10px">Polyrecrute</h1>
       <v-list nav dense v-scroll:false>
         <v-list-item-group
             v-model="group"
