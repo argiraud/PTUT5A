@@ -46,8 +46,8 @@
       </v-card-actions>
 
       <v-card-actions>
-        <v-btn rounded color="#009BDD" @click="AddOffer">Ajouter</v-btn>
-        <v-btn rounded color="red" @click.stop="show=false">Fermer</v-btn>
+        <v-btn rounded style="color: white" color="#009BDD" @click="AddOffer">Ajouter</v-btn>
+        <v-btn rounded style="color: white" color="red" @click.stop="show=false">Fermer</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

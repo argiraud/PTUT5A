@@ -5,7 +5,7 @@
         <DashboardCard color="blue" icon="mdi-offer" title="Offres" v-bind:text="nbOffers"></DashboardCard>
       </v-col>
       <v-col>
-        <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersInProgress"></DashboardCard>
+        <DashboardCard color="green" icon="mdi-offer" title="Offres disponibles" v-bind:text="nbOffersAvailable"></DashboardCard>
       </v-col>
     </v-row>
     <v-row>
@@ -66,7 +66,7 @@ export default {
       search: '',
       offers: [],
       nbOffers: 0,
-      nbOffersInProgress:0,
+      nbOffersAvailable:0,
       headers: [
         {text: "TITRE", align: "start", value: "title", sortable: true},
         {text: "ENTREPRISE", align: "start", value: "company.name", sortable: true},
@@ -105,10 +105,10 @@ export default {
             console.error(e);
           })
     },
-    countOffersInProgress() {
-      OfferDataService.countOffersInProgress()
+    countOffersAvailable() {
+      OfferDataService.countOffersAvailable()
           .then(response => {
-            this.nbOffersInProgress = response.data.response;
+            this.nbOffersAvailable = response.data.response;
           })
           .catch(e => {
             console.error(e);
@@ -123,7 +123,7 @@ export default {
   mounted() {
     this.getAllOffers();
     this.countOffers();
-    this.countOffersInProgress();
+    this.countOffersAvailable();
   }
 }
 </script>

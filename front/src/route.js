@@ -14,7 +14,7 @@ import Survey from "@/views/Survey";
 
 export const routes = [
     {
-        path: '/home',
+        path: '/',
         name: 'home',
         component: Home
     },
