@@ -62,11 +62,11 @@
                 <v-window-item v-if="isConnected && !currentUser.IsAdmin">
                     <v-row>
                       <v-col cols="12" md="12">
-                        <v-card-text class="mt-12">
-                          <h1 class="text-center display-2 teal--text text--accent-3">Vous êtes déjà connecté !</h1>
+                        <v-card-text>
+                          <h1 class="text-center display-2" style="color: #009BDD">Vous êtes déjà connecté !</h1>
                           <br/>
                           <br/>
-                          <h4 class="text-center mlt-4">Déconnectez-vous en utilisant le bouton de déconnexion en haut à droite pour changer de compte.</h4>
+                          <h4 class="text-center">Déconnectez-vous en utilisant le bouton de déconnexion en haut à droite pour changer de compte.</h4>
                         </v-card-text>
                       </v-col>
                     </v-row>
