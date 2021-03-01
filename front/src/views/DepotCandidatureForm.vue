@@ -56,6 +56,7 @@
         style="color: white"
         class="mr-4"
         @click="validate"
+        v-if="isCreationCompte"
     >
       Valider
     </v-btn>
@@ -97,6 +98,9 @@ name: "DepotCandidatureForm",
       ],
     }
   },
+  props: [
+    'isCreationCompte',
+  ],
 
   methods: {
 

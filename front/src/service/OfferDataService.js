@@ -13,8 +13,8 @@ class OfferDataService {
         return axiosAPI.get("/kpi/user/withoutOffer");
     }
 
-    countOffersInProgress(){
-        return axiosAPI.get("/kpi/companies/offersInProgress");
+    countOffersAvailable(){
+        return axiosAPI.get("/kpi/companies/offersAvailable");
     }
 
     countOffersFinished(){

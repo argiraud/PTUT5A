@@ -45,7 +45,7 @@
         color="#009BDD"
         class="mr-4"
         @click="validate"
-        to="home"
+        to="/"
     >
       Valider
     </v-btn>

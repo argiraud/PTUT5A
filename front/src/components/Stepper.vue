@@ -12,7 +12,7 @@
     </v-stepper-content>
     <v-stepper-content step="2" currentStep=2>
       <DepotOffre v-if="this.$store.state.currentUser.RoleId == 2" @step2-finish="updateMes2"></DepotOffre>
-      <DepotCandidatureForm v-if="this.$store.state.currentUser.RoleId == 1" @step2-finish="updateMes2"></DepotCandidatureForm>
+      <DepotCandidatureForm v-if="this.$store.state.currentUser.RoleId == 1" is-creation-compte="true" @step2-finish="updateMes2"></DepotCandidatureForm>
     </v-stepper-content>
     <v-stepper-content step="3" currentStep=3>
       <SaisieVoeux v-if="this.$store.state.currentUser.RoleId == 2" @step3-finish="updateMes3"></SaisieVoeux>
