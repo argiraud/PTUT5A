@@ -12,10 +12,10 @@
         Avec 12 domaines de formation, plus de 90 000 ingénieurs en activité et 3 600 diplômés annuels, le réseau Polytech est reconnu par le monde économique et permet une insertion rapide des diplômés.
         Par un adossement à une recherche de haut niveau, avec plus de 1 300 enseignants-chercheurs côtoyant quotidiennement les élèves-ingénieurs, et l'intervention de spécialistes en activité dans tous les secteurs professionnels, le réseau Polytech garantit une formation de grande qualité pour préparer les jeunes diplômés à relever les défis de demain.
         <div align="center" style="margin: 20px">
-            <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="http://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
+            <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
         </div>
         <div align="center" style="margin: 20px">
-          <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="http://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
+          <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
         </div>
         <div align="center" style="margin: 20px">
           <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://mediacenter.univ-lyon1.fr/videos/MEDIA210122193414974/multimedia/MEDIA210122193414974.mp4"></iframe>
