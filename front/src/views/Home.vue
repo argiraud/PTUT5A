@@ -15,7 +15,7 @@
             <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
         </div>
         <div align="center" style="margin: 20px">
-          <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://www.polytech-reseau.org/fileadmin/Videos/MOTION-POLYTECH_-_MAJ1.mp4"></iframe>
+          <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://mediacenter.univ-lyon1.fr/videos/?video=MEDIA201214183646782"></iframe>
         </div>
         <div align="center" style="margin: 20px">
           <iframe style="align-self: center" height="480vh" width="850vh" allowfullscreen src="https://mediacenter.univ-lyon1.fr/videos/MEDIA210122193414974/multimedia/MEDIA210122193414974.mp4"></iframe>
