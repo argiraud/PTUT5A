@@ -123,7 +123,7 @@
           {{ 'Avez-vous trouvé l\'application simple d\'utilisation ?' }}
         </v-card-title>
         <v-radio-group
-            v-model="answers[5]"
+            v-model="answers[4]"
             mandatory
             class="radio-group"
         >
@@ -152,7 +152,7 @@
         </v-card-title>
         <v-textarea
             style="margin: 1%"
-            v-model="answers[6]"
+            v-model="answers[5]"
             :rules="questionRule"
             required
             name="input-7-1"
@@ -167,7 +167,7 @@
           {{ 'Etes-vous satisfait du déroulement de vos entretiens ?' }}
         </v-card-title>
         <v-radio-group
-            v-model="question7"
+            v-model="answers[6]"
             mandatory
             class="radio-group"
         >
@@ -196,7 +196,7 @@
         </v-card-title>
         <v-textarea
             style="margin: 1%"
-            v-model="question8"
+            v-model="answers[7]"
             :rules="questionRule"
             required
             name="input-7-1"
@@ -212,7 +212,7 @@
         </v-card-title>
         <v-textarea
             style="margin: 1%"
-            v-model="question9"
+            v-model="answers[8]"
             :rules="questionRule"
             required
             name="input-7-1"
@@ -228,7 +228,7 @@
         </v-card-title>
         <v-textarea
             style="margin: 1%"
-            v-model="question10"
+            v-model="answers[9]"
             :rules="questionRule"
             required
             name="input-7-1"
@@ -244,7 +244,7 @@
         </v-card-title>
         <v-textarea
             style="margin: 1%"
-            v-model="answers[11]"
+            v-model="answers[10]"
             :rules="questionRule"
             required
             name="input-7-1"
