@@ -33,7 +33,7 @@
               }"
           >
             <template v-slot:[`item.actions`]="{ item }">
-              <PopUpOtherProfile :id-user-to-display="item.id"></PopUpOtherProfile>
+              <PopUpOtherProfile :id-user-to-display="item.idEntity"></PopUpOtherProfile>
             </template>
           </v-data-table>
         </v-card>
